@@ -1,0 +1,31 @@
+Text:
+  font: Arial Roman,Sans 28
+  align: left
+  color: :black
+  markup: true
+
+title:
+  align: center
+  width: 1725
+  font_size: 50
+  y: 50
+
+linenumber:
+  extends: Text
+  font_size: 40
+  x: 100
+
+maintext:
+  extends: Text
+  x: 150
+  width: 1425
+  ellipsize: :false
+
+whotext:
+  extends: Text
+  font_size: 20
+  hint: :black
+  x: 1575
+  width: :auto
+  height: :auto
+

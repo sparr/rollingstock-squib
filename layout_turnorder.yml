@@ -1,0 +1,18 @@
+Text:
+  font: Arial Roman,Sans 75
+  align: center
+  color: :black
+  width: 1125
+
+upperlabel:
+  extends: Text
+  y: 125
+
+lowerlabel:
+  extends: upperlabel
+  y: 625
+
+ordernumber:
+  extends: Text
+  font_size: 350
+  y: 225

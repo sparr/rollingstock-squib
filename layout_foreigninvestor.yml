@@ -1,0 +1,43 @@
+Text:
+  font: Arial Roman,Sans 75
+  align: center
+  color: :black
+  width: 1725
+
+maintext:
+  extends: Text
+  align: left
+  width: 1550
+  # height: 820
+  markup: true
+  font_size: 50
+  wrap: :word_char
+  ellipsize: :false
+  justify: true
+  x: 50
+  y: 170
+
+companyname:
+  extends: Text
+  font_size: 100
+  align: left
+  width: 1550
+  x: 50
+  y: 30  
+
+sidetext:
+  extends: Text
+  width: 1125
+  font_size: 35
+
+righttext:
+  extends: sidetext
+  x: 1675
+  y: 0
+  angle: 1.57079632679489661923
+
+bottomtext:
+  extends: sidetext
+  width: 1725
+  align: center
+  y: 1000

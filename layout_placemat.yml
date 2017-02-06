@@ -1,0 +1,37 @@
+Text:
+  font: Arial Roman,Sans 75
+  align: center
+  color: :black
+  width: 1725
+
+companyname:
+  extends: Text
+  font_size: 225
+  y: 275
+
+secondline:
+  extends: Text
+  y: 625
+
+sidetext:
+  extends: Text
+  width: 1125
+  font_size: 35
+
+lefttext:
+  extends: sidetext
+  x: 50
+  y: 1125
+  angle: 4.71238898038468985769
+
+righttext:
+  extends: sidetext
+  x: 1675
+  y: 0
+  angle: 1.57079632679489661923
+
+bottomtext:
+  extends: sidetext
+  width: 1725
+  align: center
+  y: 1000
