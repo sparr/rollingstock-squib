@@ -23,6 +23,7 @@ max_players = 5
 min_players = 1
 player_numbers = (1..max_players).to_a
 corps = ["Bear","Wheel","Orion","Eagle","Horse","Star","Android","Ship","Jupiter","Saturn"]
+corp_colors = ['#F00','#000','#96C','#FD2','#999','#0A0','#AC0','#09F','#963','#F0F']
 $share_prices = [
    0,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 18, 20, 22,
       24, 26, 28, 31, 34, 37, 41, 45, 50, 55, 60, 66, 73, 81, 90, 100
@@ -42,21 +43,23 @@ Squib::Deck.new(
   save prefix: 'turnorder_', format: :png
 end
 
-# # Corporation share cards
-# shares = 10
-# Squib::Deck.new(
-#   cards: corps.length*shares,
-#   width: 1125,
-#   height: 825,
-#   layout: 'layout_share.yml'
-#   ) do
-#   background color: :white
-#   # 1st 2nd 3rd 4th .. 9th 10th 1st 2nd ...
-#   text str: (((1..shares).to_a)*corps.length).map{|n| ordinalize(n) + " share"}, layout: :firstline
-#   text str: (0..corps.length*shares).to_a.map{|n| corps[n/shares]}, layout: :companyname
-#   text str: (((0..shares-1).to_a)*corps.length).map{|n| ((n==0) ? 'President' : (n.to_s + " shares issued"))}, layout: :secondline
-#   save prefix: 'share_', format: :png
-# end
+# Corporation share cards
+shares = 10
+Squib::Deck.new(
+  cards: corps.length*shares,
+  width: 1125,
+  height: 825,
+  layout: 'layout_share.yml'
+  ) do
+  background color: :white
+  # 1st 2nd 3rd 4th .. 9th 10th 1st 2nd ...
+  text str: (((1..shares).to_a)*corps.length).map{|n| ordinalize(n) + " share"}, layout: :firstline
+  text str: (0..corps.length*shares).to_a.map{|n| corps[n/shares]}, layout: :companyname
+  text str: (((0..shares-1).to_a)*corps.length).map{|n| ((n==0) ? 'President' : (n.to_s + " shares issued"))}, layout: :secondline
+  rect layout: :safe
+  rect layout: :cut
+  save prefix: 'share_', format: :png
+end
 
 # Corporation placemats
 Squib::Deck.new(
@@ -183,11 +186,41 @@ Squib::Deck.new(
   rect layout: :maxpayout
   text str: "max payout\nper share", layout: :maxpayoutlabel
   text str: $share_prices.map{|p| (p==0||p==100) ? 'n/a' : ('$'+(p/3).to_i.to_s)}, layout: :maxpayoutamount
+  rect range: (6..10), stroke_color: '#0000', fill_color: :red, layout: :ipofirstthird
+  text range: (6..10), str: '●', y: 250, layout: :ipofirstthird
+  rect range: (6..10), stroke_color: '#0000', fill_color: :orange, layout: :iposecondthird
+  text range: (6..10), str: '▲', y: 250,  layout: :iposecondthird
+  rect range: (6..10), stroke_color: '#0000', fill_color: :yellow, layout: :ipothirdthird
+  text range: (6..10), str: '■', y: 250,  layout: :ipothirdthird
+  rect range: (11..14), stroke_color: '#0000', fill_color: :orange, layout: :ipofirstthird
+  text range: (11..14), str: '▲', y: 250,  layout: :ipofirstthird
+  rect range: (11..14), stroke_color: '#0000', fill_color: :yellow, layout: :iposecondthird
+  text range: (11..14), str: '■', y: 250,  layout: :iposecondthird
+  rect range: (11..14), stroke_color: '#0000', fill_color: :green, layout: :ipothirdthird
+  text range: (11..14), str: '⬟', y: 250,  layout: :ipothirdthird
+  rect range: (15..17), stroke_color: '#0000', fill_color: :yellow, layout: :ipofirstthird
+  text range: (15..17), str: '■', y: 250,  layout: :ipofirstthird
+  rect range: (15..17), stroke_color: '#0000', fill_color: :green, layout: :iposecondthird
+  text range: (15..17), str: '⬟', y: 250,  layout: :iposecondthird
+  rect range: (15..17), stroke_color: '#0000', fill_color: :blue, layout: :ipothirdthird
+  text range: (15..17), str: '⬢', y: 250,  layout: :ipothirdthird
+  rect range: (18..20), stroke_color: '#0000', fill_color: :green, layout: :ipofirstthird
+  text range: (18..20), str: '⬟', y: 250,  layout: :ipofirstthird
+  rect range: (18..20), stroke_color: '#0000', fill_color: :blue, layout: :iposecondthird
+  text range: (18..20), str: '⬢', y: 250,  layout: :iposecondthird
+  rect range: (18..20), stroke_color: '#0000', fill_color: :purple, layout: :ipothirdthird
+  text range: (18..20), str: '★', y: 250,  layout: :ipothirdthird
+  rect range: (21..23), stroke_color: '#0000', fill_color: :blue, layout: :ipofirsthalf
+  text range: (21..23), str: '⬢', y: 250,  layout: :ipofirsthalf
+  rect range: (21..23), stroke_color: '#0000', fill_color: :purple, layout: :iposecondhalf
+  text range: (21..23), str: '★', y: 250,  layout: :iposecondhalf
+  text range: (6..23), str: 'IPO', layout: :ipo
+  rect range: (6..23), layout: :ipo
   bottom_y = 410
   text str: "When a corporation takes this card, it is declared bankrupt immediately. Remove its subsidiary companies from the game. Return its cash, its shares, and this card without compensation.\n(Shares are available for newly founded corporations.)",
     range: 0, 
     y: bottom_y, 
-    font_size: 33, 
+    font_size: 33,
     layout: :bottomtext
   text str: 'If this card is in use in phase 10 or after a share has been bought in phase 3, the game ends immediately. In phase 9, assume there is an infinite supply of this card. Each corporation reaching $100 share price after the first returns its old share price card without taking a new one. Its shares have a value of $100 at the end of the game.',
     range: $share_prices.length-1, 

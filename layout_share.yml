@@ -16,3 +16,23 @@ firstline:
 secondline:
   extends: Text
   y: 625
+
+# The "cut line", without rounded corners
+cut:
+  x: 37.5
+  y: 37.5
+  width: 1050
+  height: 750
+  radius: 32
+  dash: 5 5
+  stroke_color: :red
+
+# The "safe zone" as defined by TheGameCrafter poker cards
+safe:
+  x: 75
+  y: 75
+  width: 975
+  height: 675
+  radius: 16
+  dash: 3 3
+  stroke_color: :blue

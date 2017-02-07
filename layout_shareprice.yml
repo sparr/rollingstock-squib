@@ -3,7 +3,7 @@
 # safe zone is 975x675
 
 Text:
-  font: Arial Roman
+  font: DejaVu Sans
   font_size: 25
   align: center
   color: :black
@@ -46,6 +46,38 @@ maxpayoutamount:
   font_size: 30
   y: 275
 
+ipo:
+  extends: Text
+  x: 100
+  y: 200
+  width: 150
+  height: 125
+  font_size: 40
+
+ipolabel:
+  extends: ipo
+  y: 225
+
+ipofirstthird:
+  extends: ipo
+  width: 50
+
+iposecondthird:
+  extends: ipofirstthird
+  x: +=50
+
+ipothirdthird:
+  extends: iposecondthird
+  x: +=50
+
+ipofirsthalf:
+  extends: ipo
+  width: 75
+
+iposecondhalf:
+  extends: ipofirsthalf
+  x: += 75
+
 bottomtext:
   extends: Text
   align: left
@@ -66,7 +98,7 @@ cut:
   y: 37.5
   width: 1050
   height: 750
-  radius: 16
+  radius: 32
   dash: 5 5
   stroke_color: :red
 
