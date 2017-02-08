@@ -1,39 +1,51 @@
+# GameCrafter poker card is 2.5x3.5", 825x1125px with a 37.5px bleed zone and 37.5px unsafe zone
+# used here as 1125x825 for landscape, rotated in main script
+# safe zone is 975x675
+
 Text:
-  font: Signika 23
+  font: Signika 15
   align: left
   color: :black
+  x: 75
+  y: 75
+  width: 975
+  height: 675
   markup: true
 
 title:
+  extends: Text
   align: center
-  width: 1725
-  font_size: 50
+  font_size: 35
 
 linenumber:
   extends: Text
-  font_size: 40
-  x: 100
+  font_size: 30
+  x: 70
 
 maintext:
   extends: Text
-  x: 175
-  width: 1350
+  x: 126
+  width: 850
   ellipsize: :false
+
+maintext_de:
+  extends: maintext
+  font_size: 14
 
 whotext:
   extends: Text
   align: center
-  font_size: 20
-  x: 1525
-  width: 70
-  height: 30
+  font_size: 15
+  x: 980
+  width: 60
+  height: 24
 
 # The "cut line", without rounded corners
 cut:
   x: 37.5
   y: 37.5
-  width: 1650
-  height: 1050
+  width: 1050
+  height: 750
   radius: 32
   dash: 5 5
   stroke_color: :red
@@ -42,8 +54,8 @@ cut:
 safe:
   x: 75
   y: 75
-  width: 1575
-  height: 975
+  width: 975
+  height: 675
   radius: 16
   dash: 3 3
   stroke_color: :blue

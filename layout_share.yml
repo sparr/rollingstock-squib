@@ -1,31 +1,29 @@
+# GameCrafter mini card is 1.75x2.5", 600x825px with a 37.5px bleed zone and 37.5px unsafe zone
+# used here as 825x600 for landscape, rotated in main script
+# safe zone is 450x675
+
 Text:
-  font: Signika 75
+  font: Signika 40
   align: center
   color: :black
-  width: 1125
+  width: 825
   markup: true
-
-companyname:
-  extends: Text
-  font_size: 225
-  y: 275
 
 firstline:
   extends: Text
-  font_size: 100
-  y: 540
+  font_size: 60
+  y: 375
 
 secondline:
   extends: Text
-  font_size: 55
-  y: 675
+  y: 450
 
 # The "cut line", without rounded corners
 cut:
   x: 37.5
   y: 37.5
-  width: 1050
-  height: 750
+  width: 750
+  height: 525
   radius: 32
   dash: 5 5
   stroke_color: :red
@@ -34,8 +32,8 @@ cut:
 safe:
   x: 75
   y: 75
-  width: 975
-  height: 675
+  width: 675
+  height: 450
   radius: 16
   dash: 3 3
   stroke_color: :blue

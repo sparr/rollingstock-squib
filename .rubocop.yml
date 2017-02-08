@@ -1,0 +1,18 @@
+Metrics/BlockLength:
+  Enabled: false
+
+Metrics/MethodLength:
+  Enabled: false
+
+Metrics/LineLength:
+  Enabled: false
+
+Style/AlignHash:
+  Enabled: false
+
+Style/GlobalVars:
+  Enabled: false
+
+# :
+#   Enabled: false
+

@@ -1,18 +1,20 @@
 require 'squib'
 require 'set'
 
-CUTLINES = true
+CUTLINES = false
 
-TURNORDER       = false
-CORPSHARES      = false
-CORPMATS        = false
-FOREIGNINVESTOR = false
-TURNSUMMARY     = false
-TURNSUMMARYDE   = false
-SHAREPRICES     = false
+ROTATE = true
+
+TURNORDER       = true
+CORPSHARES      = true
+CORPMATS        = true
+FOREIGNINVESTOR = true
+TURNSUMMARY     = true
+TURNSUMMARYDE   = true
+SHAREPRICES     = true
 COMPANYCARDS    = true
-ENDOFGAME       = false
-SYNERGYTOKENS   = false
+ENDOFGAME       = true
+SYNERGYTOKENS   = true
 
 # ordinal and ordinalize from
 # https://github.com / rails / rails / blob / 4 - 2 - stable / activesupport / lib / active_support / inflector / methods.rb#L312 - L347
@@ -57,84 +59,92 @@ Squib::Deck.new(
   text str: ['in player order'] * PLAYER_NUMBERS.length, layout: :lowerlabel
   rect layout: :safe if CUTLINES
   rect layout: :cut if CUTLINES
-  save prefix: 'turnorder_', format: :png
 end if TURNORDER
 
 # Corporation share cards
 shares = 10
 Squib::Deck.new(
   cards: CORP_NAMES.length * shares,
-  width: 1125,
-  height: 825,
+  width: 825,
+  height: 600,
   layout: 'layout_share.yml'
 ) do
   background color: (0..CORP_NAMES.length * shares - 1).to_a.map { |n| n % 10 != 0 ? 'white' : '(0,0)(0,825) gold@0.0 white@1.0' }
   # 1st 2nd 3rd 4th .. 9th 10th 1st 2nd ...
   text str: ((1..shares).to_a * CORP_NAMES.length).map { |n| ordinalize(n) + ' share' }, layout: :firstline
-  png file: (0..CORP_NAMES.length * shares - 1).to_a.map { |n| CORP_NAMES[n / shares].downcase + '.png' }, x: 332.5, y: 75, width: 460, height: 460
+  ICON_SIZE = 300
+  png file: (0..CORP_NAMES.length * shares - 1).to_a.map { |n| CORP_NAMES[n / shares].downcase + '.png' }, x: (825-ICON_SIZE)/2, y: 75, width: ICON_SIZE, height: ICON_SIZE
   # text str: (0..CORP_NAMES.length * shares - 1).to_a.map { |n| CORP_NAMES[n / shares] }, layout: :companyname
   text str: ((0..shares - 1).to_a * CORP_NAMES.length).map { |n| n == 0 ? '<i>President</i>' : ('<i>' + n.to_s + ' share' + (n == 1 ? '' : 's') + ' issued</i>') }, layout: :secondline
-  rect x: 100, width: 75, height: 825, fill_color: (0..CORP_NAMES.length * shares - 1).to_a.map { |n| CORP_COLORS[n / shares] }
-  rect x: 950, width: 75, height: 825, fill_color: (0..CORP_NAMES.length * shares - 1).to_a.map { |n| CORP_COLORS[n / shares] }
+  STRIPE_WIDTH = 75
+  STRIPE_INSET = 25
+  rect x: 75+STRIPE_INSET, width: STRIPE_WIDTH, height: 600, fill_color: (0..CORP_NAMES.length * shares - 1).to_a.map { |n| CORP_COLORS[n / shares] }
+  rect x: 825-75-STRIPE_INSET-STRIPE_WIDTH, width: STRIPE_WIDTH, height: 600, fill_color: (0..CORP_NAMES.length * shares - 1).to_a.map { |n| CORP_COLORS[n / shares] }
   rect layout: :safe if CUTLINES
   rect layout: :cut if CUTLINES
+  # unrotated version is used for the placemats
   save prefix: 'share_', format: :png
+  save prefix: 'share_', count_format: '%02d[face]', rotate: ROTATE ? :clockwise        : false, format: :png
+  save prefix: 'share_', count_format: '%02d[back]', rotate: ROTATE ? :counterclockwise : false, format: :png
 end if CORPSHARES
 
 # Corporation placemats
 Squib::Deck.new(
   cards: CORP_NAMES.length,
-  width: 1725,
-  height: 1125,
+  width: 1125,
+  height: 825,
   layout: 'layout_placemat.yml'
 ) do
   background color: :white
   # text str: (0..CORP_NAMES.length).to_a.map { |n| CORP_NAMES[n] }, layout: :companyname
   png file: (0..CORP_NAMES.length - 1).map { |n| '_output/share_' + n.to_s + '9.png' },
-      crop_x: 37.5, crop_y: 37.5, crop_width: 1050, crop_height: 750,
-      x: 337.5, y: 187.5
-  rect x: 485, y: 700, width: 755, height: 250, fill_color: :white, stroke_color: '#0000'
-  rect x: 337.5, y: 187.5, width: 1050, height: 750, stroke_width: 8
-  text str: '<i>all 10 shares issued</i>', layout: :secondline
+      crop_x: 37.5, crop_y: 37.5, crop_width: 750, crop_height: 525,
+      x: (1125-750)/2, y: (825-525)/2-50
+  rect x: 350, y: 500-50, width: 1125-350*2, height: 125, fill_color: :white, stroke_color: '#0000'
+  rect x: (1125-750)/2, y: (825-525)/2-50, width: 750, height: 525, radius: 37.5, stroke_width: 8
+  text str: '<i>all 10 shares issued</i>', y: 565-50, layout: :secondline
   text str: '▲ share price ▲', layout: :lefttext
   text str: '▼ subsidiaries ▼', layout: :bottomtext
   text str: '▲ treasury ▲', layout: :righttext
   rect layout: :safe if CUTLINES
   rect layout: :cut if CUTLINES
-  save prefix: 'placemat_', format: :png
+  save prefix: 'placemat_', count_format: '%02d[face]', rotate: ROTATE ? :clockwise        : false, format: :png
+  save prefix: 'placemat_', count_format: '%02d[back]', rotate: ROTATE ? :counterclockwise : false, format: :png
 end if CORPMATS
 
 # Foreign Investor placemat
 Squib::Deck.new(
   cards: 1,
-  width: 1725,
-  height: 1125,
+  width: 1125,
+  height: 825,
   layout: 'layout_foreigninvestor.yml'
 ) do
   background color: '#CCC'
   text str: 'Foreign Investor', layout: :companyname
   text str: "Starts the game with $4 in treasury.
+
 <b>Phase 5</b>: Buys as many private companies as possible, in ascending face value order.
 <b>Phase 6</b>: Offers private companies for maximum price. If more than one corporation wants to buy the same private company, the corporation with the higher share price has priority.
 <b>Phase 7</b>: Closes private companies with negative income.
 <b>Phase 8</b>: Earns $5 plus normal income from private companies.", layout: :maintext
   text str: '▼ private companies ▼', layout: :bottomtext
   text str: '▲ treasury ▲', layout: :righttext
-  circle x: 1525, y: 200, radius: 110,
+  circle x: 950, y: 175, radius: 100,
     fill_color: :gray, stroke_color: :black, stroke_width: 2.0
-  text x: 1525 - 110, y: 200 - 110, font: 'Signika 75', align: 'center', valign: 'middle',
-    color: :black, width: 220, height: 220, str: '+$5'
+  text x: 950 - 100, y: 175 - 100, font: 'Signika 66', align: 'center', valign: 'middle',
+    color: :black, width: 200, height: 200, str: '+$5'
   rect layout: :safe if CUTLINES
   rect layout: :cut if CUTLINES
-  save prefix: 'foreign_investor', format: :png
+  save prefix: 'foreign_investor', count_format: '%02d[face]', rotate: ROTATE ? :clockwise        : false, format: :png
+  save prefix: 'foreign_investor', count_format: '%02d[back]', rotate: ROTATE ? :counterclockwise : false, format: :png
 end if FOREIGNINVESTOR
 
 # Turn Summary card
 # duplicate this elsewise
 Squib::Deck.new(
   cards: 1,
-  width: 1725,
-  height: 1125,
+  width: 1125,
+  height: 825,
   layout: 'layout_turnsummary.yml'
 ) do
   background color: :white
@@ -157,36 +167,37 @@ Squib::Deck.new(
     extents = text str: lines[n][1], y: y + 5, layout: :maintext
     text str: lines[n][0],
       y: y,
-      width: 75, height: extents[0][:height] + 10,
+      width: 60, height: extents[0][:height] + 10,
       align: :center, valign: :middle,
       layout: :linenumber
     # vertically center the set of who boxes
-    who_height = lines[n][2].length * 35 - 5
+    who_height = lines[n][2].length * 29 - 5
     who_y = y + (extents[0][:height] + 10 - who_height) / 2
     lines[n][2].each do |who|
       rect y: who_y, layout: :whotext, fill_color: who == 'PRIV' ? '#CBF' : who == 'AUTO' ? '#AFA' : '#FAA'
       text str: who, y: who_y, layout: :whotext
-      who_y += 35
+      who_y += 29
     end
-    rect x: 100, y: y, width: 1525, height: extents[0][:height] + 10
+    rect x: 75, y: y, width: 975, height: extents[0][:height] + 10
     y += extents[0][:height] + 10
   end
   rect layout: :safe if CUTLINES
   rect layout: :cut if CUTLINES
-  save prefix: 'turn_summary', format: :png
+  save prefix: 'turn_summary', count_format: '%02d[face]', rotate: ROTATE ? :clockwise        : false, format: :png
+  save prefix: 'turn_summary', count_format: '%02d[back]', rotate: ROTATE ? :counterclockwise : false, format: :png
 end if TURNSUMMARY
 
 # Turn Summary card in German
 # duplicate this elsewise
 Squib::Deck.new(
   cards: 1,
-  width: 1725,
-  height: 1125,
+  width: 1125,
+  height: 825,
   layout: 'layout_turnsummary.yml'
 ) do
   background color: :white
   y = 75
-  extents = text str: 'Turn Summary', y: y, layout: :title
+  extents = text str: 'Rundenübersicht', y: y, layout: :title
   y += extents[0][:height]
   lines = [
     ['1', 'In Kursreihenfolge <b>geben AGs eine Aktie aus</b> (optional) und drehen Kurskarte waagerecht.', ['AG']],
@@ -201,26 +212,27 @@ Squib::Deck.new(
     ['10','Wenn keine Privatfirmen mehr im Angebot sind, wird die <b>Endkarte umgedreht</b>. Ist sie bereits umgedreht oder hat eine AG Kurs $100, ist das <b>Spiel zuende</b>.', ['AUTO']]
   ]
   (0..9).each do |n|
-    extents = text str: lines[n][1], y: y + 5, font_size: 22, layout: :maintext
+    extents = text str: lines[n][1], y: y + 5, layout: :maintext_de
     text str: lines[n][0],
       y: y,
-      width: 75, height: extents[0][:height] + 10,
+      width: 60, height: extents[0][:height] + 10,
       align: :center, valign: :middle,
       layout: :linenumber
     # vertically center the set of who boxes
-    who_height = lines[n][2].length * 35 - 5
+    who_height = lines[n][2].length * 29 - 5
     who_y = y + (extents[0][:height] + 10 - who_height) / 2
     lines[n][2].each do |who|
       rect y: who_y, layout: :whotext, fill_color: who == 'PRIV' ? '#CBF' : who == 'AUTO' ? '#AFA' : '#FAA'
       text str: who, y: who_y, layout: :whotext
-      who_y += 35
+      who_y += 29
     end
-    rect x: 100, y: y, width: 1525, height: extents[0][:height] + 10
+    rect x: 75, y: y, width: 975, height: extents[0][:height] + 10
     y += extents[0][:height] + 10
   end
   rect layout: :safe if CUTLINES
   rect layout: :cut if CUTLINES
-  save prefix: 'turn_summary_de', format: :png
+  save prefix: 'turn_summary_de', count_format: '%02d[face]', rotate: ROTATE ? :clockwise        : false, format: :png
+  save prefix: 'turn_summary_de', count_format: '%02d[back]', rotate: ROTATE ? :counterclockwise : false, format: :png
 end if TURNSUMMARYDE
 
 # the payout range for a given stock price, price change, and number of shares
@@ -256,11 +268,11 @@ end
 def sharepricefrontback(front)
   background color: :white
   text str: 'share price', layout: :title
-  text str: (0..$SHARE_PRICES.length - 1).to_a.map { |n| n == 0 ? '' : ('← $' + $SHARE_PRICES[n - 1].to_s) }, layout: :leftprice
-  text str: (0..$SHARE_PRICES.length - 1).to_a.map { |n| n==$SHARE_PRICES.length - 1 ? '' : ('$' + $SHARE_PRICES[n + 1].to_s+' →') }, layout: :rightprice
+  text str: (0..$SHARE_PRICES.length - 1).to_a.map { |n| n == 0 ? '' : ('$' + $SHARE_PRICES[n - 1].to_s + '←') }, layout: :leftprice
+  text str: (0..$SHARE_PRICES.length - 1).to_a.map { |n| n==$SHARE_PRICES.length - 1 ? '' : ('→$' + $SHARE_PRICES[n + 1].to_s) }, layout: :rightprice
   text str: $SHARE_PRICES.map { |p| '$' + p.to_s}, color: [:red] + [:black] * ($SHARE_PRICES.length - 2) + ['#080'], layout: :shareprice
   rect layout: :maxpayout
-  text str: 'max payout\nper share', layout: :maxpayoutlabel
+  text str: "max payout\nper share", layout: :maxpayoutlabel
   text str: $SHARE_PRICES.map { |p| (p == 0 || p == 100) ? 'n / a' : ('$' + (p / 3).to_i.to_s) }, layout: :maxpayoutamount
   rect range: (6..10), stroke_color: '#0000', fill_color: :red, layout: :ipofirstthird
   text range: (6..10), str: '●', y: 290, layout: :ipofirstthird
@@ -317,7 +329,7 @@ def sharepricefrontback(front)
       layout: :bottomgridbox
   end
   (0..3).each do |row|
-    text str: (0..$SHARE_PRICES.length - 1).to_a.map { |i| ['←← ', '← ', '', ''][row] + '$' + $SHARE_PRICES[i + (row < 2 ? (row - 2) : (row - 1))].to_s + ['', '', ' →', ' →→'][row] },
+    text str: (0..$SHARE_PRICES.length - 1).to_a.map { |i| ['', '', '→', '→→'][row] + '$' + $SHARE_PRICES[i + (row < 2 ? (row - 2) : (row - 1))].to_s + ['←←', '←', '', ''][row] },
       range: ((row > 0 ? 1 : 2)..($SHARE_PRICES.length - (row < 3 ? 2 : 3))),
       x: (front ? 82 : 162),
       y: $SHARE_PRICES.map { |p| p == 5 || p == 100 ? (bottom_y + row * 50) : (bottom_y + 50 + row * 50) },
@@ -342,8 +354,7 @@ Squib::Deck.new(
   layout: 'layout_shareprice.yml'
 ) do
   sharepricefrontback(true)
-  # save prefix: 'shareprice_', count_format: '%02d[face]', rotate: :clockwise, format: :png
-  save prefix: 'shareprice_', count_format: '%02d[face]', format: :png
+  save prefix: 'shareprice_', count_format: '%02d[face]', rotate: ROTATE ? :clockwise : false, format: :png
 end if SHAREPRICES
 
 # Share Price card backs
@@ -354,8 +365,7 @@ Squib::Deck.new(
   layout: 'layout_shareprice.yml'
 ) do
   sharepricefrontback(false)
-  # save prefix: 'shareprice_', count_format: '%02d[back]', rotate: :counterclockwise, format: :png
-  save prefix: 'shareprice_', count_format: '%02d[back]', format: :png
+  save prefix: 'shareprice_', count_format: '%02d[back]', rotate: ROTATE ? :counterclockwise : false, format: :png
 end if SHAREPRICES
 
 # some data and helper functions originally from https://github.com / tobymao / rolling_stock / blob / master / models / company.rb
@@ -578,7 +588,7 @@ Squib::Deck.new(
     y2: synergy_redlines.map { |r| r[:y2] }
   rect layout: :safe if CUTLINES
   rect layout: :cut if CUTLINES
-  save prefix: 'company_', count_format: '%02d[face]', format: :png
+  save prefix: 'company_', count_format: '%02d[face]', rotate: ROTATE ? :clockwise : false, format: :png
 end if COMPANYCARDS
 
 def cost_of_ownership_string(tier)
@@ -616,7 +626,7 @@ Squib::Deck.new(
   text str: COMPANIES.map { |_k, v| cost_of_ownership_string(v[:tier]) }, layout: :CenterishText
   rect layout: :safe if CUTLINES
   rect layout: :cut if CUTLINES
-  save prefix: 'company_', count_format: '%02d[back]', format: :png
+  save prefix: 'company_', count_format: '%02d[back]', rotate: ROTATE ? :counterclockwise : false, format: :png
 end if COMPANYCARDS
 
 # End of Game cards
@@ -661,12 +671,12 @@ Squib::Deck.new(
     layout: :SmallerText, range: [1,3,5]
   rect layout: :safe if CUTLINES
   rect layout: :cut if CUTLINES
-  save prefix: 'endofgame_training[face]', range: [0], count_format: '', format: :png
-  save prefix: 'endofgame_training[back]', range: [1], count_format: '', format: :png
-  save prefix: 'endofgame_short[face]', range: [2], count_format: '', format: :png
-  save prefix: 'endofgame_short[back]', range: [3], count_format: '', format: :png
-  save prefix: 'endofgame_full[face]', range: [4], count_format: '', format: :png
-  save prefix: 'endofgame_full[back]', range: [5], count_format: '', format: :png
+  save prefix: 'endofgame_training[face]', range: [0], count_format: '', rotate: ROTATE ? :clockwise        : false, format: :png
+  save prefix: 'endofgame_training[back]', range: [1], count_format: '', rotate: ROTATE ? :counterclockwise : false, format: :png
+  save prefix: 'endofgame_short[face]',    range: [2], count_format: '', rotate: ROTATE ? :clockwise        : false, format: :png
+  save prefix: 'endofgame_short[back]',    range: [3], count_format: '', rotate: ROTATE ? :counterclockwise : false, format: :png
+  save prefix: 'endofgame_full[face]',     range: [4], count_format: '', rotate: ROTATE ? :clockwise        : false, format: :png
+  save prefix: 'endofgame_full[back]',     range: [5], count_format: '', rotate: ROTATE ? :counterclockwise : false, format: :png
 end if ENDOFGAME
 
 # synergy tokens
