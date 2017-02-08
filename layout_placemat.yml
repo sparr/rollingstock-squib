@@ -1,5 +1,5 @@
 Text:
-  font: Arial Roman,Sans 75
+  font: Signika 75
   align: center
   color: :black
   width: 1725
@@ -11,7 +11,9 @@ companyname:
 
 secondline:
   extends: Text
-  y: 625
+  font_size: 55
+  markup: true
+  y: 825
 
 sidetext:
   extends: Text
@@ -20,13 +22,13 @@ sidetext:
 
 lefttext:
   extends: sidetext
-  x: 50
+  x: 75
   y: 1125
   angle: 4.71238898038468985769
 
 righttext:
   extends: sidetext
-  x: 1675
+  x: 1650
   y: 0
   angle: 1.57079632679489661923
 
@@ -35,3 +37,23 @@ bottomtext:
   width: 1725
   align: center
   y: 1000
+
+# The "cut line", without rounded corners
+cut:
+  x: 37.5
+  y: 37.5
+  width: 1650
+  height: 1050
+  radius: 32
+  dash: 5 5
+  stroke_color: :red
+
+# The "safe zone" as defined by TheGameCrafter poker cards
+safe:
+  x: 75
+  y: 75
+  width: 1575
+  height: 975
+  radius: 16
+  dash: 3 3
+  stroke_color: :blue

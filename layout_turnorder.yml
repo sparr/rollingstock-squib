@@ -1,12 +1,12 @@
 Text:
-  font: Arial Roman,Sans 75
+  font: Signika 75
   align: center
   color: :black
   width: 1125
 
 upperlabel:
   extends: Text
-  y: 125
+  y: 75
 
 lowerlabel:
   extends: upperlabel
@@ -14,5 +14,25 @@ lowerlabel:
 
 ordernumber:
   extends: Text
-  font_size: 350
-  y: 225
+  font_size: 450
+  y: 50
+
+# The "cut line", without rounded corners
+cut:
+  x: 37.5
+  y: 37.5
+  width: 1050
+  height: 750
+  radius: 32
+  dash: 5 5
+  stroke_color: :red
+
+# The "safe zone" as defined by TheGameCrafter poker cards
+safe:
+  x: 75
+  y: 75
+  width: 975
+  height: 675
+  radius: 16
+  dash: 3 3
+  stroke_color: :blue

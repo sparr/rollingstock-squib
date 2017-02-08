@@ -1,8 +1,9 @@
 Text:
-  font: Arial Roman,Sans 75
+  font: Signika 75
   align: center
   color: :black
   width: 1125
+  markup: true
 
 companyname:
   extends: Text
@@ -11,11 +12,13 @@ companyname:
 
 firstline:
   extends: Text
-  y: 125
+  font_size: 100
+  y: 540
 
 secondline:
   extends: Text
-  y: 625
+  font_size: 55
+  y: 675
 
 # The "cut line", without rounded corners
 cut:

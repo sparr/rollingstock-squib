@@ -1,0 +1,79 @@
+# GameCrafter poker card is 2.5x3.5", 825x1125px with a 37.5px bleed zone and 37.5px unsafe zone
+# used here as 1125x825 for landscape, rotated in main script
+# safe zone is 975x675
+
+Text:
+  font: Signika
+  font_size: 25
+  align: center
+  color: :black
+  x: 75
+  y: 75
+  width: 975
+  height: 675
+  
+acronym:
+  extends: Text
+  y: 100
+  font_size: '*=4'
+
+value:
+  extends: Text
+  align: left
+  font_size: '*=3'
+
+pricerange:
+  extends: Text
+  align: left
+
+name:
+  extends: Text
+  x: 300
+  width: 525
+  hint: :black
+
+tiericon:
+  extends: Text
+  font: DejaVu Sans
+  font_size: '*= 2'
+  x: 300
+  y: 75
+
+synergybox:
+  extends: Text
+  width: 162.5
+  height: 100
+
+synergyacronym:
+  extends: synergybox
+  font_size: "*= 1.5"
+
+synergyamount:
+  extends: synergyacronym
+  font_size: "*= 1.5"
+  valign: middle
+
+synergyvalue:
+  extends: synergybox
+
+
+
+# The "cut line", without rounded corners
+cut:
+  x: 37.5
+  y: 37.5
+  width: 1050
+  height: 750
+  radius: 32
+  dash: 5 5
+  stroke_color: :red
+
+# The "safe zone" as defined by TheGameCrafter poker cards
+safe:
+  x: 75
+  y: 75
+  width: 975
+  height: 675
+  radius: 16
+  dash: 3 3
+  stroke_color: :blue

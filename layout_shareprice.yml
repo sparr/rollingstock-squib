@@ -3,7 +3,7 @@
 # safe zone is 975x675
 
 Text:
-  font: DejaVu Sans
+  font: Signika
   font_size: 25
   align: center
   color: :black
@@ -18,7 +18,8 @@ title:
 
 shareprice:
   extends: Text
-  font_size: 200
+  font_size: 225
+  markup: true
   y: 125
 
 leftprice:
@@ -33,7 +34,7 @@ rightprice:
 maxpayout:
   extends: Text
   x: 875
-  y: 200
+  y: 240
   width: 150
   height: 125
 
@@ -43,15 +44,12 @@ maxpayoutlabel:
 
 maxpayoutamount:
   extends: maxpayout
-  font_size: 30
-  y: 275
+  font_size: 40
+  y: += 60
 
 ipo:
-  extends: Text
+  extends: maxpayout
   x: 100
-  y: 200
-  width: 150
-  height: 125
   font_size: 40
 
 ipolabel:
@@ -60,6 +58,7 @@ ipolabel:
 
 ipofirstthird:
   extends: ipo
+  font: DejaVu Sans
   width: 50
 
 iposecondthird:
@@ -72,6 +71,7 @@ ipothirdthird:
 
 ipofirsthalf:
   extends: ipo
+  font: DejaVu Sans
   width: 75
 
 iposecondhalf:
@@ -86,7 +86,7 @@ bottomtext:
 
 bottomgridbox:
   extends: Text
-  font_size: 20
+  font_size: 25
   width: 160
   height: 50
   hint: :black
