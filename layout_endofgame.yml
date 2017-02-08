@@ -4,55 +4,56 @@
 
 Text:
   font: Signika
-  font_size: 25
+  font_size: 66
   align: center
+  valign: middle
   color: :black
   x: 75
   y: 75
   width: 975
   height: 675
+
+CenterishText:
+  extends: Text
+  height: 575
   
-acronym:
+SmallerText:
   extends: Text
-  y: 30
-  font_size: '*=5.5'
-
-value:
+  font_size: /=1.5
+  y: 400
+  valign: top
+  
+Symbol:
   extends: Text
-  align: left
-  font_size: '*=3'
-  y: -=15
-
-pricerange:
-  extends: Text
-
-name:
-  extends: Text
-  x: 300
-  width: 525
-
-tiericon:
-  extends: pricerange
   font: DejaVu Sans
-  font_size: '*= 2'
+  font_size: 80
 
-synergybox:
-  extends: Text
-  width: 162.5
+TopSymbol:
+  extends: Symbol
+  valign: top
+  y: -= 24
 
-synergyacronym:
-  extends: synergybox
-  font_size: "*= 1.5"
+BottomSymbol:
+  extends: Symbol
+  valign: bottom
 
-synergyamount:
-  extends: synergyacronym
-  font_size: "*= 1.5"
-  valign: middle
+BoxWhole:
+  x: 0
+  y: 0
+  width: 1125
+  height: 825
 
-synergyvalue:
-  extends: synergybox
+BoxHalf:
+  extends: BoxWhole
+  width: 562.5
 
+BoxThird:
+  extends: BoxWhole
+  width: 325
 
+BoxQuarter:
+  extends: BoxHalf
+  height: 412.5
 
 # The "cut line", without rounded corners
 cut:
