@@ -533,7 +533,9 @@ COMPANIES.each do |_k, v|
       x += 162.5
       drawn_count += 1
     end
-    !redline && synergy_redlines[v[:index]] = { x1: x, y1: y, x2: x, y2: y + COMPANY_GRID_HEIGHT }
+    if !redline
+      synergy_redlines[v[:index]] = { x1: x, y1: y, x2: x, y2: y + COMPANY_GRID_HEIGHT }
+    end
     y -= COMPANY_GRID_HEIGHT * (secondrow > 0 ? 2 : 1) + 10
   end
 end
@@ -581,7 +583,7 @@ Squib::Deck.new(
       x: synergy_boxes[i][:x], y: synergy_boxes[i][:y].map { |y| y + 60 }, range: synergy_boxes[i][:range],
       width: synergy_boxes[i][:width], layout: :synergyvalue
   end
-  line stroke_color: COMPANIES.map { |_k, v| v[:tier] > 0 ? :red : :yellow }, stroke_width: 6, cap: :round,
+  line stroke_color: COMPANIES.map { |_k, v| v[:tier] > 0 ? :red : :yellow }, stroke_width: 10, cap: :round,
     x1: synergy_redlines.map { |r| r[:x1] },
     x2: synergy_redlines.map { |r| r[:x2] },
     y1: synergy_redlines.map { |r| r[:y1] },
