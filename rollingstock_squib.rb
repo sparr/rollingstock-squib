@@ -589,6 +589,7 @@ Squib::Deck.new(
   rect layout: :safe if CUTLINES
   rect layout: :cut if CUTLINES
   save prefix: 'company_', count_format: '%02d[face]', rotate: ROTATE ? :clockwise : false, format: :png
+  save_sheet
 end if COMPANYCARDS
 
 def cost_of_ownership_string(tier)
