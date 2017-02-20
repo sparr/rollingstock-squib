@@ -2,6 +2,7 @@ require 'squib'
 require 'set'
 
 CUTLINES = false
+CUTLINES_SHEETS = true
 
 ROTATE = true
 
@@ -15,6 +16,24 @@ SHAREPRICES     = true
 COMPANYCARDS    = true
 ENDOFGAME       = true
 SYNERGYTOKENS   = true
+
+MAX_PLAYERS = 5
+MIN_PLAYERS = 1
+PLAYER_NUMBERS = (1..MAX_PLAYERS).to_a.freeze
+CORP_NAMES = %w(Bear Wheel Orion Eagle Horse Star Android Ship Jupiter Saturn).freeze
+CORP_COLORS = %w(#F00 #000 #96C #FD2 #999 #0A0 #AC0 #09F #963 #F0F).freeze
+$SHARE_PRICES = [
+   0,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 18, 20, 22,
+      24, 26, 28, 31, 34, 37, 41, 45, 50, 55, 60, 66, 73, 81, 90, 100
+].freeze
+# red orange yellow green blue purple
+# default blue and purple are too dark
+TIER_COLORS = %w(red orange yellow green #55F #90B).freeze
+# red orange yellow+green blue purple
+SYNERGY_COLORS = [TIER_COLORS[0], TIER_COLORS[1], '#BF0', TIER_COLORS[4], TIER_COLORS[5]].freeze
+SYNERGY_VALUES = [1, 2, 4, 8, 16].freeze
+TIER_SYMBOLS = %w(● ▲ ■ ⬟ ⬢ ★).freeze
+TIER_TO_SYNERGY = [0, 1, 2, 2, 3, 4].freeze
 
 # ordinal and ordinalize from
 # https://github.com / rails / rails / blob / 4 - 2 - stable / activesupport / lib / active_support / inflector / methods.rb#L312 - L347
@@ -36,16 +55,6 @@ def ordinalize(number)
   "#{number}#{ordinal(number)}"
 end
 
-MAX_PLAYERS = 5
-MIN_PLAYERS = 1
-PLAYER_NUMBERS = (1..MAX_PLAYERS).to_a.freeze
-CORP_NAMES = %w(Bear Wheel Orion Eagle Horse Star Android Ship Jupiter Saturn).freeze
-CORP_COLORS = %w(#F00 #000 #96C #FD2 #999 #0A0 #AC0 #09F #963 #F0F).freeze
-$SHARE_PRICES = [
-   0,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 18, 20, 22,
-      24, 26, 28, 31, 34, 37, 41, 45, 50, 55, 60, 66, 73, 81, 90, 100
-].freeze
-
 # Player turn order cards
 Squib::Deck.new(
   cards: 5,
@@ -59,6 +68,9 @@ Squib::Deck.new(
   text str: ['in player order'] * PLAYER_NUMBERS.length, layout: :lowerlabel
   rect layout: :safe if CUTLINES
   rect layout: :cut if CUTLINES
+  save prefix: 'turnorder_', count_format: '%02d', rotate: ROTATE ? :clockwise : false, format: :png
+  rect layout: :cut, dash: '', stroke_color: :black if CUTLINES_SHEETS and not CUTLINES
+  save_sheet prefix: 'sheet_turnorder_'
 end if TURNORDER
 
 # Corporation share cards
@@ -80,12 +92,14 @@ Squib::Deck.new(
   STRIPE_INSET = 25
   rect x: 75+STRIPE_INSET, width: STRIPE_WIDTH, height: 600, fill_color: (0..CORP_NAMES.length * shares - 1).to_a.map { |n| CORP_COLORS[n / shares] }
   rect x: 825-75-STRIPE_INSET-STRIPE_WIDTH, width: STRIPE_WIDTH, height: 600, fill_color: (0..CORP_NAMES.length * shares - 1).to_a.map { |n| CORP_COLORS[n / shares] }
+  # unrotated version is used to render placemats
+  save prefix: 'share_', format: :png
   rect layout: :safe if CUTLINES
   rect layout: :cut if CUTLINES
-  # unrotated version is used for the placemats
-  save prefix: 'share_', format: :png
   save prefix: 'share_', count_format: '%02d[face]', rotate: ROTATE ? :clockwise        : false, format: :png
   save prefix: 'share_', count_format: '%02d[back]', rotate: ROTATE ? :counterclockwise : false, format: :png
+  rect layout: :cut, dash: '', stroke_color: :black if CUTLINES_SHEETS and not CUTLINES
+  save_sheet prefix: 'sheet_share_'
 end if CORPSHARES
 
 # Corporation placemats
@@ -110,6 +124,8 @@ Squib::Deck.new(
   rect layout: :cut if CUTLINES
   save prefix: 'placemat_', count_format: '%02d[face]', rotate: ROTATE ? :clockwise        : false, format: :png
   save prefix: 'placemat_', count_format: '%02d[back]', rotate: ROTATE ? :counterclockwise : false, format: :png
+  rect layout: :cut, dash: '', stroke_color: :black if CUTLINES_SHEETS and not CUTLINES
+  save_sheet prefix: 'sheet_placemat_'
 end if CORPMATS
 
 # Foreign Investor placemat
@@ -137,6 +153,8 @@ Squib::Deck.new(
   rect layout: :cut if CUTLINES
   save prefix: 'foreign_investor', count_format: '%02d[face]', rotate: ROTATE ? :clockwise        : false, format: :png
   save prefix: 'foreign_investor', count_format: '%02d[back]', rotate: ROTATE ? :counterclockwise : false, format: :png
+  rect layout: :cut, dash: '', stroke_color: :black if CUTLINES_SHEETS and not CUTLINES
+  save_sheet prefix: 'sheet_foreigninvestor_'
 end if FOREIGNINVESTOR
 
 # Turn Summary card
@@ -185,6 +203,8 @@ Squib::Deck.new(
   rect layout: :cut if CUTLINES
   save prefix: 'turn_summary', count_format: '%02d[face]', rotate: ROTATE ? :clockwise        : false, format: :png
   save prefix: 'turn_summary', count_format: '%02d[back]', rotate: ROTATE ? :counterclockwise : false, format: :png
+  rect layout: :cut, dash: '', stroke_color: :black if CUTLINES_SHEETS and not CUTLINES
+  save_sheet prefix: 'sheet_turnsummary_'
 end if TURNSUMMARY
 
 # Turn Summary card in German
@@ -233,6 +253,8 @@ Squib::Deck.new(
   rect layout: :cut if CUTLINES
   save prefix: 'turn_summary_de', count_format: '%02d[face]', rotate: ROTATE ? :clockwise        : false, format: :png
   save prefix: 'turn_summary_de', count_format: '%02d[back]', rotate: ROTATE ? :counterclockwise : false, format: :png
+  rect layout: :cut, dash: '', stroke_color: :black if CUTLINES_SHEETS and not CUTLINES
+  save_sheet prefix: 'sheet_turnsummaryde_'
 end if TURNSUMMARYDE
 
 # the payout range for a given stock price, price change, and number of shares
@@ -274,33 +296,33 @@ def sharepricefrontback(front)
   rect layout: :maxpayout
   text str: "max payout\nper share", layout: :maxpayoutlabel
   text str: $SHARE_PRICES.map { |p| (p == 0 || p == 100) ? 'n / a' : ('$' + (p / 3).to_i.to_s) }, layout: :maxpayoutamount
-  rect range: (6..10), stroke_color: '#0000', fill_color: :red, layout: :ipofirstthird
+  rect range: (6..10), stroke_color: '#0000', fill_color: TIER_COLORS[0], layout: :ipofirstthird
   text range: (6..10), str: '●', y: 290, layout: :ipofirstthird
-  rect range: (6..10), stroke_color: '#0000', fill_color: :orange, layout: :iposecondthird
+  rect range: (6..10), stroke_color: '#0000', fill_color: TIER_COLORS[1], layout: :iposecondthird
   text range: (6..10), str: '▲', y: 290, layout: :iposecondthird
-  rect range: (6..10), stroke_color: '#0000', fill_color: :yellow, layout: :ipothirdthird
+  rect range: (6..10), stroke_color: '#0000', fill_color: TIER_COLORS[2], layout: :ipothirdthird
   text range: (6..10), str: '■', y: 290, layout: :ipothirdthird
-  rect range: (11..14), stroke_color: '#0000', fill_color: :orange, layout: :ipofirstthird
+  rect range: (11..14), stroke_color: '#0000', fill_color: TIER_COLORS[1], layout: :ipofirstthird
   text range: (11..14), str: '▲', y: 290, layout: :ipofirstthird
-  rect range: (11..14), stroke_color: '#0000', fill_color: :yellow, layout: :iposecondthird
+  rect range: (11..14), stroke_color: '#0000', fill_color: TIER_COLORS[2], layout: :iposecondthird
   text range: (11..14), str: '■', y: 290, layout: :iposecondthird
-  rect range: (11..14), stroke_color: '#0000', fill_color: :green, layout: :ipothirdthird
+  rect range: (11..14), stroke_color: '#0000', fill_color: TIER_COLORS[3], layout: :ipothirdthird
   text range: (11..14), str: '⬟', y: 290, layout: :ipothirdthird
-  rect range: (15..17), stroke_color: '#0000', fill_color: :yellow, layout: :ipofirstthird
+  rect range: (15..17), stroke_color: '#0000', fill_color: TIER_COLORS[2], layout: :ipofirstthird
   text range: (15..17), str: '■', y: 290, layout: :ipofirstthird
-  rect range: (15..17), stroke_color: '#0000', fill_color: :green, layout: :iposecondthird
+  rect range: (15..17), stroke_color: '#0000', fill_color: TIER_COLORS[3], layout: :iposecondthird
   text range: (15..17), str: '⬟', y: 290, layout: :iposecondthird
-  rect range: (15..17), stroke_color: '#0000', fill_color: :blue, layout: :ipothirdthird
+  rect range: (15..17), stroke_color: '#0000', fill_color: TIER_COLORS[4], layout: :ipothirdthird
   text range: (15..17), str: '⬢', y: 290, layout: :ipothirdthird
-  rect range: (18..20), stroke_color: '#0000', fill_color: :green, layout: :ipofirstthird
+  rect range: (18..20), stroke_color: '#0000', fill_color: TIER_COLORS[3], layout: :ipofirstthird
   text range: (18..20), str: '⬟', y: 290, layout: :ipofirstthird
-  rect range: (18..20), stroke_color: '#0000', fill_color: :blue, layout: :iposecondthird
+  rect range: (18..20), stroke_color: '#0000', fill_color: TIER_COLORS[4], layout: :iposecondthird
   text range: (18..20), str: '⬢', y: 290, layout: :iposecondthird
-  rect range: (18..20), stroke_color: '#0000', fill_color: :purple, layout: :ipothirdthird
+  rect range: (18..20), stroke_color: '#0000', fill_color: TIER_COLORS[5], layout: :ipothirdthird
   text range: (18..20), str: '★', y: 290, layout: :ipothirdthird
-  rect range: (21..23), stroke_color: '#0000', fill_color: :blue, layout: :ipofirsthalf
+  rect range: (21..23), stroke_color: '#0000', fill_color: TIER_COLORS[4], layout: :ipofirsthalf
   text range: (21..23), str: '⬢', y: 290, layout: :ipofirsthalf
-  rect range: (21..23), stroke_color: '#0000', fill_color: :purple, layout: :iposecondhalf
+  rect range: (21..23), stroke_color: '#0000', fill_color: TIER_COLORS[5], layout: :iposecondhalf
   text range: (21..23), str: '★', y: 290, layout: :iposecondhalf
   text range: (6..23), str: 'IPO', layout: :ipo
   rect range: (6..23), layout: :ipo
@@ -355,6 +377,8 @@ Squib::Deck.new(
 ) do
   sharepricefrontback(true)
   save prefix: 'shareprice_', count_format: '%02d[face]', rotate: ROTATE ? :clockwise : false, format: :png
+  rect layout: :cut, dash: '', stroke_color: :black if CUTLINES_SHEETS and not CUTLINES
+  save_sheet prefix: 'sheet_shareprice_face_'
 end if SHAREPRICES
 
 # Share Price card backs
@@ -366,6 +390,8 @@ Squib::Deck.new(
 ) do
   sharepricefrontback(false)
   save prefix: 'shareprice_', count_format: '%02d[back]', rotate: ROTATE ? :counterclockwise : false, format: :png
+  rect layout: :cut, dash: '', stroke_color: :black if CUTLINES_SHEETS and not CUTLINES
+  save_sheet prefix: 'sheet_shareprice_back_', rtl: true
 end if SHAREPRICES
 
 # some data and helper functions originally from https://github.com / tobymao / rolling_stock / blob / master / models / company.rb
@@ -416,11 +442,6 @@ COMPANIES = {
   'LE'  => { index: 43, tier: 5, value: 90, income: 25, synergies: %w(MAD LHR CDG FRA MM VP TSI), name: 'Lunar Enterprises' },
   'TSI' => { index: 44, tier: 5, value:100, income: 25, synergies: %w(OPC RCC MM VP RU AL LE), name: 'Trans - Space Inc.' }
 }.freeze
-
-TIER_COLORS = %w(red orange yellow green #33F purple).freeze
-SYNERGY_COLORS = %w(red orange #BF0 #33F purple).freeze
-TIER_SYMBOLS = %w(● ▲ ■ ⬟ ⬢ ★).freeze
-TIER_TO_SYNERGY = [0, 1, 2, 2, 3, 4].freeze
 
 def min_price(value)
   (value / 2.0).ceil
@@ -567,7 +588,7 @@ Squib::Deck.new(
     rect fill_color: color, layout: :synergyamount,
       x: synergy_rows[index][:x], y: synergy_rows[index][:y], range: synergy_rows[index][:range],
       width: synergy_rows[index][:width], height: synergy_rows[index][:height]
-    text str: '$' + (2 ** index).to_s, layout: :synergyamount,
+    text str: '$' + SYNERGY_VALUES[index].to_s, layout: :synergyamount,
       x: synergy_rows[index][:x], y: synergy_rows[index][:y], range: synergy_rows[index][:range],
       width: synergy_rows[index][:width], height: synergy_rows[index][:height]
   end
@@ -591,7 +612,8 @@ Squib::Deck.new(
   rect layout: :safe if CUTLINES
   rect layout: :cut if CUTLINES
   save prefix: 'company_', count_format: '%02d[face]', rotate: ROTATE ? :clockwise : false, format: :png
-  save_sheet
+  rect layout: :cut, dash: '', stroke_color: :black if CUTLINES_SHEETS and not CUTLINES
+  save_sheet prefix: 'sheet_company_face_'
 end if COMPANYCARDS
 
 def cost_of_ownership_string(tier)
@@ -630,6 +652,8 @@ Squib::Deck.new(
   rect layout: :safe if CUTLINES
   rect layout: :cut if CUTLINES
   save prefix: 'company_', count_format: '%02d[back]', rotate: ROTATE ? :counterclockwise : false, format: :png
+  rect layout: :cut, dash: '', stroke_color: :black if CUTLINES_SHEETS and not CUTLINES
+  save_sheet prefix: 'sheet_company_back_', rtl: true
 end if COMPANYCARDS
 
 # End of Game cards
@@ -680,6 +704,9 @@ Squib::Deck.new(
   save prefix: 'endofgame_short[back]',    range: [3], count_format: '', rotate: ROTATE ? :counterclockwise : false, format: :png
   save prefix: 'endofgame_full[face]',     range: [4], count_format: '', rotate: ROTATE ? :clockwise        : false, format: :png
   save prefix: 'endofgame_full[back]',     range: [5], count_format: '', rotate: ROTATE ? :counterclockwise : false, format: :png
+  rect layout: :cut, dash: '', stroke_color: :black if CUTLINES_SHEETS and not CUTLINES
+  save_sheet prefix: 'sheet_endofgame_face_', range: [0,2,4]
+  save_sheet prefix: 'sheet_endofgame_back_', range: [5,3,1]
 end if ENDOFGAME
 
 # synergy tokens
@@ -693,8 +720,10 @@ Squib::Deck.new(
   background color: SYNERGY_COLORS
   text font: 'Signika 40', align: 'center', valign: 'middle', color: :black,
     width: 225, height: 225,
-    str: [1,2,4,8,16].map{ |v| '+$' + v.to_s }
+    str: SYNERGY_VALUES.map{ |v| '+$' + v.to_s }
   circle layout: :safe if CUTLINES
   circle layout: :cut if CUTLINES
   save prefix: 'synergy_token_', format: :png  
+  circle layout: :cut, dash: '', stroke_color: :black if CUTLINES_SHEETS and not CUTLINES
+  save_sheet prefix: 'sheet_synergytoken_'
 end if SYNERGYTOKENS
