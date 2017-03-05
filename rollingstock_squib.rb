@@ -92,7 +92,7 @@ Squib::Deck.new(
   STRIPE_INSET = 25
   rect x: 75 + STRIPE_INSET, width: STRIPE_WIDTH, height: 600, fill_color: (0..CORP_NAMES.length * shares - 1).to_a.map { |n| CORP_COLORS[n / shares] }
   rect x: 825 - 75 - STRIPE_INSET - STRIPE_WIDTH, width: STRIPE_WIDTH, height: 600, fill_color: (0..CORP_NAMES.length * shares - 1).to_a.map { |n| CORP_COLORS[n / shares] }
-  # unrotated version is used to render placemats
+  # unrotated version with no cutlines is used later to render placemats
   save dir: '_temp', prefix: 'share_', format: :png
   rect layout: :safe if CUTLINES
   rect layout: :cut if CUTLINES
@@ -150,9 +150,9 @@ Squib::Deck.new(
   text x: 950 - 100, y: 175 - 100, font: 'Signika 66', align: 'center', valign: 'middle',
     color: :black, width: 200, height: 200, str: '+$5'
   rect layout: :safe if CUTLINES
-  rect layout: :cut if CUTLINES
-  save prefix: 'foreign_investor', count_format: '%02d[face]', rotate: ROTATE ? :clockwise        : false, format: :png
-  save prefix: 'foreign_investor', count_format: '%02d[back]', rotate: ROTATE ? :counterclockwise : false, format: :png
+  rect layout: :cut if CUTLINES  
+  save dir: 'cards/singles', prefix: 'foreign_investor_', count_format: '%02d[face]', rotate: ROTATE ? :clockwise        : false, format: :png
+  save dir: 'cards/singles', prefix: 'foreign_investor_', count_format: '%02d[back]', rotate: ROTATE ? :counterclockwise : false, format: :png
   rect layout: :cut, dash: '', stroke_color: :black if CUTLINES_SHEETS and not CUTLINES
   save_sheet dir: 'sheets', prefix: 'foreigninvestor', count_format: '', columns: 1
 end if FOREIGNINVESTOR
