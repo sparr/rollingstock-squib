@@ -50,7 +50,9 @@ maxpayoutamount:
 ipo:
   extends: maxpayout
   x: 100
+  y: 290
   font_size: 40
+  stroke_color: '#0000'
 
 ipolabel:
   extends: ipo

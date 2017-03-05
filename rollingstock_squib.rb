@@ -68,9 +68,9 @@ Squib::Deck.new(
   text str: ['in player order'] * PLAYER_NUMBERS.length, layout: :lowerlabel
   rect layout: :safe if CUTLINES
   rect layout: :cut if CUTLINES
-  save prefix: 'turnorder_', count_format: '%02d', rotate: ROTATE ? :clockwise : false, format: :png
+  save dir: 'cards/turnorder', prefix: 'turnorder_', count_format: '%02d', rotate: ROTATE ? :clockwise : false, format: :png
   rect layout: :cut, dash: '', stroke_color: :black if CUTLINES_SHEETS and not CUTLINES
-  save_sheet prefix: 'sheet_turnorder_'
+  save_sheet dir: 'sheets', prefix: 'turnorder', count_format: ''
 end if TURNORDER
 
 # Corporation share cards
@@ -85,21 +85,21 @@ Squib::Deck.new(
   # 1st 2nd 3rd 4th .. 9th 10th 1st 2nd ...
   text str: ((1..shares).to_a * CORP_NAMES.length).map { |n| ordinalize(n) + ' share' }, layout: :firstline
   ICON_SIZE = 300
-  png file: (0..CORP_NAMES.length * shares - 1).to_a.map { |n| CORP_NAMES[n / shares].downcase + '.png' }, x: (825-ICON_SIZE)/2, y: 75, width: ICON_SIZE, height: ICON_SIZE
+  png file: (0..CORP_NAMES.length * shares - 1).to_a.map { |n| 'images/corplogos/' + CORP_NAMES[n / shares].downcase + '.png' }, x: (825 - ICON_SIZE) / 2, y: 75, width: ICON_SIZE, height: ICON_SIZE
   # text str: (0..CORP_NAMES.length * shares - 1).to_a.map { |n| CORP_NAMES[n / shares] }, layout: :companyname
   text str: ((0..shares - 1).to_a * CORP_NAMES.length).map { |n| n == 0 ? '<i>President</i>' : ('<i>' + n.to_s + ' share' + (n == 1 ? '' : 's') + ' issued</i>') }, layout: :secondline
   STRIPE_WIDTH = 75
   STRIPE_INSET = 25
-  rect x: 75+STRIPE_INSET, width: STRIPE_WIDTH, height: 600, fill_color: (0..CORP_NAMES.length * shares - 1).to_a.map { |n| CORP_COLORS[n / shares] }
-  rect x: 825-75-STRIPE_INSET-STRIPE_WIDTH, width: STRIPE_WIDTH, height: 600, fill_color: (0..CORP_NAMES.length * shares - 1).to_a.map { |n| CORP_COLORS[n / shares] }
+  rect x: 75 + STRIPE_INSET, width: STRIPE_WIDTH, height: 600, fill_color: (0..CORP_NAMES.length * shares - 1).to_a.map { |n| CORP_COLORS[n / shares] }
+  rect x: 825 - 75 - STRIPE_INSET - STRIPE_WIDTH, width: STRIPE_WIDTH, height: 600, fill_color: (0..CORP_NAMES.length * shares - 1).to_a.map { |n| CORP_COLORS[n / shares] }
   # unrotated version is used to render placemats
-  save prefix: 'share_', format: :png
+  save dir: '_temp', prefix: 'share_', format: :png
   rect layout: :safe if CUTLINES
   rect layout: :cut if CUTLINES
-  save prefix: 'share_', count_format: '%02d[face]', rotate: ROTATE ? :clockwise        : false, format: :png
-  save prefix: 'share_', count_format: '%02d[back]', rotate: ROTATE ? :counterclockwise : false, format: :png
+  save dir: 'cards/share', prefix: 'share_', count_format: '%02d[face]', rotate: ROTATE ? :clockwise        : false, format: :png
+  save dir: 'cards/share', prefix: 'share_', count_format: '%02d[back]', rotate: ROTATE ? :counterclockwise : false, format: :png
   rect layout: :cut, dash: '', stroke_color: :black if CUTLINES_SHEETS and not CUTLINES
-  save_sheet prefix: 'sheet_share_'
+  save_sheet dir: 'sheets', prefix: 'share', count_format: ''
 end if CORPSHARES
 
 # Corporation placemats
@@ -111,21 +111,21 @@ Squib::Deck.new(
 ) do
   background color: :white
   # text str: (0..CORP_NAMES.length).to_a.map { |n| CORP_NAMES[n] }, layout: :companyname
-  png file: (0..CORP_NAMES.length - 1).map { |n| '_output/share_' + n.to_s + '9.png' },
+  png file: (0..CORP_NAMES.length - 1).map { |n| '_temp/share_' + n.to_s + '9.png' },
       crop_x: 37.5, crop_y: 37.5, crop_width: 750, crop_height: 525,
-      x: (1125-750)/2, y: (825-525)/2-50
-  rect x: 350, y: 500-50, width: 1125-350*2, height: 125, fill_color: :white, stroke_color: '#0000'
-  rect x: (1125-750)/2, y: (825-525)/2-50, width: 750, height: 525, radius: 37.5, stroke_width: 8
-  text str: '<i>all 10 shares issued</i>', y: 565-50, layout: :secondline
+      x: (1125 - 750) / 2, y: (825 - 525) / 2 - 50
+  rect x: 350, y: 500 - 50, width: 1125 - 350 * 2, height: 125, fill_color: :white, stroke_color: '#0000'
+  rect x: (1125 - 750) / 2, y: (825 - 525) / 2 - 50, width: 750, height: 525, radius: 37.5, stroke_width: 8
+  text str: '<i>all 10 shares issued</i>', y: 565 - 50, layout: :secondline
   text str: '▲ share price ▲', layout: :lefttext
   text str: '▼ subsidiaries ▼', layout: :bottomtext
   text str: '▲ treasury ▲', layout: :righttext
   rect layout: :safe if CUTLINES
   rect layout: :cut if CUTLINES
-  save prefix: 'placemat_', count_format: '%02d[face]', rotate: ROTATE ? :clockwise        : false, format: :png
-  save prefix: 'placemat_', count_format: '%02d[back]', rotate: ROTATE ? :counterclockwise : false, format: :png
+  save dir: 'cards/placemat', prefix: 'placemat_', count_format: '%02d[face]', rotate: ROTATE ? :clockwise        : false, format: :png
+  save dir: 'cards/placemat', prefix: 'placemat_', count_format: '%02d[back]', rotate: ROTATE ? :counterclockwise : false, format: :png
   rect layout: :cut, dash: '', stroke_color: :black if CUTLINES_SHEETS and not CUTLINES
-  save_sheet prefix: 'sheet_placemat_'
+  save_sheet dir: 'sheets', prefix: 'placemat', count_format: ''
 end if CORPMATS
 
 # Foreign Investor placemat
@@ -154,7 +154,7 @@ Squib::Deck.new(
   save prefix: 'foreign_investor', count_format: '%02d[face]', rotate: ROTATE ? :clockwise        : false, format: :png
   save prefix: 'foreign_investor', count_format: '%02d[back]', rotate: ROTATE ? :counterclockwise : false, format: :png
   rect layout: :cut, dash: '', stroke_color: :black if CUTLINES_SHEETS and not CUTLINES
-  save_sheet prefix: 'sheet_foreigninvestor_'
+  save_sheet dir: 'sheets', prefix: 'foreigninvestor', count_format: '', columns: 1
 end if FOREIGNINVESTOR
 
 # Turn Summary card
@@ -201,10 +201,10 @@ Squib::Deck.new(
   end
   rect layout: :safe if CUTLINES
   rect layout: :cut if CUTLINES
-  save prefix: 'turn_summary', count_format: '%02d[face]', rotate: ROTATE ? :clockwise        : false, format: :png
-  save prefix: 'turn_summary', count_format: '%02d[back]', rotate: ROTATE ? :counterclockwise : false, format: :png
+  save dir: 'cards/singles', prefix: 'turn_summary', count_format: '%02d[face]', rotate: ROTATE ? :clockwise        : false, format: :png
+  save dir: 'cards/singles', prefix: 'turn_summary', count_format: '%02d[back]', rotate: ROTATE ? :counterclockwise : false, format: :png
   rect layout: :cut, dash: '', stroke_color: :black if CUTLINES_SHEETS and not CUTLINES
-  save_sheet prefix: 'sheet_turnsummary_'
+  save_sheet dir: 'sheets', prefix: 'turnsummary', count_format: '', columns: 1
 end if TURNSUMMARY
 
 # Turn Summary card in German
@@ -251,10 +251,10 @@ Squib::Deck.new(
   end
   rect layout: :safe if CUTLINES
   rect layout: :cut if CUTLINES
-  save prefix: 'turn_summary_de', count_format: '%02d[face]', rotate: ROTATE ? :clockwise        : false, format: :png
-  save prefix: 'turn_summary_de', count_format: '%02d[back]', rotate: ROTATE ? :counterclockwise : false, format: :png
+  save dir: 'cards/singles', prefix: 'turn_summary_de', count_format: '%02d[face]', rotate: ROTATE ? :clockwise        : false, format: :png
+  save dir: 'cards/singles', prefix: 'turn_summary_de', count_format: '%02d[back]', rotate: ROTATE ? :counterclockwise : false, format: :png
   rect layout: :cut, dash: '', stroke_color: :black if CUTLINES_SHEETS and not CUTLINES
-  save_sheet prefix: 'sheet_turnsummaryde_'
+  save_sheet dir: 'sheets', prefix: 'turnsummaryde', count_format: '', columns: 1
 end if TURNSUMMARYDE
 
 # the payout range for a given stock price, price change, and number of shares
@@ -291,39 +291,39 @@ def sharepricefrontback(front)
   background color: :white
   text str: 'share price', layout: :title
   text str: (0..$SHARE_PRICES.length - 1).to_a.map { |n| n == 0 ? '' : ('$' + $SHARE_PRICES[n - 1].to_s + '←') }, layout: :leftprice
-  text str: (0..$SHARE_PRICES.length - 1).to_a.map { |n| n==$SHARE_PRICES.length - 1 ? '' : ('→$' + $SHARE_PRICES[n + 1].to_s) }, layout: :rightprice
-  text str: $SHARE_PRICES.map { |p| '$' + p.to_s}, color: [:red] + [:black] * ($SHARE_PRICES.length - 2) + ['#080'], layout: :shareprice
+  text str: (0..$SHARE_PRICES.length - 1).to_a.map { |n| n == $SHARE_PRICES.length - 1 ? '' : ('→$' + $SHARE_PRICES[n + 1].to_s) }, layout: :rightprice
+  text str: $SHARE_PRICES.map { |p| '$' + p.to_s }, color: [:red] + [:black] * ($SHARE_PRICES.length - 2) + ['#080'], layout: :shareprice
   rect layout: :maxpayout
   text str: "max payout\nper share", layout: :maxpayoutlabel
   text str: $SHARE_PRICES.map { |p| (p == 0 || p == 100) ? 'n / a' : ('$' + (p / 3).to_i.to_s) }, layout: :maxpayoutamount
-  rect range: (6..10), stroke_color: '#0000', fill_color: TIER_COLORS[0], layout: :ipofirstthird
-  text range: (6..10), str: '●', y: 290, layout: :ipofirstthird
-  rect range: (6..10), stroke_color: '#0000', fill_color: TIER_COLORS[1], layout: :iposecondthird
-  text range: (6..10), str: '▲', y: 290, layout: :iposecondthird
-  rect range: (6..10), stroke_color: '#0000', fill_color: TIER_COLORS[2], layout: :ipothirdthird
-  text range: (6..10), str: '■', y: 290, layout: :ipothirdthird
-  rect range: (11..14), stroke_color: '#0000', fill_color: TIER_COLORS[1], layout: :ipofirstthird
-  text range: (11..14), str: '▲', y: 290, layout: :ipofirstthird
-  rect range: (11..14), stroke_color: '#0000', fill_color: TIER_COLORS[2], layout: :iposecondthird
-  text range: (11..14), str: '■', y: 290, layout: :iposecondthird
-  rect range: (11..14), stroke_color: '#0000', fill_color: TIER_COLORS[3], layout: :ipothirdthird
-  text range: (11..14), str: '⬟', y: 290, layout: :ipothirdthird
-  rect range: (15..17), stroke_color: '#0000', fill_color: TIER_COLORS[2], layout: :ipofirstthird
-  text range: (15..17), str: '■', y: 290, layout: :ipofirstthird
-  rect range: (15..17), stroke_color: '#0000', fill_color: TIER_COLORS[3], layout: :iposecondthird
-  text range: (15..17), str: '⬟', y: 290, layout: :iposecondthird
-  rect range: (15..17), stroke_color: '#0000', fill_color: TIER_COLORS[4], layout: :ipothirdthird
-  text range: (15..17), str: '⬢', y: 290, layout: :ipothirdthird
-  rect range: (18..20), stroke_color: '#0000', fill_color: TIER_COLORS[3], layout: :ipofirstthird
-  text range: (18..20), str: '⬟', y: 290, layout: :ipofirstthird
-  rect range: (18..20), stroke_color: '#0000', fill_color: TIER_COLORS[4], layout: :iposecondthird
-  text range: (18..20), str: '⬢', y: 290, layout: :iposecondthird
-  rect range: (18..20), stroke_color: '#0000', fill_color: TIER_COLORS[5], layout: :ipothirdthird
-  text range: (18..20), str: '★', y: 290, layout: :ipothirdthird
-  rect range: (21..23), stroke_color: '#0000', fill_color: TIER_COLORS[4], layout: :ipofirsthalf
-  text range: (21..23), str: '⬢', y: 290, layout: :ipofirsthalf
-  rect range: (21..23), stroke_color: '#0000', fill_color: TIER_COLORS[5], layout: :iposecondhalf
-  text range: (21..23), str: '★', y: 290, layout: :iposecondhalf
+  rect range: (6..10), fill_color: TIER_COLORS[0], layout: :ipofirstthird
+  text range: (6..10), str: '●', layout: :ipofirstthird
+  rect range: (6..10), fill_color: TIER_COLORS[1], layout: :iposecondthird
+  text range: (6..10), str: '▲', layout: :iposecondthird
+  rect range: (6..10), fill_color: TIER_COLORS[2], layout: :ipothirdthird
+  text range: (6..10), str: '■', layout: :ipothirdthird
+  rect range: (11..14), fill_color: TIER_COLORS[1], layout: :ipofirstthird
+  text range: (11..14), str: '▲', layout: :ipofirstthird
+  rect range: (11..14), fill_color: TIER_COLORS[2], layout: :iposecondthird
+  text range: (11..14), str: '■', layout: :iposecondthird
+  rect range: (11..14), fill_color: TIER_COLORS[3], layout: :ipothirdthird
+  text range: (11..14), str: '⬟', layout: :ipothirdthird
+  rect range: (15..17), fill_color: TIER_COLORS[2], layout: :ipofirstthird
+  text range: (15..17), str: '■', layout: :ipofirstthird
+  rect range: (15..17), fill_color: TIER_COLORS[3], layout: :iposecondthird
+  text range: (15..17), str: '⬟', layout: :iposecondthird
+  rect range: (15..17), fill_color: TIER_COLORS[4], layout: :ipothirdthird
+  text range: (15..17), str: '⬢', layout: :ipothirdthird
+  rect range: (18..20), fill_color: TIER_COLORS[3], layout: :ipofirstthird
+  text range: (18..20), str: '⬟', layout: :ipofirstthird
+  rect range: (18..20), fill_color: TIER_COLORS[4], layout: :iposecondthird
+  text range: (18..20), str: '⬢', layout: :iposecondthird
+  rect range: (18..20), fill_color: TIER_COLORS[5], layout: :ipothirdthird
+  text range: (18..20), str: '★', layout: :ipothirdthird
+  rect range: (21..23), fill_color: TIER_COLORS[4], layout: :ipofirsthalf
+  text range: (21..23), str: '⬢', layout: :ipofirsthalf
+  rect range: (21..23), fill_color: TIER_COLORS[5], layout: :iposecondhalf
+  text range: (21..23), str: '★', layout: :iposecondhalf
   text range: (6..23), str: 'IPO', layout: :ipo
   rect range: (6..23), layout: :ipo
   bottom_y = 475
@@ -376,9 +376,9 @@ Squib::Deck.new(
   layout: 'layout_shareprice.yml'
 ) do
   sharepricefrontback(true)
-  save prefix: 'shareprice_', count_format: '%02d[face]', rotate: ROTATE ? :clockwise : false, format: :png
+  save dir: 'cards/shareprice', prefix: 'shareprice_', count_format: '%02d[face]', rotate: ROTATE ? :clockwise : false, format: :png
   rect layout: :cut, dash: '', stroke_color: :black if CUTLINES_SHEETS and not CUTLINES
-  save_sheet prefix: 'sheet_shareprice_face_'
+  save_sheet dir: 'sheets', prefix: 'shareprice_face', count_format: ''
 end if SHAREPRICES
 
 # Share Price card backs
@@ -389,9 +389,9 @@ Squib::Deck.new(
   layout: 'layout_shareprice.yml'
 ) do
   sharepricefrontback(false)
-  save prefix: 'shareprice_', count_format: '%02d[back]', rotate: ROTATE ? :counterclockwise : false, format: :png
+  save dir: 'cards/shareprice', prefix: 'shareprice_', count_format: '%02d[back]', rotate: ROTATE ? :counterclockwise : false, format: :png
   rect layout: :cut, dash: '', stroke_color: :black if CUTLINES_SHEETS and not CUTLINES
-  save_sheet prefix: 'sheet_shareprice_back_', rtl: true
+  save_sheet dir: 'sheets', prefix: 'shareprice_back', count_format: '', rtl: true
 end if SHAREPRICES
 
 # some data and helper functions originally from https://github.com / tobymao / rolling_stock / blob / master / models / company.rb
@@ -506,7 +506,7 @@ COMPANIES.each do |_k, v|
 end
 # now figure out where to draw all of that on each company card
 COMPANIES.each do |_k, v|
-  y = 825-75-COMPANY_GRID_HEIGHT
+  y = 825 - 75 - COMPANY_GRID_HEIGHT
   i = v[:index]
   redline = false
   [4, 3, 2, 1, 0].each do |synergy_tier|
@@ -611,9 +611,9 @@ Squib::Deck.new(
     y2: synergy_redlines.map { |r| r[:y2] }
   rect layout: :safe if CUTLINES
   rect layout: :cut if CUTLINES
-  save prefix: 'company_', count_format: '%02d[face]', rotate: ROTATE ? :clockwise : false, format: :png
+  save dir: 'cards/company', prefix: 'company_', count_format: '%02d[face]', rotate: ROTATE ? :clockwise : false, format: :png
   rect layout: :cut, dash: '', stroke_color: :black if CUTLINES_SHEETS and not CUTLINES
-  save_sheet prefix: 'sheet_company_face_'
+  save_sheet dir: 'sheets', prefix: 'company_face', count_format: ''
 end if COMPANYCARDS
 
 def cost_of_ownership_string(tier)
@@ -651,9 +651,9 @@ Squib::Deck.new(
   text str: COMPANIES.map { |_k, v| cost_of_ownership_string(v[:tier]) }, layout: :CenterishText
   rect layout: :safe if CUTLINES
   rect layout: :cut if CUTLINES
-  save prefix: 'company_', count_format: '%02d[back]', rotate: ROTATE ? :counterclockwise : false, format: :png
+  save dir: 'cards/company', prefix: 'company_', count_format: '%02d[back]', rotate: ROTATE ? :counterclockwise : false, format: :png
   rect layout: :cut, dash: '', stroke_color: :black if CUTLINES_SHEETS and not CUTLINES
-  save_sheet prefix: 'sheet_company_back_', rtl: true
+  save_sheet dir: 'sheets', prefix: 'company_back', count_format: '', rtl: true
 end if COMPANYCARDS
 
 # End of Game cards
@@ -668,45 +668,45 @@ Squib::Deck.new(
   rect layout: :BoxHalf, stroke_width: 0, fill_color: TIER_COLORS[0], range: [0]
   rect layout: :BoxHalf, stroke_width: 0, fill_color: TIER_COLORS[1], range: [0], x: 562.5
   # front of short game, back of training game
-  rect layout: :BoxThird, stroke_width: 0, fill_color: TIER_COLORS[0], range: [1,2], x: 0, width: 400
-  rect layout: :BoxThird, stroke_width: 0, fill_color: TIER_COLORS[1], range: [1,2], x: 400
-  rect layout: :BoxThird, stroke_width: 0, fill_color: TIER_COLORS[2], range: [1,2], x: 725, width: 400
+  rect layout: :BoxThird, stroke_width: 0, fill_color: TIER_COLORS[0], range: [1, 2], x: 0, width: 400
+  rect layout: :BoxThird, stroke_width: 0, fill_color: TIER_COLORS[1], range: [1, 2], x: 400
+  rect layout: :BoxThird, stroke_width: 0, fill_color: TIER_COLORS[2], range: [1, 2], x: 725, width: 400
   # back of short game, front and back of full game
-  rect layout: :BoxQuarter, stroke_width: 0, fill_color: TIER_COLORS[0], range: [3,4,5]
-  rect layout: :BoxQuarter, stroke_width: 0, fill_color: TIER_COLORS[1], range: [3,4,5], x: 562.5
-  rect layout: :BoxQuarter, stroke_width: 0, fill_color: TIER_COLORS[2], range: [3,4,5], y: 412.5
-  rect layout: :BoxQuarter, stroke_width: 0, fill_color: TIER_COLORS[3], range: [3,4,5], x: 562.5, y: 412.5
+  rect layout: :BoxQuarter, stroke_width: 0, fill_color: TIER_COLORS[0], range: [3, 4, 5]
+  rect layout: :BoxQuarter, stroke_width: 0, fill_color: TIER_COLORS[1], range: [3, 4, 5], x: 562.5
+  rect layout: :BoxQuarter, stroke_width: 0, fill_color: TIER_COLORS[2], range: [3, 4, 5], y: 412.5
+  rect layout: :BoxQuarter, stroke_width: 0, fill_color: TIER_COLORS[3], range: [3, 4, 5], x: 562.5, y: 412.5
   # next we draw the symbols
   # bottom left circle
-  text layout: :BottomSymbol, str: TIER_SYMBOLS[0], range: [0,1,2], align: :left
+  text layout: :BottomSymbol, str: TIER_SYMBOLS[0], range: [0, 1, 2], align: :left
   # bottom right triangle
   text layout: :BottomSymbol, str: TIER_SYMBOLS[1], range: [0], align: :right
   # bottom center triangle
-  text layout: :BottomSymbol, str: TIER_SYMBOLS[1], range: [1,2]
+  text layout: :BottomSymbol, str: TIER_SYMBOLS[1], range: [1, 2]
   # bottom right square
-  text layout: :BottomSymbol, str: TIER_SYMBOLS[2], range: [1,2], align: :right
+  text layout: :BottomSymbol, str: TIER_SYMBOLS[2], range: [1, 2], align: :right
   # all four corners
-  text layout: :TopSymbol, str: TIER_SYMBOLS[0], range: [3,4,5], align: :left
-  text layout: :TopSymbol, str: TIER_SYMBOLS[1], range: [3,4,5], align: :right
-  text layout: :BottomSymbol, str: TIER_SYMBOLS[2], range: [3,4,5], align: :left
-  text layout: :BottomSymbol, str: TIER_SYMBOLS[3], range: [3,4,5], align: :right
+  text layout: :TopSymbol, str: TIER_SYMBOLS[0], range: [3, 4, 5], align: :left
+  text layout: :TopSymbol, str: TIER_SYMBOLS[1], range: [3, 4, 5], align: :right
+  text layout: :BottomSymbol, str: TIER_SYMBOLS[2], range: [3, 4, 5], align: :left
+  text layout: :BottomSymbol, str: TIER_SYMBOLS[3], range: [3, 4, 5], align: :right
   # then we draw the text in the middle
-  text str: [3,8,6,15,10,16].map{|c| 'cost of ownership $' + c.to_s }, layout: :CenterishText
+  text str: [3, 8, 6, 15, 10, 16].map { |c| 'cost of ownership $' + c.to_s }, layout: :CenterishText
   text str: "If there are no unowned private companies left at the end of\na turn, flip this card.",
-    layout: :SmallerText, range: [0,2,4]
+    layout: :SmallerText, range: [0, 2, 4]
   text str: "The end of the next turn is\nthe end of the game.",
-    layout: :SmallerText, range: [1,3,5]
+    layout: :SmallerText, range: [1, 3, 5]
   rect layout: :safe if CUTLINES
   rect layout: :cut if CUTLINES
-  save prefix: 'endofgame_training[face]', range: [0], count_format: '', rotate: ROTATE ? :clockwise        : false, format: :png
-  save prefix: 'endofgame_training[back]', range: [1], count_format: '', rotate: ROTATE ? :counterclockwise : false, format: :png
-  save prefix: 'endofgame_short[face]',    range: [2], count_format: '', rotate: ROTATE ? :clockwise        : false, format: :png
-  save prefix: 'endofgame_short[back]',    range: [3], count_format: '', rotate: ROTATE ? :counterclockwise : false, format: :png
-  save prefix: 'endofgame_full[face]',     range: [4], count_format: '', rotate: ROTATE ? :clockwise        : false, format: :png
-  save prefix: 'endofgame_full[back]',     range: [5], count_format: '', rotate: ROTATE ? :counterclockwise : false, format: :png
+  save dir: 'cards/singles', prefix: 'endofgame_training[face]', range: [0], count_format: '', rotate: ROTATE ? :clockwise        : false, format: :png
+  save dir: 'cards/singles', prefix: 'endofgame_training[back]', range: [1], count_format: '', rotate: ROTATE ? :counterclockwise : false, format: :png
+  save dir: 'cards/singles', prefix: 'endofgame_short[face]',    range: [2], count_format: '', rotate: ROTATE ? :clockwise        : false, format: :png
+  save dir: 'cards/singles', prefix: 'endofgame_short[back]',    range: [3], count_format: '', rotate: ROTATE ? :counterclockwise : false, format: :png
+  save dir: 'cards/singles', prefix: 'endofgame_full[face]',     range: [4], count_format: '', rotate: ROTATE ? :clockwise        : false, format: :png
+  save dir: 'cards/singles', prefix: 'endofgame_full[back]',     range: [5], count_format: '', rotate: ROTATE ? :counterclockwise : false, format: :png
   rect layout: :cut, dash: '', stroke_color: :black if CUTLINES_SHEETS and not CUTLINES
-  save_sheet prefix: 'sheet_endofgame_face_', range: [0,2,4]
-  save_sheet prefix: 'sheet_endofgame_back_', range: [5,3,1]
+  save_sheet dir: 'sheets', prefix: 'endofgame_face', count_format: '', range: [0, 2, 4], columns: 3
+  save_sheet dir: 'sheets', prefix: 'endofgame_back', count_format: '', range: [5, 3, 1], columns: 3
 end if ENDOFGAME
 
 # synergy tokens
@@ -720,10 +720,10 @@ Squib::Deck.new(
   background color: SYNERGY_COLORS
   text font: 'Signika 40', align: 'center', valign: 'middle', color: :black,
     width: 225, height: 225,
-    str: SYNERGY_VALUES.map{ |v| '+$' + v.to_s }
+    str: SYNERGY_VALUES.map { |v| '+$' + v.to_s }
   circle layout: :safe if CUTLINES
   circle layout: :cut if CUTLINES
-  save prefix: 'synergy_token_', format: :png  
+  save dir: 'cards/synergy_token', prefix: 'synergy_token_', format: :png
   circle layout: :cut, dash: '', stroke_color: :black if CUTLINES_SHEETS and not CUTLINES
-  save_sheet prefix: 'sheet_synergytoken_'
+  save_sheet dir: 'sheets', prefix: 'synergytoken', count_format: ''
 end if SYNERGYTOKENS
