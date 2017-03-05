@@ -60,7 +60,7 @@ Squib::Deck.new(
   cards: 5,
   width: 1125,
   height: 825,
-  layout: 'layout_turnorder.yml'
+  layout: 'layouts/layout_turnorder.yml'
 ) do
   background color: :white
   text str: ['Position'] * PLAYER_NUMBERS.length, layout: :upperlabel
@@ -79,7 +79,7 @@ Squib::Deck.new(
   cards: CORP_NAMES.length * shares,
   width: 825,
   height: 600,
-  layout: 'layout_share.yml'
+  layout: 'layouts/layout_share.yml'
 ) do
   background color: (0..CORP_NAMES.length * shares - 1).to_a.map { |n| n % 10 != 0 ? 'white' : '(0,0)(0,825) gold@0.0 white@1.0' }
   # 1st 2nd 3rd 4th .. 9th 10th 1st 2nd ...
@@ -107,7 +107,7 @@ Squib::Deck.new(
   cards: CORP_NAMES.length,
   width: 1125,
   height: 825,
-  layout: 'layout_placemat.yml'
+  layout: 'layouts/layout_placemat.yml'
 ) do
   background color: :white
   # text str: (0..CORP_NAMES.length).to_a.map { |n| CORP_NAMES[n] }, layout: :companyname
@@ -133,7 +133,7 @@ Squib::Deck.new(
   cards: 1,
   width: 1125,
   height: 825,
-  layout: 'layout_foreigninvestor.yml'
+  layout: 'layouts/layout_foreigninvestor.yml'
 ) do
   background color: '#CCC'
   text str: 'Foreign Investor', layout: :companyname
@@ -163,7 +163,7 @@ Squib::Deck.new(
   cards: 1,
   width: 1125,
   height: 825,
-  layout: 'layout_turnsummary.yml'
+  layout: 'layouts/layout_turnsummary.yml'
 ) do
   background color: :white
   y = 75
@@ -213,7 +213,7 @@ Squib::Deck.new(
   cards: 1,
   width: 1125,
   height: 825,
-  layout: 'layout_turnsummary.yml'
+  layout: 'layouts/layout_turnsummary.yml'
 ) do
   background color: :white
   y = 75
@@ -373,7 +373,7 @@ Squib::Deck.new(
   cards: $SHARE_PRICES.length,
   width: 1125,
   height: 825,
-  layout: 'layout_shareprice.yml'
+  layout: 'layouts/layout_shareprice.yml'
 ) do
   sharepricefrontback(true)
   save dir: 'cards/shareprice', prefix: 'shareprice_', count_format: '%02d[face]', rotate: ROTATE ? :clockwise : false, format: :png
@@ -386,7 +386,7 @@ Squib::Deck.new(
   cards: $SHARE_PRICES.length,
   width: 1125,
   height: 825,
-  layout: 'layout_shareprice.yml'
+  layout: 'layouts/layout_shareprice.yml'
 ) do
   sharepricefrontback(false)
   save dir: 'cards/shareprice', prefix: 'shareprice_', count_format: '%02d[back]', rotate: ROTATE ? :counterclockwise : false, format: :png
@@ -566,7 +566,7 @@ Squib::Deck.new(
   cards: COMPANIES.length,
   width: 1125,
   height: 825,
-  layout: 'layout_company.yml'
+  layout: 'layouts/layout_company.yml'
 ) do
   background color: COMPANIES.map { |_k, v| '(0,37.5)(0,787.5) ' + TIER_COLORS[v[:tier]] + '@0.0 white@1.0' }
   extents = text str: COMPANIES.map { |_k, v| '$' + v[:value].to_s }, layout: :value
@@ -629,7 +629,7 @@ Squib::Deck.new(
   cards: COMPANIES.length,
   width: 1125,
   height: 825,
-  layout: 'layout_company_back.yml'
+  layout: 'layouts/layout_company_back.yml'
 ) do
   background color: COMPANIES.map { |_k, v| '(0,37.5)(0,787.5) ' + TIER_COLORS[v[:tier]] + '@0.0 white@1.0' }
   text str: COMPANIES.map { |_k, v| TIER_SYMBOLS[v[:tier]] }, layout: :CornerSymbol
@@ -661,7 +661,7 @@ Squib::Deck.new(
   cards: 6,
   width: 1125,
   height: 825,
-  layout: 'layout_endofgame.yml'
+  layout: 'layouts/layout_endofgame.yml'
 ) do
   # first we draw the colored boxes
   # front of training game
@@ -715,7 +715,7 @@ Squib::Deck.new(
   cards: 5,
   width: 225,
   height: 225,
-  layout: 'layout_synergytoken.yml'
+  layout: 'layouts/layout_synergytoken.yml'
 ) do
   background color: SYNERGY_COLORS
   text font: 'Signika 40', align: 'center', valign: 'middle', color: :black,
