@@ -23,6 +23,8 @@ You will need a recent version of [Ruby](https://www.ruby-lang.org/). The instru
 
 This will run `ruby rollingstock.rb` and then remove the transient `_temp` folder. You will find all of the individual cards in the `cards` folder, and the assembled card sheets in `sheets`.
 
+Cutlines and other options can be toggled in [rollingstock/config.rb](rollingstock/config.rb).
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
