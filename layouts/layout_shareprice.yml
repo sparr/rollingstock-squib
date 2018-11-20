@@ -4,27 +4,26 @@
 
 Text:
   font: Signika
-  font_size: 25
+  font_size: 30
   align: center
   color: :black
   x: 75
   y: 75
   width: 975
   height: 675
-  
+
 title:
   extends: Text
-  font_size: 50
+  font_size: '*=2'
 
 shareprice:
   extends: Text
-  font_size: 225
+  font_size: '*=10'
   markup: true
   y: 125
 
 leftprice:
-  extends: Text
-  font_size: 50
+  extends: title
   align: left
 
 rightprice:
@@ -33,64 +32,106 @@ rightprice:
 
 maxpayout:
   extends: Text
-  x: 875
-  y: 240
-  width: 150
-  height: 125
+  x: 870
+  y: 230
+  width: 180
+  height: 145
+
+maxpayoutbox:
+  extends: maxpayout
+  stroke_width: 2.0
+  stroke_color: :black
 
 maxpayoutlabel:
   extends: maxpayout
-  font_size: 20
 
 maxpayoutamount:
   extends: maxpayout
-  font_size: 40
-  y: += 60
+  font_size: '*=2'
+  y: += 70
 
 ipo:
   extends: maxpayout
-  x: 100
-  y: 290
-  font_size: 40
-  stroke_color: '#0000'
+  x: 75
+  font_size: '*=2'
+  stroke_width: 0
+
+ipobox:
+  extends: ipo
+  stroke_width: 2.0
+  stroke_color: :black
 
 ipolabel:
   extends: ipo
-  y: 225
+  align: center
+
+iposymbol:
+  font: DejaVu Sans
+  font_size: 50
+  valign: bottom
 
 ipofirstthird:
   extends: ipo
-  font: DejaVu Sans
-  width: 50
+  width: 60
 
 iposecondthird:
   extends: ipofirstthird
-  x: +=50
+  x: +=60
 
 ipothirdthird:
   extends: iposecondthird
-  x: +=50
+  x: +=60
+
+ipofirstthirdsymbol:
+  extends:
+  - ipofirstthird
+  - iposymbol
+  height: '-=20'
+
+iposecondthirdsymbol:
+  extends:
+  - iposecondthird
+  - iposymbol
+  height: '-=20'
+
+ipothirdthirdsymbol:
+  extends:
+  - ipothirdthird
+  - iposymbol
+  height: '-=20'
 
 ipofirsthalf:
   extends: ipo
-  font: DejaVu Sans
-  width: 75
+  width: 90
 
 iposecondhalf:
   extends: ipofirsthalf
-  x: += 75
+  x: += 90
+
+ipofirsthalfsymbol:
+  extends:
+  - ipofirsthalf
+  - iposymbol
+  height: '-=20'
+
+iposecondhalfsymbol:
+  extends:
+  - iposecondhalf
+  - iposymbol
+  height: '-=20'
 
 bottomtext:
   extends: Text
   align: left
   ellipsize: false
   justify: true
+  font_size: '*=1.3'
 
 bottomgridbox:
   extends: Text
-  font_size: 25
-  width: 160
-  height: 50
+  font_size: '*=1.2'
+  width: 162.5
+  height: 55
   hint: :black
   valign: middle
 

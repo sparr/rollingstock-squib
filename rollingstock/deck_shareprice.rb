@@ -26,7 +26,7 @@ module Rollingstock
       max = SHARE_PRICES[spi - 1] * shares - 1
     end
 
-    "$#{min}-$#{max}"
+    "$#{min}-#{max}"
   end
 
   def Rollingstock.deck_shareprice_faceback(face)
@@ -41,82 +41,79 @@ module Rollingstock
       text str: (0..SHARE_PRICES.length - 1).to_a.map { |n| n == 0 ? '' : ('$' + SHARE_PRICES[n - 1].to_s + '←') }, layout: :leftprice
       text str: (0..SHARE_PRICES.length - 1).to_a.map { |n| n == SHARE_PRICES.length - 1 ? '' : ('→$' + SHARE_PRICES[n + 1].to_s) }, layout: :rightprice
       text str: SHARE_PRICES.map { |p| '$' + p.to_s }, color: [:red] + [:black] * (SHARE_PRICES.length - 2) + ['#080'], layout: :shareprice
-      rect layout: :maxpayout
-      text str: "max payout\nper share", layout: :maxpayoutlabel
-      text str: SHARE_PRICES.map { |p| (p == 0 || p == 100) ? 'n / a' : ('$' + (p / 3).to_i.to_s) }, layout: :maxpayoutamount
+      rect range: (1..SHARE_PRICES.length - 2), layout: :maxpayoutbox
+      text range: (1..SHARE_PRICES.length - 2), str: "max payout\nper share", layout: :maxpayoutlabel
+      text range: (1..SHARE_PRICES.length - 2), str: SHARE_PRICES.map { |p| '$' + (p / 3).to_i.to_s }, layout: :maxpayoutamount
       rect range: (6..10), fill_color: TIER_COLORS[0], layout: :ipofirstthird
-      text range: (6..10), str: '●', layout: :ipofirstthird
+      text range: (6..10), str: '●', layout: :ipofirstthirdsymbol
       rect range: (6..10), fill_color: TIER_COLORS[1], layout: :iposecondthird
-      text range: (6..10), str: '▲', layout: :iposecondthird
+      text range: (6..10), str: '▲', layout: :iposecondthirdsymbol
       rect range: (6..10), fill_color: TIER_COLORS[2], layout: :ipothirdthird
-      text range: (6..10), str: '■', layout: :ipothirdthird
+      text range: (6..10), str: '■', layout: :ipothirdthirdsymbol
       rect range: (11..14), fill_color: TIER_COLORS[1], layout: :ipofirstthird
-      text range: (11..14), str: '▲', layout: :ipofirstthird
+      text range: (11..14), str: '▲', layout: :ipofirstthirdsymbol
       rect range: (11..14), fill_color: TIER_COLORS[2], layout: :iposecondthird
-      text range: (11..14), str: '■', layout: :iposecondthird
+      text range: (11..14), str: '■', layout: :iposecondthirdsymbol
       rect range: (11..14), fill_color: TIER_COLORS[3], layout: :ipothirdthird
-      text range: (11..14), str: '⬟', layout: :ipothirdthird
+      text range: (11..14), str: '⬟', layout: :ipothirdthirdsymbol
       rect range: (15..17), fill_color: TIER_COLORS[2], layout: :ipofirstthird
-      text range: (15..17), str: '■', layout: :ipofirstthird
+      text range: (15..17), str: '■', layout: :ipofirstthirdsymbol
       rect range: (15..17), fill_color: TIER_COLORS[3], layout: :iposecondthird
-      text range: (15..17), str: '⬟', layout: :iposecondthird
+      text range: (15..17), str: '⬟', layout: :iposecondthirdsymbol
       rect range: (15..17), fill_color: TIER_COLORS[4], layout: :ipothirdthird
-      text range: (15..17), str: '⬢', layout: :ipothirdthird
+      text range: (15..17), str: '⬢', layout: :ipothirdthirdsymbol
       rect range: (18..20), fill_color: TIER_COLORS[3], layout: :ipofirstthird
-      text range: (18..20), str: '⬟', layout: :ipofirstthird
+      text range: (18..20), str: '⬟', layout: :ipofirstthirdsymbol
       rect range: (18..20), fill_color: TIER_COLORS[4], layout: :iposecondthird
-      text range: (18..20), str: '⬢', layout: :iposecondthird
+      text range: (18..20), str: '⬢', layout: :iposecondthirdsymbol
       rect range: (18..20), fill_color: TIER_COLORS[5], layout: :ipothirdthird
-      text range: (18..20), str: '★', layout: :ipothirdthird
+      text range: (18..20), str: '★', layout: :ipothirdthirdsymbol
       rect range: (21..23), fill_color: TIER_COLORS[4], layout: :ipofirsthalf
-      text range: (21..23), str: '⬢', layout: :ipofirsthalf
+      text range: (21..23), str: '⬢', layout: :ipofirsthalfsymbol
       rect range: (21..23), fill_color: TIER_COLORS[5], layout: :iposecondhalf
-      text range: (21..23), str: '★', layout: :iposecondhalf
-      text range: (6..23), str: 'IPO', layout: :ipo
-      rect range: (6..23), layout: :ipo
+      text range: (21..23), str: '★', layout: :iposecondhalfsymbol
+      text range: (6..23), str: 'IPO', layout: :ipolabel
       bottom_y = 475
       text str: 'When a corporation takes this card, it is declared bankrupt immediately. Remove its subsidiary companies from the game. Return its cash, its shares, and this card without compensation.\n(Shares are available for newly founded corporations.)',
         range: 0,
         y: bottom_y,
-        font_size: 30,
         layout: :bottomtext
       text str: 'If this card is in use in phase 10 or after a share has been bought in phase 3, the game ends immediately. In phase 9, assume there is an infinite supply of this card. Each corporation reaching $100 share price after the first returns its old share price card without taking a new one. Its shares have a value of $100 at the end of the game.',
         range: SHARE_PRICES.length - 1,
         y: bottom_y,
-        font_size: 27,
         layout: :bottomtext
       text str: 'shares ',
         range: (1..SHARE_PRICES.length - 2), # skip $0 and $100
-        x: (face ? 82 : 162),
+        x: (face ? 75 : 156.25),
         y: bottom_y,
         align: 'right',
         layout: :bottomgridbox
       (face ? 2..6 : 7..10).each do |col|
         text str: col.to_s,
           range: (1..SHARE_PRICES.length - 2), # skip $0 and $100
-          x: (face ? 82 : 162) + 160 * (col - (face ? 1 : 6)),
+          x: (face ? 75 : 156.25) + 162.5 * (col - (face ? 1 : 6)),
           y: bottom_y,
           layout: :bottomgridbox
       end
       (0..3).each do |row|
         text str: (0..SHARE_PRICES.length - 1).to_a.map { |i| ['', '', '→', '→→'][row] + '$' + SHARE_PRICES[i + (row < 2 ? (row - 2) : (row - 1))].to_s + ['←←', '←', '', ''][row] },
           range: ((row > 0 ? 1 : 2)..(SHARE_PRICES.length - (row < 3 ? 2 : 3))),
-          x: (face ? 82 : 162),
-          y: SHARE_PRICES.map { |p| p == 5 || p == 100 ? (bottom_y + row * 50) : (bottom_y + 50 + row * 50) },
+          x: (face ? 75 : 156.25),
+          y: SHARE_PRICES.map { |p| p == 5 || p == 100 ? (bottom_y + row * 55) : (bottom_y + 55 + row * 55) },
           layout: :bottomgridbox
         (face ? 2..6 : 7..10).each do |col|
           text str: (0..SHARE_PRICES.length - 1).map { |i| Rollingstock.payoutrange(i, row, col) },
             range: ((row > 0 ? 1 : 2)..(SHARE_PRICES.length - (row < 3 ? 2 : 3))),
-            x: (face ? 82 : 162) + 160 * (col - (face ? 1 : 6)),
-            y: SHARE_PRICES.map { |p| p == 5 || p == 100 ? (bottom_y + row * 50) : (bottom_y + 50 + row * 50) },
+            x: (face ? 75 : 156.25) + 162.5 * (col - (face ? 1 : 6)),
+            y: SHARE_PRICES.map { |p| p == 5 || p == 100 ? (bottom_y + row * 55) : (bottom_y + 55 + row * 55) },
             layout: :bottomgridbox
         end
       end
       rect layout: :safe if CUTLINES
       rect layout: :cut if CUTLINES
-      save dir: 'cards/shareprice', prefix: 'shareprice_', 
-        count_format: '%02d' + (face ? '[face]' : '[back]'), 
-        rotate: ROTATE ? (face ? :clockwise : :counterclockwise) : false, 
+      save dir: 'cards/shareprice', prefix: 'shareprice_',
+        count_format: '%02d' + (face ? '[face]' : '[back]'),
+        rotate: ROTATE ? (face ? :clockwise : :counterclockwise) : false,
         format: :png
       rect layout: :cut, dash: '', stroke_color: :black if CUTLINES_SHEETS and not CUTLINES
       save_sheet dir: 'sheets', prefix: 'shareprice_' + (face ? 'face' : 'back'), count_format: ''

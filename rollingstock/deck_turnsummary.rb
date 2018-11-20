@@ -91,8 +91,8 @@ module Rollingstock
           text str: who, y: who_y, layout: :whotext
           who_y += 29
         end
-        rect x: 75, y: y, width: 975, height: extents[0][:height] + 10
-        y += extents[0][:height] + 10
+        rect x: 75, y: y, width: 975, height: extents[0][:height] + 8
+        y += extents[0][:height] + 8
       end
       rect layout: :safe if CUTLINES
       rect layout: :cut if CUTLINES

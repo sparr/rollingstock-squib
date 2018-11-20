@@ -8,9 +8,9 @@ module Rollingstock
       layout: 'layouts/layout_turnorder.yml'
     ) do
       background color: :white
-      text str: ['Position'] * PLAYER_NUMBERS.length, layout: :upperlabel
-      text str: PLAYER_NUMBERS, layout: :ordernumber
-      text str: ['in player order'] * PLAYER_NUMBERS.length, layout: :lowerlabel
+      text layout: :upperlabel, str: ['Position'] * PLAYER_NUMBERS.length
+      text layout: :ordernumber, str: PLAYER_NUMBERS
+      text layout: :lowerlabel, str: ['in player order'] * PLAYER_NUMBERS.length
       rect layout: :safe if CUTLINES
       rect layout: :cut if CUTLINES
       save dir: 'cards/turnorder', prefix: 'turnorder_', count_format: '%02d', rotate: ROTATE ? :clockwise : false, format: :png

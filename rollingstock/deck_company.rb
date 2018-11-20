@@ -126,18 +126,15 @@ module Rollingstock
       layout: 'layouts/layout_company.yml'
     ) do
       background color: COMPANIES.map { |_k, v| '(0,37.5)(0,787.5) ' + TIER_COLORS[v[:tier]] + '@0.0 white@1.0' }
-      extents = text str: COMPANIES.map { |_k, v| '$' + v[:value].to_s }, layout: :value
-      y = extents[0][:height] + 40
-      extents = text y: y, x: 50, width: extents.map { |e| e[:width] + 50 },
-        str: COMPANIES.map { |_k, v| '($' + Rollingstock.company_min_price(v[:value]).to_s + '-$' + Rollingstock.company_max_price(v[:tier], v[:value], v[:income]).to_s + ')' },
-        layout: :pricerange
-      y += extents[0][:height] * 0.7
-      text y: y, x: 75, align: :left,
-        str: COMPANIES.map { |_k, v| TIER_SYMBOLS[v[:tier]] }, layout: :tiericon
+      extents = text layout: :value, str: COMPANIES.map { |_k, v| '$' + v[:value].to_s }
+      extents = text layout: :pricerange, x: 50, width: extents.map { |e| e[:width] + 50 },
+        str: COMPANIES.map { |_k, v| '($' + Rollingstock.company_min_price(v[:value]).to_s + '-$' + Rollingstock.company_max_price(v[:tier], v[:value], v[:income]).to_s + ')' }
+      text layout: :tiericon, 
+        str: COMPANIES.map { |_k, v| TIER_SYMBOLS[v[:tier]] }
       circle layout: :incomecircle, fill_color: COMPANIES.map { |_k, v| TIER_COLORS[v[:tier]] }
       text layout: :incometext, str: COMPANIES.map { |_k, v| '+$' + v[:income].to_s }
-      extents = text str: COMPANIES.keys, layout: :acronym
-      text y: extents[0][:height] + 5, str: COMPANIES.map { |_k, v| v[:name] }, layout: :name
+      extents = text layout: :acronym, str: COMPANIES.keys
+      text layout: :name, y: extents[0][:height] + 20, str: COMPANIES.map { |_k, v| v[:name] }
 
       SYNERGY_COLORS.each_with_index do |color, index|
         rect fill_color: color, layout: :synergyamount,
@@ -189,22 +186,22 @@ module Rollingstock
       layout: 'layouts/layout_company_back.yml'
     ) do
       background color: COMPANIES.map { |_k, v| '(0,37.5)(0,787.5) ' + TIER_COLORS[v[:tier]] + '@0.0 white@1.0' }
-      text str: COMPANIES.map { |_k, v| TIER_SYMBOLS[v[:tier]] }, layout: :CornerSymbol
+      text layout: :CornerSymbol, str: COMPANIES.map { |_k, v| TIER_SYMBOLS[v[:tier]] }
       # red box on the back of green cards
       rect layout: :BoxWhole, stroke_width: 0, fill_color: TIER_COLORS[0], range: COMPANIES.select { |_k, v| v[:tier] == 3 }.map { |_k, v| v[:index] }
       text layout: :BoxWholeSymbol, str: TIER_SYMBOLS[0], range: COMPANIES.select { |_k, v| v[:tier] == 3 }.map { |_k, v| v[:index] }
       # red and orange boxes on the back of blue cards
       rect layout: :BoxHalf, stroke_width: 0, fill_color: TIER_COLORS[0], range: COMPANIES.select { |_k, v| v[:tier] == 4 }.map { |_k, v| v[:index] }
-      text layout: :BoxHalf, str: TIER_SYMBOLS[0], range: COMPANIES.select { |_k, v| v[:tier] == 4 }.map { |_k, v| v[:index] }
+      text layout: :BoxHalfSymbol, str: TIER_SYMBOLS[0], range: COMPANIES.select { |_k, v| v[:tier] == 4 }.map { |_k, v| v[:index] }
       rect layout: :BoxHalf, x: 562.5, stroke_width: 0, fill_color: TIER_COLORS[1], range: COMPANIES.select { |_k, v| v[:tier] == 4 }.map { |_k, v| v[:index] }
-      text layout: :BoxHalf, x: 562.5, str: TIER_SYMBOLS[1], range: COMPANIES.select { |_k, v| v[:tier] == 4 }.map { |_k, v| v[:index] }
+      text layout: :BoxHalfSymbol, x: 562.5, str: TIER_SYMBOLS[1], range: COMPANIES.select { |_k, v| v[:tier] == 4 }.map { |_k, v| v[:index] }
       # red orange yellow boxes on the back of purple cards
       rect layout: :BoxThird, stroke_width: 0, fill_color: TIER_COLORS[0], range: COMPANIES.select { |_k, v| v[:tier] == 5 }.map { |_k, v| v[:index] }
-      text layout: :BoxThird, str: TIER_SYMBOLS[0], range: COMPANIES.select { |_k, v| v[:tier] == 5 }.map { |_k, v| v[:index] }
+      text layout: :BoxThirdSymbol, str: TIER_SYMBOLS[0], range: COMPANIES.select { |_k, v| v[:tier] == 5 }.map { |_k, v| v[:index] }
       rect layout: :BoxThird, x: 425, stroke_width: 0, fill_color: TIER_COLORS[1], range: COMPANIES.select { |_k, v| v[:tier] == 5 }.map { |_k, v| v[:index] }
-      text layout: :BoxThird, x: 425, str: TIER_SYMBOLS[1], range: COMPANIES.select { |_k, v| v[:tier] == 5 }.map { |_k, v| v[:index] }
+      text layout: :BoxThirdSymbol, x: 425, str: TIER_SYMBOLS[1], range: COMPANIES.select { |_k, v| v[:tier] == 5 }.map { |_k, v| v[:index] }
       rect layout: :BoxThird, x: 700, stroke_width: 0, fill_color: TIER_COLORS[2], range: COMPANIES.select { |_k, v| v[:tier] == 5 }.map { |_k, v| v[:index] }
-      text layout: :BoxThird, x: 700, str: TIER_SYMBOLS[2], range: COMPANIES.select { |_k, v| v[:tier] == 5 }.map { |_k, v| v[:index] }
+      text layout: :BoxThirdSymbol, x: 700, str: TIER_SYMBOLS[2], range: COMPANIES.select { |_k, v| v[:tier] == 5 }.map { |_k, v| v[:index] }
       text str: COMPANIES.map { |_k, v| Rollingstock.cost_of_ownership_string(v[:tier]) }, layout: :CenterishText
       rect layout: :safe if CUTLINES
       rect layout: :cut if CUTLINES

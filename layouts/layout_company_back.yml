@@ -4,7 +4,7 @@
 
 Text:
   font: Signika
-  font_size: 66
+  font_size: 80
   align: center
   valign: middle
   color: :black
@@ -20,17 +20,13 @@ CenterishText:
 Symbol:
   extends: Text
   font: DejaVu Sans
-  font_size: 80
+  font_size: '*=1.25'
 
 CornerSymbol:
   extends: Symbol
   align: left
   valign: top
   y: -= 24
-
-BoxSymbol:
-  extends: Symbol
-  valign: bottom
 
 BoxWhole:
   x: 150
@@ -40,16 +36,30 @@ BoxWhole:
 
 BoxWholeSymbol:
   extends:
-    - BoxSymbol
+    - Symbol
     - BoxWhole
+  valign: bottom
+  height: '-=40'
 
 BoxHalf:
-  extends: BoxWholeSymbol
-  width: 412.5
+  extends: BoxWhole
+  width: '/=2'
 
 BoxThird:
-  extends: BoxWholeSymbol
-  width: 275
+  extends: BoxWhole
+  width: '/=3'
+
+BoxHalfSymbol:
+  extends:
+    - BoxWholeSymbol
+    - BoxHalf
+  height: '-=40'
+
+BoxThirdSymbol:
+  extends:
+    - BoxWholeSymbol
+    - BoxThird
+  height: '-=40'
 
 
 # The "cut line", without rounded corners

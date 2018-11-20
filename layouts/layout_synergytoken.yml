@@ -2,6 +2,21 @@
 # 225x225px with 37.5px bleed and 37.5x unsafe zone
 # safe zone is 75px circle
 
+Text:
+  font: Signika
+  align: center
+  color: :black
+  x: 37.5
+  y: 37.5
+  width: 150
+  height: 150
+  markup: true
+
+tokentext:
+  extends: Text
+  font_size: 60
+  valign: 'middle'
+
 # The "cut line"
 cut:
   x: 112.5

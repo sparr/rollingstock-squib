@@ -4,7 +4,7 @@
 
 Text:
   font: Signika
-  font_size: 66
+  font_size: 80
   align: center
   valign: middle
   color: :black
@@ -16,17 +16,17 @@ Text:
 CenterishText:
   extends: Text
   height: 575
-  
+
 SmallerText:
   extends: Text
   font_size: /=1.5
   y: 400
   valign: top
-  
+
 Symbol:
   extends: Text
   font: DejaVu Sans
-  font_size: 80
+  font_size: '*=1.25'
 
 TopSymbol:
   extends: Symbol

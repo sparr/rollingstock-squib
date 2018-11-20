@@ -3,7 +3,8 @@
 # safe zone is 450x675
 
 Text:
-  font: Signika 40
+  font: Signika
+  font_size: 55
   align: center
   color: :black
   width: 825
@@ -11,7 +12,7 @@ Text:
 
 firstline:
   extends: Text
-  font_size: 60
+  font_size: '*=1.75'
   y: 375
 
 secondline:

@@ -14,17 +14,18 @@ Text:
 
 acronym:
   extends: Text
-  y: 30
+  y: 50
   font_size: '*=5.5'
 
 value:
   extends: Text
-  align: left
   font_size: '*=3'
+  align: left
   y: -=15
 
 pricerange:
   extends: Text
+  y: 140
 
 name:
   extends: Text
@@ -35,7 +36,9 @@ name:
 tiericon:
   extends: pricerange
   font: DejaVu Sans
-  font_size: '*= 2'
+  font_size: 100
+  y: 160
+  align: left
 
 synergybox:
   extends: Text

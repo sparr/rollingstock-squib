@@ -3,25 +3,25 @@
 # safe zone is 975x675
 
 Text:
-  font: Signika 75
+  font: Signika
+  font_size: 55
   align: center
   color: :black
   width: 1125
 
-companyname:
-  extends: Text
-  font_size: 225
-  y: 275
+# companyname:
+#   extends: Text
+#   font_size: 225
+#   y: 275
 
 secondline:
   extends: Text
-  font_size: 40
   markup: true
 
 sidetext:
   extends: Text
   width: 825
-  font_size: 35
+  font_size: '*=0.8'
 
 lefttext:
   extends: sidetext

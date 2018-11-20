@@ -9,9 +9,7 @@ module Rollingstock
       layout: 'layouts/layout_synergytoken.yml'
     ) do
       background color: SYNERGY_COLORS
-      text font: 'Signika 40', align: 'center', valign: 'middle', color: :black,
-        width: 225, height: 225,
-        str: SYNERGY_VALUES.map { |v| '+$' + v.to_s }
+      text layout: :tokentext, str: SYNERGY_VALUES.map { |v| '+$' + v.to_s }
       circle layout: :safe if CUTLINES
       circle layout: :cut if CUTLINES
       save dir: 'cards/synergy_token', prefix: 'synergy_token_', format: :png
