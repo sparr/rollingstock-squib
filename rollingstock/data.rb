@@ -10,7 +10,7 @@ module Rollingstock
   ].freeze
   # red orange yellow green blue purple
   # default blue and purple are too dark
-  TIER_COLORS = %w(red orange yellow green #55F #90B).freeze
+  TIER_COLORS = %w(red orange yellow green #66F #A2D).freeze
   # red orange yellow+green blue purple
   SYNERGY_COLORS = [TIER_COLORS[0], TIER_COLORS[1], '#BF0', TIER_COLORS[4], TIER_COLORS[5]].freeze
   SYNERGY_VALUES = [1, 2, 4, 8, 16].freeze
