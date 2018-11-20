@@ -11,7 +11,7 @@ Text:
   y: 75
   width: 975
   height: 675
-  
+
 acronym:
   extends: Text
   y: 30

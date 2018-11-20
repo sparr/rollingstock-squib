@@ -18,7 +18,8 @@ module Rollingstock
   TIER_TO_SYNERGY = [0, 1, 2, 2, 3, 4].freeze 
   CORP_SHARES = 10
 
-  # some data and helper functions originally from https://github.com / tobymao / rolling_stock / blob / master / models / company.rb
+  # some data and helper functions originally from
+  # https://github.com/tobymao/rolling_stock/blob/master/models/company.rb
   COMPANIES = {
     'BME' => { index: 0, tier: 0, value: 1, income: 1, synergies: %w(KME BD HE PR), name: "Bergisch - Märkische\nEisenbahn - Gesellschaft" },
     'BSE' => { index: 1, tier: 0, value: 2, income: 1, synergies: %w(BPM SX MS PR), name: "Berlin - Stettiner\nEisenbahn - Gesellschaft" },
