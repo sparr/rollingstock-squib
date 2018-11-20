@@ -3,7 +3,8 @@
 # safe zone is 975x675
 
 Text:
-  font: Signika 40
+  font: Signika
+  font_size: 37
   align: center
   color: :black
   x: 75
@@ -16,7 +17,6 @@ maintext:
   extends: Text
   align: left
   markup: true
-  font_size: 28
   wrap: :word_char
   ellipsize: :false
   width: 950
@@ -24,7 +24,7 @@ maintext:
 
 companyname:
   extends: Text
-  font_size: 80
+  font_size: '*=2.875'
   align: left
   y: -=10
 
@@ -50,6 +50,24 @@ bottomtext:
   align: center
   width: 975
   y: 700
+
+incometext:
+  extends: Text
+  x: 850
+  y: 75
+  font_size: 80
+  valign: 'middle'
+  width: 200
+  height: 200
+
+incomecircle:
+  extends: incometext
+  x: '+=100'
+  y: '+=100'
+  radius: 100,
+  fill_color: :gray
+  stroke_color: :black
+  stroke_width: 2.0
 
 # The "cut line", without rounded corners
 cut:

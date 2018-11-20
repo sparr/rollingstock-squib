@@ -134,10 +134,8 @@ module Rollingstock
       y += extents[0][:height] * 0.7
       text y: y, x: 75, align: :left,
         str: COMPANIES.map { |_k, v| TIER_SYMBOLS[v[:tier]] }, layout: :tiericon
-      circle x: 950, y: 175, radius: 100,
-        fill_color: COMPANIES.map { |_k, v| TIER_COLORS[v[:tier]] }, stroke_color: :black, stroke_width: 2.0
-      text x: 950 - 100, y: 175 - 100, font: 'Signika 66', align: 'center', valign: 'middle',
-        color: :black, width: 200, height: 200, str: COMPANIES.map { |_k, v| '+$' + v[:income].to_s }
+      circle layout: :incomecircle, fill_color: COMPANIES.map { |_k, v| TIER_COLORS[v[:tier]] }
+      text layout: :incometext, str: COMPANIES.map { |_k, v| '+$' + v[:income].to_s }
       extents = text str: COMPANIES.keys, layout: :acronym
       text y: extents[0][:height] + 5, str: COMPANIES.map { |_k, v| v[:name] }, layout: :name
 
