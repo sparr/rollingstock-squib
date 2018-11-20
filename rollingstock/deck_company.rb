@@ -155,8 +155,8 @@ module Rollingstock
           x: SYNERGY_BOXES[i][:x], y: SYNERGY_BOXES[i][:y], range: SYNERGY_BOXES[i][:range],
           width: SYNERGY_BOXES[i][:width], height: COMPANY_GRID_HEIGHT, layout: :synergybox
         text str: k,
-          x: SYNERGY_BOXES[i][:x], y: SYNERGY_BOXES[i][:y], range: SYNERGY_BOXES[i][:range],
-          width: SYNERGY_BOXES[i][:width], layout: :synergyacronym
+          x: SYNERGY_BOXES[i][:x].map{ |x| x - 10 }, y: SYNERGY_BOXES[i][:y], range: SYNERGY_BOXES[i][:range],
+          width: SYNERGY_BOXES[i][:width].map{ |width| width + 20 }, layout: :synergyacronym
         text str: '(' + v[:value].to_s + ')',
           x: SYNERGY_BOXES[i][:x], y: SYNERGY_BOXES[i][:y].map { |y| y + 70 }, range: SYNERGY_BOXES[i][:range],
           width: SYNERGY_BOXES[i][:width], layout: :synergyvalue
