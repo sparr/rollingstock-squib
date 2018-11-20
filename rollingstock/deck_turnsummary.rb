@@ -45,7 +45,6 @@ module Rollingstock
       rect layout: :safe if CUTLINES
       rect layout: :cut if CUTLINES
       save dir: 'cards/singles', prefix: 'turnsummary', count_format: '%02d[face]', rotate: ROTATE ? :clockwise        : false, format: :png
-      save dir: 'cards/singles', prefix: 'turnsummary', count_format: '%02d[back]', rotate: ROTATE ? :counterclockwise : false, format: :png
       rect layout: :cut, dash: '', stroke_color: :black if CUTLINES_SHEETS and not CUTLINES
       save_sheet dir: 'sheets', prefix: 'turnsummary', count_format: '', columns: 1
     end
@@ -96,8 +95,7 @@ module Rollingstock
       end
       rect layout: :safe if CUTLINES
       rect layout: :cut if CUTLINES
-      save dir: 'cards/singles', prefix: 'turnsummaryde', count_format: '%02d[face]', rotate: ROTATE ? :clockwise        : false, format: :png
-      save dir: 'cards/singles', prefix: 'turnsummaryde', count_format: '%02d[back]', rotate: ROTATE ? :counterclockwise : false, format: :png
+      save dir: 'cards/singles', prefix: 'turnsummary', count_format: '%02d[back]', rotate: ROTATE ? :counterclockwise : false, format: :png
       rect layout: :cut, dash: '', stroke_color: :black if CUTLINES_SHEETS and not CUTLINES
       save_sheet dir: 'sheets', prefix: 'turnsummaryde', count_format: '', columns: 1
     end
