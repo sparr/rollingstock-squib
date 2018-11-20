@@ -10,7 +10,10 @@ If you just want to print a copy of the game, grab one of the pre-rendered [Rele
 
 ### Prerequisites
 
-You will need a recent version of [Ruby](https://www.ruby-lang.org/). The instructions below have a few other requirements such as Bundler, but those can be skipped if you're comfortable installing gems manually.
+- A recent version of [Ruby](https://www.ruby-lang.org/).
+- [DejaVu Sans](https://dejavu-fonts.github.io/) and [Signika](https://fonts.google.com/specimen/Signika) Fonts
+
+The instructions below have a few other requirements such as Bundler, but those can be skipped if you're comfortable installing gems manually.
 
 ### Installing
 
