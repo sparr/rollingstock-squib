@@ -3,7 +3,8 @@
 # safe zone is 975x675
 
 Text:
-  font: Signika 15
+  font: Signika
+  font_size: 20
   align: left
   color: :black
   x: 75
@@ -30,12 +31,10 @@ maintext:
 
 maintext_de:
   extends: maintext
-  font_size: 14
 
 whotext:
   extends: Text
   align: center
-  font_size: 15
   x: 980
   width: 60
   height: 24
