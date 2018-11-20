@@ -158,7 +158,7 @@ module Rollingstock
           x: SYNERGY_BOXES[i][:x], y: SYNERGY_BOXES[i][:y], range: SYNERGY_BOXES[i][:range],
           width: SYNERGY_BOXES[i][:width], layout: :synergyacronym
         text str: '(' + v[:value].to_s + ')',
-          x: SYNERGY_BOXES[i][:x], y: SYNERGY_BOXES[i][:y].map { |y| y + 60 }, range: SYNERGY_BOXES[i][:range],
+          x: SYNERGY_BOXES[i][:x], y: SYNERGY_BOXES[i][:y].map { |y| y + 70 }, range: SYNERGY_BOXES[i][:range],
           width: SYNERGY_BOXES[i][:width], layout: :synergyvalue
       end
       line stroke_color: COMPANIES.map { |_k, v| v[:tier] > 0 ? :red : :yellow }, stroke_width: 10, cap: :round,

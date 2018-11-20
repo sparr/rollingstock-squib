@@ -42,15 +42,16 @@ synergybox:
 
 synergyacronym:
   extends: synergybox
-  font_size: "*= 1.5"
+  font_size: "*= 2.25"
 
 synergyamount:
   extends: synergyacronym
-  font_size: "*= 1.5"
+  font_size: "*= 1.75"
   valign: middle
 
 synergyvalue:
   extends: synergybox
+  font_size: "*= 1.25"
 
 
 
