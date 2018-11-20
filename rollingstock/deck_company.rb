@@ -83,7 +83,7 @@ module Rollingstock
       # position and size the tier bonus box
       if secondrow > 0
         y -= COMPANY_GRID_HEIGHT
-        secondrow == firstrow && SYNERGY_ROWS[synergy_tier][:height][i] *= 2
+        (secondrow == firstrow || secondrow < 6) && SYNERGY_ROWS[synergy_tier][:height][i] *= 2
       end
       SYNERGY_ROWS[synergy_tier][:y][i] = y
       x += 162.5
@@ -97,7 +97,7 @@ module Rollingstock
         if drawn_count == firstrow
           # start the second row
           y += COMPANY_GRID_HEIGHT
-          x = 75 + (secondrow == firstrow ? 162.5 : 0)
+          x = 75 + ((secondrow == firstrow || secondrow < 6) ? 162.5 : 0)
         end
         if !redline && synv[:value] > v[:value]
           SYNERGY_REDLINES[v[:index]] = { x1: x, y1: y, x2: x, y2: y + COMPANY_GRID_HEIGHT }
