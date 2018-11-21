@@ -12,9 +12,9 @@ module Rollingstock
       png file: (0..CORP_NAMES.length - 1).map { |n| '_temp/share_' + n.to_s + '9.png' },
           crop_x: 37.5, crop_y: 37.5, crop_width: 750, crop_height: 525,
           x: (1125 - 750) / 2, y: (825 - 525) / 2 - 50
-      rect x: 350, y: 500 - 50, width: 1125 - 350 * 2, height: 125, fill_color: :white, stroke_color: '#0000'
+      rect x: 350, y: 500 - 50, width: 1125 - 350 * 2, height: 140, fill_color: :white, stroke_color: '#0000'
       rect x: (1125 - 750) / 2, y: (825 - 525) / 2 - 50, width: 750, height: 525, radius: 37.5, stroke_width: 8
-      text str: '<i>all 10 shares issued</i>', y: 565 - 50, layout: :secondline
+      text str: '<i>all 10 shares issued</i>', y: 565 - 35, layout: :secondline
       text str: '▲ share price ▲', layout: :lefttext
       text str: '▼ subsidiaries ▼', layout: :bottomtext
       text str: '▲ treasury ▲', layout: :righttext

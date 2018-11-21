@@ -17,7 +17,7 @@ firstline:
 
 secondline:
   extends: Text
-  y: 450
+  y: 465
 
 # The "cut line", without rounded corners
 cut:
