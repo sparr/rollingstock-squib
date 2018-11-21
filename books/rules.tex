@@ -1,0 +1,445 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{multicol,anysize}
+\usepackage{sfmath,mathabx,wasysym}
+
+%\renewcommand{\familydefault}{\sfdefault}
+
+%\papersize{21.0cm}{29.7cm} 
+\marginsize{1.0cm}{1.0cm}{1.0cm}{1.0cm}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.3ex plus 0.5ex minus 0.2ex}
+
+\newcounter{itemcounter}
+\newenvironment{my_enumerate}
+{\begin{list}{\arabic{itemcounter}.}
+  {\usecounter{itemcounter}\leftmargin=1.8em}
+  \setlength{\itemsep}{1pt}
+  \setlength{\parskip}{0pt}
+  \setlength{\parsep}{0pt}
+}
+{\end{list}}
+
+\newenvironment{my_description}
+  {\begin{list}{}{\setlength{\labelwidth}{0pt}
+   \leftmargin=1.2em
+   \setlength{\itemindent}{-\leftmargin}
+   %\setlength{\listparindent}{\parindent}
+   \renewcommand{\makelabel}{\descriptionlabel}}
+  \setlength{\itemsep}{1pt}
+  \setlength{\parskip}{0pt}
+  \setlength{\parsep}{0pt}
+  }
+  {\end{list}}
+
+\newenvironment{my_itemize}
+{\begin{list}{\labelitemi}{\leftmargin=1.2em}
+  \setlength{\itemsep}{1pt}
+  \setlength{\parskip}{0pt}
+  \setlength{\parsep}{0pt}}
+{\end{list}}
+
+
+\begin{document}
+
+\begin{center}
+\section*{Rolling Stock}
+
+A card game for three to five players. Rules v1.2pre. Game design by
+Björn Rabenstein.
+\end{center}
+
+These are the complete and canonical rules. However, they are meant as
+a reference and the ultimate ``source of truth'' and are written in an
+extremely condensed and formal way. They should \emph{not} be used to
+learn the rules. Read \emph{Learning the Game} instead.  Read the
+\emph{Player's Guide} for additional information about the game
+(strategy, variants, \dots).
+
+\begin{multicols}{2}
+
+{
+%\small
+
+  Terms printed \textsc{in small caps} are explained in the
+  \emph{Glossary} or in the \emph{Procedures} section at the end of
+  the rules.
+
+\subsection*{Components}
+
+The game contains 196 cards, 5 turn summaries, 3 booklets (the
+\emph{Rules}, \emph{Learning the Game}, and the \emph{Player's
+  Guide}), an unlimited number of round double-sided synergy markers,
+and an unlimited amount of \textsc{money}. (In practice, the number of
+synergy markers and amount of \textsc{money} provided with the game is
+obviously limited. Use other means of tracking them in the unlikely
+case that the material provided runs out.) The 196 cards in more
+detail:
+\begin{my_itemize}
+\item 10 symbol cards, each featuring a different
+  \textsc{corporation} symbol.
+\item 100 \textsc{shares}, 10 for each of the 10
+  \textsc{corporations}, identified by their symbols.
+\item 5 grey player order cards, numbered from 1 to 5.
+\item 32 white share price cards showing \textsc{share prices} from
+  \$0 to \$100 and a table used for \textsc{adjusting share
+    prices}. The cards are two-sided. Use the back for
+  \textsc{corporations} with 7 or more \textsc{shares} issued. The
+  share price cards from \$10 to \$45 have a colored \emph{IPO}
+  rectangle to mark \textsc{share prices} that can be used to
+  \textsc{form a corporation}.
+\item 45 \textsc{companies}, 6 red ($\bullet$), 8 orange
+  ($\blacktriangleup$), 8 yellow ($\sqbullet$), 7 green ($\pentagon$),
+  8 blue ($\hexagon$), 8 purple ($\star$). (Each geometric shape is
+  used to mark the respective color on all game components to assist
+  color-blind players.) The number in the upper right corner is the
+  income. The number in the upper left corner is the \textsc{face
+    value}, followed by an allowed price span (in parentheses) used
+  for \textsc{company} trading in phase 6. The \textsc{face value} is
+  unique for each \textsc{company}. Other unique identifiers are a one
+  to five letter code and the full \textsc{company} name, to be found
+  in the center of the top half of the card. The bottom half of each
+  card shows blocks of \textsc{synergies} with other
+  \textsc{companies}.
+\item 3 game end cards, one each for the \emph{training game}, the
+  \emph{short game}, and the \emph{long game}.
+\item 1 grey \textsc{foreign investor} card.
+\end{my_itemize}
+
+The normal orientation of cards and money is called
+\emph{horizontal}. In many situations during the game, cards or money
+are turned \emph{vertically} to mark a special state of that
+particular component.
+
+
+\subsection*{Setup}
+
+Each \textsc{player} receives \$30 from the \textsc{bank}, a turn
+summary, and a random player order card, thus determining the initial
+\textsc{player order}. Set aside the \textsc{shares} in 10 separate
+stacks, one for each \textsc{corporation}, sorted with the
+1\textsuperscript{st} share on top. Add the corresponding symbol card to
+the bottom of each stack. Those stacks are available to \textsc{form
+  corporations} in phase 2. Lay out the share price cards in a
+\textsc{row}, in ascending order from left to right. Place the
+\textsc{foreign investor} card on the table. The \textsc{foreign
+  investor} receives \$4 from the \textsc{bank}. Build the
+\textsc{deck} of \textsc{companies} in the following way: Place the
+game end card that corresponds to your desired game type (training
+game, short game, full game) at the bottom of the deck, the lower
+cost-of-ownership side up. Separate the \textsc{companies} by
+color. Shuffle each stack. Draw (without revealing) one more
+\textsc{company} than number of \textsc{players} from each stack, with
+the following exceptions: In a 4-player game, draw 6 orange
+\textsc{companies}; in a 5-player game, draw 8 orange
+\textsc{companies}. Discard all \textsc{companies} not drawn (without
+revealing them). Add the purple \textsc{companies} to the deck on top
+of the game end card if you play a full game (otherwise discard all
+purple \textsc{companies}). Then add the blue \textsc{companies} to
+the top of the deck if you play a full or a short game (otherwise,
+discard all blue \textsc{companies}). Then add the green
+\textsc{companies} to the top of the deck, then the yellow
+\textsc{companies}, then the orange \textsc{companies}, and finally
+the red \textsc{companies}. Place the deck in the middle of the
+table. Draw and reveal a number of \textsc{companies} equal to the
+number of \textsc{players}. The drawn \textsc{companies} are available
+for future \textsc{auctions}. Start the first turn of the game.
+
+\subsection*{Game Sequence}
+
+The game is played in a series of turns. Each turn is divided into the
+following phases (in that order):
+
+\begin{my_enumerate}
+\item In \textsc{share price order}, each \textsc{corporation}
+  may \textsc{issue one share}. Then it turns its share price card
+  horizontally (whether it has issued a share or not).
+\item In descending \textsc{face value order}, private companies may
+  \textsc{form corporations}.
+\item In \textsc{player order}, players choose \emph{one} of the
+  following actions: \textsc{buy one share}, \textsc{sell one share},
+  start an \textsc{auction}, or pass. After a player has passed, their
+  player order card is turned vertically. After each non-pass action,
+  it is turned horizontally. As soon as all player order cards are
+  turned vertically, the phase ends.
+\item Determine the new \textsc{player order} by descending remaining
+  cash. Ties are broken by the old \textsc{player order}. Turn all
+  player order cards horizontally and redistribute them between
+  players to indicate the new \textsc{player order}.
+\item In \emph{ascending} \textsc{face value order}, the
+  \textsc{foreign investor} buys as many of the remaining
+  \emph{available} \textsc{companies} as possible, paying \textsc{face
+    value}. For each \textsc{company} bought in that way, draw a new
+  one from the \textsc{deck} and turn it vertically. Once the
+  \textsc{foreign investor} cannot buy any more \textsc{companies},
+  all \emph{unavailable} \textsc{companies} become \emph{available}
+  for future \textsc{auctions}. (Turn their cards horizontally.)
+\item In \textsc{any order}, \textsc{corporations} buy
+  \textsc{companies} from other \textsc{corporations},
+  \textsc{players}, or the \textsc{foreign investor}. Each transaction
+  is executed separately and involves exactly one \textsc{company},
+  which is transfered from the seller to the buying
+  \textsc{corporation}, and the \textsc{money} payed, which is
+  transfered from the buying \textsc{corporation} to the seller. A
+  transaction only takes place if both \textsc{entities} involved
+  agree on a price within the allowed price span printed on the
+  company card. The transfered \textsc{company} and \textsc{money}
+  are turned vertically until the end of this phase and cannot be used
+  for further transactions. (Turn them back horizontally after the
+  phase has ended. A \textsc{company} turned vertically may be the
+  only \textsc{company} a \textsc{corporation} owns.) The
+  \textsc{foreign investor} only sells at the maximum allowed price,
+  and the intention to buy a specific \textsc{company} from the
+  \textsc{foreign investor} must be announced before executing the
+  transaction. Any \textsc{corporation} with a higher \textsc{share
+    price} and enough \textsc{money} available may then immediately
+  intervene and buy the desired \textsc{company} itself. If more than
+  one eligible \textsc{corporation} wants to intervene, the one with
+  the highest \textsc{share price} has priority. If there is no
+  intervention, the announcing \textsc{corporation} \emph{must} buy
+  the specified \textsc{company}.
+\item In \textsc{any order}, \textsc{players} and
+  \textsc{corporations} may close \textsc{companies} by removing them
+  from the game. \textsc{Players} must close a sufficient number of
+  \textsc{companies} with negative income to be able to pay for a
+  possibly negative total income in phase 8. The \textsc{foreign investor}
+  closes \textsc{companies} whose \textsc{cost of ownership} exceeds
+  their income.
+\item \textsc{Players}, \textsc{corporations}, and the \textsc{foreign
+    investor} \textsc{collect income}.
+\item In \textsc{share price order}, \textsc{corporations} \textsc{pay
+    dividends}, \textsc{adjust their share price}, and turn their
+  share price card vertically.
+\item If there are no unowned \textsc{companies} left, flip the game
+  end card. If it is already flipped, or if the \$100 share price card
+  is owned by a \textsc{corporation}, the game ends.
+\end{my_enumerate}
+
+Repeat the turn sequence until the game ends in phase 3 or phase
+10. Then rank players according to their \textsc{book value},
+breaking ties by \textsc{player order}.
+
+\subsection*{Glossary}
+
+\begin{my_description}
+\item[Any order] During a phase executed in any order, players act (for
+  themselves or as \textsc{presidents} on behalf of
+  \textsc{corporations}) whenever and as often as they wish, even
+  concurrently or alternating with other players. They may wait for
+  other players' actions but when nobody has acted for a reasonable
+  amount of time, the phase ends.
+\item[Bank] An \textsc{entity} whose actions are entirely determined
+  by the rules. Owns an unlimited amount of \textsc{money} and all
+  \emph{issued} \textsc{shares} that are not owned by
+  \textsc{players}.
+\item[Book value] The sum of the \textsc{face value} of each
+  \textsc{company} and the \textsc{money} owned by an
+  \textsc{entity}. If the \textsc{entity} is a \textsc{player}, the
+  sum also includes the \textsc{share price} of each owned
+  \textsc{share}.
+\item[Company] Represented by company cards. Companies start the game
+  face-down in the \textsc{deck}. Eventually, each company in the
+  \textsc{deck} is drawn and revealed. Newly drawn companies are
+  \emph{unavailable} at first but become \emph{available} (for
+  \textsc{auctions}) as instructed by the rules. A company is
+  \emph{unowned} until \textsc{auctioned} to a \textsc{player} (in
+  phase 3) or sold to the \textsc{foreign investor} (in phase 5),
+  which turns it into a \emph{private company}, owned by the
+  \textsc{player} or the \textsc{foreign investor}, respectively. It
+  may later be bought by a \textsc{corporation} (in phase 6) or used
+  to \textsc{form a corporation} (in phase 2). In both cases, it
+  becomes a \emph{subsidiary company}. After that, it can be traded
+  between \textsc{corporations} (in a later phase 6) but can never
+  become a private company again.
+\item[Corporation] Distinguished by their symbol. A corporation owns
+  \emph{one} or more \textsc{companies} (\emph{never} zero), zero or
+  more \$, and a card showing its symbol. Stacked on top of that card
+  are the unissued \textsc{shares} of the corporation. A corporation
+  usually owns a share price card defining its \textsc{share
+    price}. There are 10 \textsc{shares} assigned to each
+  corporation. At most 10 corporations may exist simultaneously.
+\item[Cost of ownership] Defined by the top card of the
+  \textsc{deck}. Deducted from the income of \emph{each} company
+  matching any of the colors in the central rectangle of the top
+  card. If the top card is the game end card, a match with any color
+  displayed by the card triggers the cost.
+\item[Deck] Contains the unrevealed \textsc{company} cards and (at the
+  bottom) the game end card. The back of the top company card displays
+  the current \textsc{cost of ownership}. Once all companies have been
+  drawn, the deck contains only the game end card for the rest of the
+  game. The game end card is never drawn (but flipped eventually), and
+  whichever face is up defines the \textsc{cost of ownership}.
+\item[Entity] Each \textsc{player}, each \textsc{corporation}, the
+  \textsc{foreign investor}, and the \textsc{bank} is an
+  entity. Entities own the various assets (\textsc{money},
+  \textsc{shares}, \textsc{companies}), which may only
+  be transferred between entities according to the rules. Arrange the
+  game components on the table in a way that clearly marks ownership.
+  All assets are open for inspection by any player at any time.
+\item[Face value] A \textsc{company} has a unique face value printed
+  on its card.
+\item[Face value order] Defines the order of \textsc{companies}.  The
+  \textsc{company} with the highest \textsc{face value} is first in
+  \emph{descending} face value order, but last in \emph{ascending}
+  face value order.
+\item[Foreign investor] An \textsc{entity} whose actions are entirely
+  determined by the rules. Owns zero or more \$ and zero or more
+  \textsc{companies}.
+\item[Money] Measured in units of \$. Only integer \$ amounts of money
+  are possible.
+\item[Player] Owns zero or more \$, zero or more \textsc{companies}
+  and zero or more \textsc{shares}. May become the \textsc{president}
+  of any number of \textsc{corporations}.
+\item[Player order] Marked by player order cards, starting with card
+  \emph{1}, followed by the other cards in ascending order. However,
+  the player order is cyclic and infinite. The player with the highest
+  player order card is followed by the player with card \emph{1}, and
+  the player order starts over.
+\item[President] The president of a \textsc{corporation} is the
+  \textsc{player} owning the \emph{president's} \textsc{share} of that
+  \textsc{corporation}. That player acts on behalf of the
+  \textsc{corporation}. A \textsc{change of presidency} may occur
+  during share trading.
+\item[Row] The row of share price cards. For practical reasons, often
+  laid out in multiple rows. Logically, it is still one long row of
+  share price cards in ascending order, from left to right. When a
+  share price card is taken by a \textsc{corporation}, do not move
+  other cards to fill the gap. Whenever a share price card is
+  returned to the row, return it to its old spot.
+\item[Share] Represented by share cards featuring the symbol of the
+  corporation they are assigned to. \emph{Issued} shares are owned by
+  either \textsc{players} or the \textsc{bank}. \emph{Unissued} shares
+  are placed next to the other assets of the corresponding
+  \textsc{corporation}. Shares are numbered from 1 to 10. Numbers are
+  only significant for unissued shares (as they display the number of
+  issued shares). If a share is removed from the stack of unissued
+  shares, always take the top one. The share marked \emph{President}
+  is called the \emph{president's share}.
+\item[Share price] Current value of each of the \textsc{shares} of a
+  \textsc{corporation}. Usually marked by a share price card placed
+  next to the other assets of the \textsc{corporation}. A
+  \textsc{corporation} without a share price card has a share price of
+  \$100.
+\item[Share price order] Defines the order of
+  \textsc{corporations}. Always descending, i.\,e. highest
+  \textsc{share price} first.
+\item[Synergy] A bonus income for \textsc{corporations} (only). For
+  each pair of \textsc{companies} owned by the same
+  \textsc{corporation} that have each other's code printed in one of
+  their synergy blocks, add the \$ amount printed in the upper left
+  corner of that block. Add this amount only \emph{once} per
+  pair. Place a matching synergy marker on \emph{one} of the
+  \textsc{companies} of each pair to facilitate counting.
+
+\end{my_description}
+
+\subsection*{Procedures}
+
+Procedures are atomic. If any part of a procedure cannot be executed,
+the whole procedure cannot be executed.
+
+\begin{my_description}
+\item[Adjust share price] On the share price card of the acting
+  \textsc{corporation}, choose the column corresponding to the number
+  of issued \textsc{shares}. In that column, find the \$ interval that
+  matches the \textsc{book value} of the \textsc{corporation}. From
+  there, go left to the beginning of the row to find the target
+  \textsc{share price}. Take the matching share price card. If it is
+  not available, take the next available share price card in the
+  direction of the arrow printed next to the target \textsc{share
+    price}. Return the old share price card to the row. If you end up
+  taking the \$0 share price card, continue with \textsc{going
+    bankrupt}. If you have to take the next higher available share
+  price card but there is no higher share price card available, do not
+  take any share price card.
+\item[Auction] A \textsc{player} starting an auction chooses one of
+  the \emph{available} \textsc{companies} and bids at least its
+  \textsc{face value}. In \textsc{player order} (following the
+  \textsc{player} that started the auction), \textsc{players} may
+  raise the bid or leave the auction. \textsc{Players} that have left
+  the auction are skipped for the remainder of that same auction. Bids
+  are \$ amounts and may not exceed the \textsc{money} owned by the
+  bidding \textsc{player}. Once all but one \textsc{player} have left
+  the auction, the remaining \textsc{player} pays their bid to the
+  \textsc{bank} and receives the \textsc{company}. Draw a new
+  \textsc{company} from the \textsc{deck} and turn it vertically. It
+  is \emph{unavailable} for later auctions during the same
+  phase. After the auction, the next regular action of phase 3 is
+  taken by the next \textsc{player} in \textsc{player order} following
+  the \textsc{player} that \emph{started} the auction.
+\item[Buy one share] \textsc{Shares} may be bought from the
+  \textsc{bank}. The acting \textsc{player} takes one \textsc{share}
+  from the \textsc{bank}. The corresponding \textsc{corporation}
+  returns its share price card to the \textsc{row} and gains the next
+  higher available share price card. The \textsc{player} pays the
+  \emph{new} \textsc{share price} to the \textsc{bank}. Check for
+  \textsc{change of presidency}. If the new \textsc{share price} is
+  \$100, the game ends immediately after payment.
+\item[Change of presidency] If at any time one or more
+  \textsc{players} own more \textsc{shares} of any given
+  \textsc{corporation} than the current \textsc{president} of that
+  \textsc{corporation}, the latter exchanges the \emph{president's}
+  \textsc{share} of that \textsc{corporation} with a \textsc{share} of
+  the same \textsc{corporation} owned by the next \textsc{player} in
+  \textsc{player order} (after the current \textsc{president})
+  that owns more \textsc{shares} of that \textsc{corporation} than
+  the current \textsc{president}.
+\item[Collect income] Each \textsc{company} has an income printed on
+  the company card. This income is reduced by the \textsc{cost of
+    ownership} of that \textsc{company}. Each \textsc{entity} adds up
+  the results for all \textsc{companies} it owns. A
+  \textsc{corporation} also adds the \textsc{synergy} between its
+  \textsc{companies}. The \textsc{foreign investor} adds \$5. If the
+  result is positive, the \textsc{entity} receives that amount from
+  the \textsc{bank}. If the result is negative, it pays that amount to
+  the \textsc{bank}. If a \textsc{corporation} is not able to do so,
+  it \textsc{goes bankrupt}.
+\item[Form corporation] Separate the acting \textsc{company} from the
+  other assets of its owning \textsc{player} (as it is about to become
+  a subsidiary \textsc{company} of a new \textsc{corporation}). The
+  \textsc{player} selects an unused stack of \textsc{shares} and an
+  available share price card that features the color of the
+  \textsc{company} in the \emph{IPO} rectangle and places both next to
+  the \textsc{company}. The \textsc{player} takes the smallest
+  possible number of \textsc{shares} from the stack so that their
+  added \textsc{share price} matches or exceeds the \textsc{face
+    value} of the \textsc{company}, and pays the difference between
+  added \textsc{share price} and \textsc{face value} to the newly
+  formed \textsc{corporation}. Then take the same number of
+  \textsc{shares} from the stack (again) and give them to the
+  \textsc{bank}. The \textsc{bank} pays their added \textsc{share
+    price} to the newly formed \textsc{corporation}.
+\item[Go bankrupt] Remove all \textsc{companies} of the acting
+  \textsc{corporation} from the game. Set \emph{all} 10
+  \textsc{shares} assigned to the \textsc{corporation} aside in a
+  sorted stack. (These \textsc{shares} are available for forming a new
+  corporation later.) Return its \textsc{money} to the \textsc{bank}. Return
+  its share price card to the \textsc{row}.
+\item[Issue one share] Works in the same way as \textsc{selling one
+    share}, with the following exceptions: Replace the acting
+  \textsc{player} by the acting \textsc{corporation}, and take the
+  share given to the \textsc{bank} from the stack of unissued
+  \textsc{shares} of the acting \textsc{corporation}.
+\item[Pay dividends] From the money it owns, the acting
+  \textsc{corporation} pays dividends for each \emph{issued}
+  \textsc{share} to the \textsc{entity} owning the share. The payout
+  per share must be greater or equal \$0 and may not exceed the
+  maximum amount as stated on the share price card of the
+  \textsc{corporation}.
+\item[Sell one share] A \textsc{share} may be sold to the
+  \textsc{bank} if there is at least one other
+  \textsc{share} of the same \textsc{corporation} owned by any
+  \textsc{player}.  The acting \textsc{player} gives one owned
+  \textsc{share} to the \textsc{bank}. The corresponding
+  \textsc{corporation} returns its share price card to the
+  \textsc{row} and gains the next lower available share price
+  card. The \textsc{bank} pays the \emph{new} \textsc{share price} to
+  the \textsc{player}. If the new \textsc{share price} is \$0, the
+  \textsc{corporation} \textsc{goes bankrupt}. Check for
+  \textsc{change of presidency}.
+\end{my_description}
+
+}
+
+\end{multicols}
+\end{document}
