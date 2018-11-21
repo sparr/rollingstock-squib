@@ -1,14 +1,21 @@
-\documentclass[11pt,a4paper]{article}
+\documentclass[8pt]{extarticle}
+\usepackage[paperheight=8.25in,paperwidth=4.75in,margin=0.25in,heightrounded]{geometry}
 \usepackage[utf8]{inputenc}
 \usepackage{multicol,anysize}
 \usepackage{sfmath,mathabx,wasysym}
 
-%\renewcommand{\familydefault}{\sfdefault}
+\renewcommand{\familydefault}{\sfdefault}
 
-%\papersize{21.0cm}{29.7cm} 
-\marginsize{1.0cm}{1.0cm}{1.0cm}{1.0cm}
+\papersize{8.25in}{4.75in}
+\marginsize{0.45in}{0.45in}{0.45in}{0.25in}
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{0.3ex plus 0.5ex minus 0.2ex}
+
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\textheight}{7.25in}
+\setlength{\footskip}{0.25in}
+
 
 \newcounter{itemcounter}
 \newenvironment{my_enumerate}
@@ -56,10 +63,10 @@ learn the rules. Read \emph{Learning the Game} instead.  Read the
 \emph{Player's Guide} for additional information about the game
 (strategy, variants, \dots).
 
+\begin{small}
 \begin{multicols}{2}
 
 {
-%\small
 
   Terms printed \textsc{in small caps} are explained in the
   \emph{Glossary} or in the \emph{Procedures} section at the end of
@@ -442,4 +449,5 @@ the whole procedure cannot be executed.
 }
 
 \end{multicols}
+\end{small}
 \end{document}
