@@ -74,7 +74,7 @@ module Rollingstock
       text range: (21..23), str: '★', layout: :iposecondhalfsymbol
       text range: (6..23), str: 'IPO', layout: :ipolabel
       bottom_y = 475
-      text str: 'When a corporation takes this card, it is declared bankrupt immediately. Remove its subsidiary companies from the game. Return its cash, its shares, and this card without compensation.\n(Shares are available for newly founded corporations.)',
+      text str: "When a corporation takes this card, it is declared bankrupt immediately. Remove its subsidiary companies from the game. Return its cash, its shares, and this card without compensation.\n(Shares are available for newly founded corporations.)",
         range: 0,
         y: bottom_y,
         layout: :bottomtext

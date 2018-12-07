@@ -4,7 +4,7 @@
 
 Text:
   font: Signika
-  font_size: 37
+  font_size: 55
   align: center
   color: :black
   x: 75
@@ -19,19 +19,20 @@ maintext:
   markup: true
   wrap: :word_char
   ellipsize: :false
+  font_size: '*=0.67'
   width: 950
   y: 220
 
 companyname:
   extends: Text
-  font_size: '*=2.875'
+  font_size: '*=1.9'
   align: left
   y: -=10
 
 sidetext:
   extends: Text
   width: 825
-  font_size: 35
+  font_size: '*=0.8'
 
 lefttext:
   extends: sidetext
