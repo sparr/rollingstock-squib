@@ -65,7 +65,7 @@ incomecircle:
   extends: incometext
   x: '+=100'
   y: '+=100'
-  radius: 100,
+  radius: 100
   fill_color: :gray
   stroke_color: :black
   stroke_width: 2.0
