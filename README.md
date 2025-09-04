@@ -17,8 +17,15 @@ The instructions below have a few other requirements such as Bundler, but those 
 
 ### Installing
 
-1. clone this repository `git clone https://github.com/sparr/rollingstock-squib.git`
-2. install the prerequisites `bundle`
+1. clone this repository
+
+   `git clone https://github.com/sparr/rollingstock-squib.git`
+2. change into the repo directory
+
+   `cd rollingstock-squib`
+3. install the prerequisites
+
+   `bundle`
 
 ### Rendering the components
 
