@@ -1,3 +1,5 @@
+require 'fileutils'
+
 module Rollingstock
   # Player turn order cards
   def Rollingstock.deck_turnorder()
@@ -14,6 +16,7 @@ module Rollingstock
       rect layout: :safe if CUTLINES
       rect layout: :cut if CUTLINES
       save dir: 'cards/turnorder', prefix: 'turnorder_', count_format: '%02d', rotate: ROTATE ? :clockwise : false, format: :png
+      FileUtils.touch 'cards/turnorder'
       rect layout: :cut, dash: '', stroke_color: :black if CUTLINES_SHEETS and not CUTLINES
       save_sheet dir: 'sheets', prefix: 'turnorder', count_format: ''
     end

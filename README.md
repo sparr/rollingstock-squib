@@ -31,7 +31,7 @@ The instructions below have a few other requirements such as Bundler, but those 
 
 `rake`
 
-This will run `ruby rollingstock.rb` and then remove the transient `_temp` folder. You will find all of the individual cards in the `cards` folder, and the assembled card sheets in `sheets`.
+This will create the cards and sheets and then remove the transient `_temp` folder. You will find all of the individual cards in the `cards` folder, and the assembled card sheets in `sheets`.
 
 Cutlines and other options can be toggled in [rollingstock/config.rb](rollingstock/config.rb).
 

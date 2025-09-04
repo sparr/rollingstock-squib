@@ -1,3 +1,5 @@
+require 'fileutils'
+
 module Rollingstock
   # the payout range for a given stock price, price change, and number of shares
   # spi is the index into SHARE_PRICES
@@ -115,6 +117,7 @@ module Rollingstock
         count_format: '%02d' + (face ? '[face]' : '[back]'),
         rotate: ROTATE ? (face ? :clockwise : :counterclockwise) : false,
         format: :png
+      FileUtils.touch 'cards/shareprice'
       rect layout: :cut, dash: '', stroke_color: :black if CUTLINES_SHEETS and not CUTLINES
       save_sheet dir: 'sheets', prefix: 'shareprice_' + (face ? 'face' : 'back'), count_format: ''
     end

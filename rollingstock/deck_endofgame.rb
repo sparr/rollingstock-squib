@@ -1,3 +1,5 @@
+require 'fileutils'
+
 module Rollingstock
   # End of Game cards
   def Rollingstock.deck_endofgame()
@@ -48,6 +50,7 @@ module Rollingstock
       save dir: 'cards/singles', prefix: 'endofgame_short[back]',    range: [3], count_format: '', rotate: ROTATE ? :counterclockwise : false, format: :png
       save dir: 'cards/singles', prefix: 'endofgame_full[face]',     range: [4], count_format: '', rotate: ROTATE ? :clockwise        : false, format: :png
       save dir: 'cards/singles', prefix: 'endofgame_full[back]',     range: [5], count_format: '', rotate: ROTATE ? :counterclockwise : false, format: :png
+      FileUtils.touch 'cards/singles'
       rect layout: :cut, dash: '', stroke_color: :black if CUTLINES_SHEETS and not CUTLINES
       save_sheet dir: 'sheets', prefix: 'endofgame_face', count_format: '', range: [0, 2, 4], columns: 3
       save_sheet dir: 'sheets', prefix: 'endofgame_back', count_format: '', range: [5, 3, 1], columns: 3

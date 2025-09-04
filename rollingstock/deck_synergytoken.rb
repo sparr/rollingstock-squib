@@ -1,3 +1,5 @@
+require 'fileutils'
+
 module Rollingstock
   # synergy tokens
   # to be mixed faces/backs at production time
@@ -12,7 +14,8 @@ module Rollingstock
       text layout: :tokentext, str: SYNERGY_VALUES.map { |v| '+$' + v.to_s }
       circle layout: :safe if CUTLINES
       circle layout: :cut if CUTLINES
-      save dir: 'cards/synergy_token', prefix: 'synergy_token_', format: :png
+      save dir: 'cards/synergytoken', prefix: 'synergytoken_', format: :png
+      FileUtils.touch 'cards/synergytoken'
       circle layout: :cut, dash: '', stroke_color: :black if CUTLINES_SHEETS and not CUTLINES
       save_sheet dir: 'sheets', prefix: 'synergytoken', count_format: ''
     end

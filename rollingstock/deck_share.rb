@@ -1,3 +1,5 @@
+require 'fileutils'
+
 # ordinal and ordinalize from
 # https://github.com / rails / rails / blob / 4 - 2 - stable / activesupport / lib / active_support / inflector / methods.rb#L312 - L347
 def ordinal(number)
@@ -23,7 +25,7 @@ module Rollingstock
   SHARE_ICON_SIZE = 300
   SHARE_STRIPE_WIDTH = 75
   SHARE_STRIPE_INSET = 25
-  def Rollingstock.deck_share(placemat_only)
+  def Rollingstock.deck_share(placemat_only = false)
     Squib::Deck.new(
       cards: CORP_NAMES.length * CORP_SHARES,
       width: 825,
@@ -47,6 +49,7 @@ module Rollingstock
       rect layout: :cut if CUTLINES
       save dir: 'cards/share', prefix: 'share_', count_format: '%02d[face]', rotate: ROTATE ? :clockwise        : false, format: :png
       save dir: 'cards/share', prefix: 'share_', count_format: '%02d[back]', rotate: ROTATE ? :counterclockwise : false, format: :png
+      FileUtils.touch 'cards/share'
       rect layout: :cut, dash: '', stroke_color: :black if CUTLINES_SHEETS and not CUTLINES
       save_sheet dir: 'sheets', prefix: 'share', count_format: ''
     end

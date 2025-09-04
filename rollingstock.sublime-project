@@ -9,7 +9,7 @@
     [
         {
             "name": "Build",
-            "shell_cmd": "ruby rollingstock.rb"
+            "shell_cmd": "rake"
         }
     ]
 }

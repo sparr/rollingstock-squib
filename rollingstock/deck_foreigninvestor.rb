@@ -1,3 +1,5 @@
+require 'fileutils'
+
 module Rollingstock
   # Foreign Investor placemat
   def Rollingstock.deck_foreigninvestor()
@@ -23,6 +25,7 @@ module Rollingstock
       rect layout: :cut if CUTLINES
       save dir: 'cards/singles', prefix: 'foreigninvestor_', count_format: '%02d[face]', rotate: ROTATE ? :clockwise        : false, format: :png
       save dir: 'cards/singles', prefix: 'foreigninvestor_', count_format: '%02d[back]', rotate: ROTATE ? :counterclockwise : false, format: :png
+      FileUtils.touch 'cards/singles'
       rect layout: :cut, dash: '', stroke_color: :black if CUTLINES_SHEETS and not CUTLINES
       save_sheet dir: 'sheets', prefix: 'foreigninvestor', count_format: '', columns: 1
     end

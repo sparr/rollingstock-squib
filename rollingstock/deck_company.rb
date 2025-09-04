@@ -1,3 +1,5 @@
+require 'fileutils'
+
 module Rollingstock
   def Rollingstock.company_min_price(value)
     (value / 2.0).ceil
@@ -164,6 +166,7 @@ module Rollingstock
       rect layout: :safe if CUTLINES
       rect layout: :cut if CUTLINES
       save dir: 'cards/company', prefix: 'company_', count_format: '%02d[face]', rotate: ROTATE ? :clockwise : false, format: :png
+      FileUtils.touch 'cards/company'
       rect layout: :cut, dash: '', stroke_color: :black if CUTLINES_SHEETS and not CUTLINES
       save_sheet dir: 'sheets', prefix: 'company_face', count_format: ''
     end
@@ -206,6 +209,7 @@ module Rollingstock
       rect layout: :safe if CUTLINES
       rect layout: :cut if CUTLINES
       save dir: 'cards/company', prefix: 'company_', count_format: '%02d[back]', rotate: ROTATE ? :counterclockwise : false, format: :png
+      FileUtils.touch 'cards/company'
       rect layout: :cut, dash: '', stroke_color: :black if CUTLINES_SHEETS and not CUTLINES
       save_sheet dir: 'sheets', prefix: 'company_back', count_format: '', rtl: true
     end

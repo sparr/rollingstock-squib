@@ -1,3 +1,5 @@
+require 'fileutils'
+
 module Rollingstock
   # Corporation placemats
   def Rollingstock.deck_placemat()
@@ -22,6 +24,7 @@ module Rollingstock
       rect layout: :cut if CUTLINES
       save dir: 'cards/placemat', prefix: 'placemat_', count_format: '%02d[face]', rotate: ROTATE ? :clockwise        : false, format: :png
       save dir: 'cards/placemat', prefix: 'placemat_', count_format: '%02d[back]', rotate: ROTATE ? :counterclockwise : false, format: :png
+      FileUtils.touch 'cards/placemat'
       rect layout: :cut, dash: '', stroke_color: :black if CUTLINES_SHEETS and not CUTLINES
       save_sheet dir: 'sheets', prefix: 'placemat', count_format: ''
     end
