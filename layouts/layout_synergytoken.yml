@@ -14,7 +14,7 @@ Text:
 
 tokentext:
   extends: Text
-  font_size: 60
+  font_size: 15
   valign: 'middle'
 
 # The "cut line"

@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-gem "squib"
+gem "squib", "~> 0.20.0a"
 
 # These are dependencies of squib and its dependencies
 # They were previously included in the default gems prior to Ruby 3.4.0

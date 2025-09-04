@@ -55,7 +55,7 @@ module Rollingstock
     'HH'  => { index: 31, tier: 4, value: 48, income: 15, synergies: %w(DSB PKP DR BSR RU AL), name: 'Hamburger Hafen' },
     'HR'  => { index: 32, tier: 4, value: 49, income: 15, synergies: %w(NS B DR E RU AL), name: 'Haven van Rotterdam' },
     'LHR' => { index: 33, tier: 4, value: 54, income: 15, synergies: %w(BR E FR MM VP LE), name: 'London Heathrow Airport' },
-    'CDG' => { index: 34, tier: 4, value: 56, income: 15, synergies: %w(SNCF SBB E FR VP LE), name: 'Aéroport Paris - Charles - de - Gaulle' },
+    'CDG' => { index: 34, tier: 4, value: 56, income: 15, synergies: %w(SNCF SBB E FR VP LE), name: 'Aéroport Paris Charles-de-Gaulle' },
     'FRA' => { index: 35, tier: 4, value: 58, income: 15, synergies: %w(PKP KK SBB DR FR MM LE), name: 'Flughafen Frankfurt' },
     'FR'  => { index: 36, tier: 4, value: 60, income: 15, synergies: %w(MAD LHR CDG FRA), name: 'Ryanair' },
     'OPC' => { index: 37, tier: 5, value: 70, income: 25, synergies: %w(RU AL TSI), name: 'Outer Planet Consortium' },

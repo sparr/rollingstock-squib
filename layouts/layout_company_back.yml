@@ -4,7 +4,7 @@
 
 Text:
   font: Signika
-  font_size: 80
+  font_size: 20
   align: center
   valign: middle
   color: :black

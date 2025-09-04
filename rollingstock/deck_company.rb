@@ -126,8 +126,8 @@ module Rollingstock
       layout: 'layouts/layout_company.yml'
     ) do
       background color: COMPANIES.map { |_k, v| '(0,37.5)(0,787.5) ' + TIER_COLORS[v[:tier]] + '@0.0 white@1.0' }
-      extents = text layout: :value, str: COMPANIES.map { |_k, v| '$' + v[:value].to_s }
-      extents = text layout: :pricerange, x: 50, width: extents.map { |e| e[:width] + 50 },
+      text layout: :value, str: COMPANIES.map { |_k, v| '$' + v[:value].to_s }
+      text layout: :pricerange,
         str: COMPANIES.map { |_k, v| '($' + Rollingstock.company_min_price(v[:value]).to_s + '-$' + Rollingstock.company_max_price(v[:tier], v[:value], v[:income]).to_s + ')' }
       text layout: :tiericon, 
         str: COMPANIES.map { |_k, v| TIER_SYMBOLS[v[:tier]] }

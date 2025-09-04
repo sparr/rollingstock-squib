@@ -1,6 +1,6 @@
 Text:
   font: Signika
-  font_size: 120
+  font_size: 28
   align: center
   color: :black
   width: 1125
@@ -11,7 +11,7 @@ upperlabel:
 
 lowerlabel:
   extends: upperlabel
-  y: 625
+  y: 615
 
 ordernumber:
   extends: Text

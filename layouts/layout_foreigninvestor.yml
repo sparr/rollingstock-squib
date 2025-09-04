@@ -4,7 +4,8 @@
 
 Text:
   font: Signika
-  font_size: 55
+  font_size: 15
+  spacing: -10
   align: center
   color: :black
   x: 75
@@ -20,12 +21,12 @@ maintext:
   wrap: :word_char
   ellipsize: :false
   font_size: '*=0.67'
-  width: 950
-  y: 220
+  width: 925
+  y: 200
 
 companyname:
   extends: Text
-  font_size: '*=1.9'
+  font_size: '*=1.75'
   align: left
   y: -=10
 
@@ -34,15 +35,9 @@ sidetext:
   width: 825
   font_size: '*=0.8'
 
-lefttext:
-  extends: sidetext
-  x: 75
-  y: 825
-  angle: 4.71238898038468985769
-
 righttext:
   extends: sidetext
-  x: 1050
+  x: 1065
   y: 0
   angle: 1.57079632679489661923
 
@@ -56,7 +51,7 @@ incometext:
   extends: Text
   x: 850
   y: 75
-  font_size: 80
+  font_size: 20
   valign: 'middle'
   width: 200
   height: 200

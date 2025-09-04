@@ -4,7 +4,7 @@
 
 Text:
   font: Signika
-  font_size: 25
+  font_size: 6.5
   align: center
   color: :black
   x: 75
@@ -19,27 +19,29 @@ acronym:
 
 value:
   extends: Text
-  font_size: '*=3'
-  align: left
+  font_size: '*=2.75'
+  align: center
+  x: 75
+  width: 200
   y: -=15
 
 pricerange:
-  extends: Text
-  font_size: '*=1.35'
-  y: 140
+  extends: value
+  font_size: /=2
+  y: 135
 
 name:
   extends: Text
-  font_size: '*=1.5'
-  x: 300
-  width: 525
+  font_size: '*=1.6'
+  x: 250
+  width: 625
+  spacing: -12
 
 tiericon:
-  extends: pricerange
+  extends: value
   font: DejaVu Sans
-  font_size: 100
+  font_size: 25
   y: 160
-  align: left
 
 synergybox:
   extends: Text
@@ -51,7 +53,7 @@ synergyacronym:
 
 synergyamount:
   extends: synergyacronym
-  font_size: "*= 1.75"
+  font_size: "*= 1.5"
   valign: middle
 
 synergyvalue:
@@ -62,7 +64,7 @@ incometext:
   extends: Text
   x: 850
   y: 75
-  font_size: 80
+  font_size: 20
   valign: 'middle'
   width: 200
   height: 200

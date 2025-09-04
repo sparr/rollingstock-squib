@@ -4,7 +4,7 @@
 
 Text:
   font: Signika
-  font_size: 20
+  font_size: 4.85
   align: left
   color: :black
   x: 75
@@ -16,17 +16,17 @@ Text:
 title:
   extends: Text
   align: center
-  font_size: 35
+  font_size: 8.5
 
 linenumber:
   extends: Text
-  font_size: 30
-  x: 70
+  font_size: 7.5
+  x: 65
 
 maintext:
   extends: Text
-  x: 126
-  width: 850
+  x: 120
+  width: 856
   ellipsize: :false
 
 maintext_de:

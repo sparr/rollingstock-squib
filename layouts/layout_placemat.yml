@@ -4,17 +4,18 @@
 
 Text:
   font: Signika
-  font_size: 55
+  font_size: 14
   align: center
   color: :black
   width: 1125
 
 # companyname:
 #   extends: Text
-#   font_size: 225
+#   font_size: 56
 #   y: 275
 
 secondline:
+  font_size: '*=0.9'
   extends: Text
   markup: true
 
@@ -25,13 +26,13 @@ sidetext:
 
 lefttext:
   extends: sidetext
-  x: 75
+  x: 65
   y: 825
   angle: 4.71238898038468985769
 
 righttext:
   extends: sidetext
-  x: 1050
+  x: 1060
   y: 0
   angle: 1.57079632679489661923
 

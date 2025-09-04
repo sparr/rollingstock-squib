@@ -4,7 +4,7 @@
 
 Text:
   font: Signika
-  font_size: 80
+  font_size: 25
   align: center
   valign: middle
   color: :black
@@ -22,6 +22,7 @@ SmallerText:
   font_size: /=1.5
   y: 400
   valign: top
+  spacing: -10
 
 Symbol:
   extends: Text

@@ -4,7 +4,7 @@
 
 Text:
   font: Signika
-  font_size: 55
+  font_size: 14
   align: center
   color: :black
   width: 825
@@ -15,7 +15,13 @@ firstline:
   font_size: '*=1.75'
   y: 375
 
+# companyname:
+#   extends: Text
+#   font_size: 56
+#   y: 275
+
 secondline:
+  font_size: '*=0.9'
   extends: Text
   y: 465
 
