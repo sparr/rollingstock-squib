@@ -26,7 +26,7 @@ DECK_SYNERGYTOKEN    = true
 
 if __FILE__ == $0
   Rollingstock.deck_turnorder()       if DECK_TURNORDER
-  Rollingstock.deck_share()           if DECK_SHARE
+  Rollingstock.deck_share(!DECK_SHARE)if DECK_SHARE || DECK_PLACEMAT
   Rollingstock.deck_placemat()        if DECK_PLACEMAT
   Rollingstock.deck_foreigninvestor() if DECK_FOREIGNINVESTOR
   Rollingstock.deck_turnsummary()     if DECK_TURNSUMMARY

@@ -23,7 +23,7 @@ module Rollingstock
   SHARE_ICON_SIZE = 300
   SHARE_STRIPE_WIDTH = 75
   SHARE_STRIPE_INSET = 25
-  def Rollingstock.deck_share()
+  def Rollingstock.deck_share(placemat_only)
     Squib::Deck.new(
       cards: CORP_NAMES.length * CORP_SHARES,
       width: 825,
@@ -40,6 +40,9 @@ module Rollingstock
       rect x: 825 - 75 - SHARE_STRIPE_INSET - SHARE_STRIPE_WIDTH, width: SHARE_STRIPE_WIDTH, height: 600, fill_color: (0..CORP_NAMES.length * CORP_SHARES - 1).to_a.map { |n| CORP_COLORS[n / CORP_SHARES] }
       # unrotated version with no cutlines is used later to render placemats
       save dir: '_temp', prefix: 'share_', format: :png
+      if placemat_only
+        return
+      end
       rect layout: :safe if CUTLINES
       rect layout: :cut if CUTLINES
       save dir: 'cards/share', prefix: 'share_', count_format: '%02d[face]', rotate: ROTATE ? :clockwise        : false, format: :png
