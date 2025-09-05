@@ -1,0 +1,3 @@
+# Require -f to commit these, so they don't accidentally get updated
+cards/
+sheets/
