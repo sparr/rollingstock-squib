@@ -1,11 +1,11 @@
 require 'fileutils'
 
 module Rollingstock
-  def Rollingstock.company_min_price(value)
+  def self.company_min_price(value)
     (value / 2.0).ceil
   end
 
-  def Rollingstock.company_max_price(tier, value, income)
+  def self.company_max_price(tier, value, income)
     case tier
     when 0
       income + value
@@ -22,8 +22,8 @@ module Rollingstock
     end.floor
   end
 
-  def Rollingstock.synergytier(t1, t2)
-    TIER_TO_SYNERGY[[t1, t2].min]
+  def self.synergytier(tier1, tier2)
+    TIER_TO_SYNERGY[[tier1, tier2].min]
   end
 
   COMPANY_GRID_HEIGHT = 115
@@ -50,7 +50,7 @@ module Rollingstock
   end
   SYNERGY_REDLINES = Array.new(COMPANIES.length)
   # first figure out which companies get which synergy tiers and specific synergies
-  COMPANIES.each do |_k, v|
+  COMPANIES.each_value do |v|
     # each synergy that company card has
     v[:synergies].each do |s|
       # which synergy tier for the two companies?
@@ -63,13 +63,14 @@ module Rollingstock
     end
   end
   # now figure out where to draw all of that on each company card
-  COMPANIES.each do |_k, v|
+  COMPANIES.each_value do |v| # rubocop:disable Style/CombinableLoops
     y = 825 - 75 - COMPANY_GRID_HEIGHT
     i = v[:index]
     redline = false
     [4, 3, 2, 1, 0].each do |synergy_tier|
       x = 75
-      next unless SYNERGY_ROWS[synergy_tier][:range].include?i
+      next unless SYNERGY_ROWS[synergy_tier][:range].include? i
+
       # this company has at least one synergy at this tier
       count = SYNERGY_ROWS[synergy_tier][:count][i]
       if count < 6
@@ -83,7 +84,7 @@ module Rollingstock
       # boxwidth = [975/(firstrow + 1),243.75].min
       # SYNERGY_ROWS[synergy_tier][:width][i] = boxwidth
       # position and size the tier bonus box
-      if secondrow > 0
+      if secondrow.positive?
         y -= COMPANY_GRID_HEIGHT
         (secondrow == firstrow || secondrow < 6) && SYNERGY_ROWS[synergy_tier][:height][i] *= 2
       end
@@ -92,14 +93,15 @@ module Rollingstock
       drawn_count = 0
       # puts k + ' ' + firstrow.to_s + ' ' + secondrow.to_s
       COMPANIES.each do |synk, synv|
-        next unless v[:synergies].include?synk
+        next unless v[:synergies].include? synk
         # this company has this synergy
         next unless synergytier(v[:tier], synv[:tier]) == synergy_tier
+
         # and it's on this tier
         if drawn_count == firstrow
           # start the second row
           y += COMPANY_GRID_HEIGHT
-          x = 75 + ((secondrow == firstrow || secondrow < 6) ? 162.5 : 0)
+          x = 75 + (secondrow == firstrow || secondrow < 6 ? 162.5 : 0)
         end
         if !redline && synv[:value] > v[:value]
           SYNERGY_REDLINES[v[:index]] = { x1: x, y1: y, x2: x, y2: y + COMPANY_GRID_HEIGHT }
@@ -112,111 +114,116 @@ module Rollingstock
         x += 162.5
         drawn_count += 1
       end
-      if !redline
-        SYNERGY_REDLINES[v[:index]] = { x1: x, y1: y, x2: x, y2: y + COMPANY_GRID_HEIGHT }
-      end
-      y -= COMPANY_GRID_HEIGHT * (secondrow > 0 ? 2 : 1) + 10
+      SYNERGY_REDLINES[v[:index]] = { x1: x, y1: y, x2: x, y2: y + COMPANY_GRID_HEIGHT } unless redline
+      y -= COMPANY_GRID_HEIGHT * (secondrow.positive? ? 2 : 1) + 10
     end
   end
 
   # Company card faces
-  def Rollingstock.deck_company_face()
+  def self.deck_company_face
     Squib::Deck.new(
       cards: COMPANIES.length,
       width: 1125,
       height: 825,
       layout: 'layouts/layout_company.yml'
     ) do
-      background color: COMPANIES.map { |_k, v| '(0,37.5)(0,787.5) ' + TIER_COLORS[v[:tier]] + '@0.0 white@1.0' }
-      text layout: :value, str: COMPANIES.map { |_k, v| '$' + v[:value].to_s }
+      background color: COMPANIES.map { |_k, v| "(0,37.5)(0,787.5) #{TIER_COLORS[v[:tier]]}@0.0 white@1.0" }
+      text layout: :value, str: COMPANIES.map { |_k, v| "$#{v[:value]}" }
       text layout: :pricerange,
-        str: COMPANIES.map { |_k, v| '($' + Rollingstock.company_min_price(v[:value]).to_s + '-$' + Rollingstock.company_max_price(v[:tier], v[:value], v[:income]).to_s + ')' }
-      text layout: :tiericon, 
-        str: COMPANIES.map { |_k, v| TIER_SYMBOLS[v[:tier]] }
+           str: COMPANIES.map { |_k, v|
+             "($#{Rollingstock.company_min_price(v[:value])}-"\
+             "$#{Rollingstock.company_max_price(v[:tier], v[:value], v[:income])})"
+           }
+      text layout: :tiericon, str: COMPANIES.map { |_k, v| TIER_SYMBOLS[v[:tier]] }
       circle layout: :incomecircle, fill_color: COMPANIES.map { |_k, v| TIER_COLORS[v[:tier]] }
-      text layout: :incometext, str: COMPANIES.map { |_k, v| '+$' + v[:income].to_s }
+      text layout: :incometext, str: COMPANIES.map { |_k, v| "+$#{v[:income]}" }
       extents = text layout: :acronym, str: COMPANIES.keys
       text layout: :name, y: extents[0][:height] + 20, str: COMPANIES.map { |_k, v| v[:name] }
 
       SYNERGY_COLORS.each_with_index do |color, index|
         rect fill_color: color, layout: :synergyamount,
-          x: SYNERGY_ROWS[index][:x], y: SYNERGY_ROWS[index][:y], range: SYNERGY_ROWS[index][:range],
-          width: SYNERGY_ROWS[index][:width], height: SYNERGY_ROWS[index][:height]
-        text str: '$' + SYNERGY_VALUES[index].to_s, layout: :synergyamount,
-          x: SYNERGY_ROWS[index][:x], y: SYNERGY_ROWS[index][:y], range: SYNERGY_ROWS[index][:range],
-          width: SYNERGY_ROWS[index][:width], height: SYNERGY_ROWS[index][:height]
+             x: SYNERGY_ROWS[index][:x], y: SYNERGY_ROWS[index][:y], range: SYNERGY_ROWS[index][:range],
+             width: SYNERGY_ROWS[index][:width], height: SYNERGY_ROWS[index][:height]
+        text str: "$#{SYNERGY_VALUES[index]}", layout: :synergyamount,
+             x: SYNERGY_ROWS[index][:x], y: SYNERGY_ROWS[index][:y], range: SYNERGY_ROWS[index][:range],
+             width: SYNERGY_ROWS[index][:width], height: SYNERGY_ROWS[index][:height]
       end
       COMPANIES.each do |k, v|
         i = v[:index]
         rect fill_color: TIER_COLORS[v[:tier]],
-          x: SYNERGY_BOXES[i][:x], y: SYNERGY_BOXES[i][:y], range: SYNERGY_BOXES[i][:range],
-          width: SYNERGY_BOXES[i][:width], height: COMPANY_GRID_HEIGHT, layout: :synergybox
+             x: SYNERGY_BOXES[i][:x], y: SYNERGY_BOXES[i][:y], range: SYNERGY_BOXES[i][:range],
+             width: SYNERGY_BOXES[i][:width], height: COMPANY_GRID_HEIGHT, layout: :synergybox
         text str: k,
-          x: SYNERGY_BOXES[i][:x].map{ |x| x - 10 }, y: SYNERGY_BOXES[i][:y], range: SYNERGY_BOXES[i][:range],
-          width: SYNERGY_BOXES[i][:width].map{ |width| width + 20 }, layout: :synergyacronym
-        text str: '(' + v[:value].to_s + ')',
-          x: SYNERGY_BOXES[i][:x], y: SYNERGY_BOXES[i][:y].map { |y| y + 70 }, range: SYNERGY_BOXES[i][:range],
-          width: SYNERGY_BOXES[i][:width], layout: :synergyvalue
+             x: SYNERGY_BOXES[i][:x].map { |x| x - 10 }, y: SYNERGY_BOXES[i][:y], range: SYNERGY_BOXES[i][:range],
+             width: SYNERGY_BOXES[i][:width].map { |width| width + 20 }, layout: :synergyacronym
+        text str: "(#{v[:value]})",
+             x: SYNERGY_BOXES[i][:x], y: SYNERGY_BOXES[i][:y].map { |y| y + 70 }, range: SYNERGY_BOXES[i][:range],
+             width: SYNERGY_BOXES[i][:width], layout: :synergyvalue
       end
-      line stroke_color: COMPANIES.map { |_k, v| v[:tier] > 0 ? :red : :yellow }, stroke_width: 10, cap: :round,
-        x1: SYNERGY_REDLINES.map { |r| r[:x1] },
-        x2: SYNERGY_REDLINES.map { |r| r[:x2] },
-        y1: SYNERGY_REDLINES.map { |r| r[:y1] },
-        y2: SYNERGY_REDLINES.map { |r| r[:y2] }
+      line stroke_color: COMPANIES.map { |_k, v| v[:tier].positive? ? :red : :yellow }, stroke_width: 10, cap: :round,
+           x1: SYNERGY_REDLINES.map { |r| r[:x1] }, y1: SYNERGY_REDLINES.map { |r| r[:y1] },
+           x2: SYNERGY_REDLINES.map { |r| r[:x2] }, y2: SYNERGY_REDLINES.map { |r| r[:y2] }
       rect layout: :safe if CUTLINES
       rect layout: :cut if CUTLINES
-      save dir: 'cards/company', prefix: 'company_', count_format: '%02d[face]', rotate: ROTATE ? :clockwise : false, format: :png
+      save dir: 'cards/company', prefix: 'company_', count_format: '%02d[face]', rotate: ROTATE ? :clockwise : false,
+           format: :png
       FileUtils.touch 'cards/company'
-      rect layout: :cut, dash: '', stroke_color: :black if CUTLINES_SHEETS and not CUTLINES
+      rect layout: :cut, dash: '', stroke_color: :black if CUTLINES_SHEETS && !CUTLINES
       save_sheet dir: 'sheets', prefix: 'company_face', count_format: ''
     end
   end
 
-  def Rollingstock.cost_of_ownership_string(tier)
+  def self.cost_of_ownership_string(tier)
     if tier < 3
       'no cost of ownership'
     else
-      'cost of ownership $' + [1, 3, 6][tier - 3].to_s
+      "cost of ownership $#{[1, 3, 6][tier - 3]}"
     end
   end
 
+  def self.tier_companies(tier)
+    COMPANIES.select { |_k, v| v[:tier] == tier }.map { |_k, v| v[:index] }
+  end
+
   # Company card backs
-  def Rollingstock.deck_company_back()
+  def self.deck_company_back
     Squib::Deck.new(
       cards: COMPANIES.length,
       width: 1125,
       height: 825,
       layout: 'layouts/layout_company_back.yml'
     ) do
-      background color: COMPANIES.map { |_k, v| '(0,37.5)(0,787.5) ' + TIER_COLORS[v[:tier]] + '@0.0 white@1.0' }
+      background color: COMPANIES.map { |_k, v| "(0,37.5)(0,787.5) #{TIER_COLORS[v[:tier]]}@0.0 white@1.0" }
       text layout: :CornerSymbol, str: COMPANIES.map { |_k, v| TIER_SYMBOLS[v[:tier]] }
       # red box on the back of green cards
-      rect layout: :BoxWhole, stroke_width: 0, fill_color: TIER_COLORS[0], range: COMPANIES.select { |_k, v| v[:tier] == 3 }.map { |_k, v| v[:index] }
-      text layout: :BoxWholeSymbol, str: TIER_SYMBOLS[0], range: COMPANIES.select { |_k, v| v[:tier] == 3 }.map { |_k, v| v[:index] }
+      rect layout: :BoxWhole, stroke_width: 0, fill_color: TIER_COLORS[0], range: Rollingstock.tier_companies(3)
+      text layout: :BoxWholeSymbol, str: TIER_SYMBOLS[0], range: Rollingstock.tier_companies(3)
       # red and orange boxes on the back of blue cards
-      rect layout: :BoxHalf, stroke_width: 0, fill_color: TIER_COLORS[0], range: COMPANIES.select { |_k, v| v[:tier] == 4 }.map { |_k, v| v[:index] }
-      text layout: :BoxHalfSymbol, str: TIER_SYMBOLS[0], range: COMPANIES.select { |_k, v| v[:tier] == 4 }.map { |_k, v| v[:index] }
-      rect layout: :BoxHalf, x: 562.5, stroke_width: 0, fill_color: TIER_COLORS[1], range: COMPANIES.select { |_k, v| v[:tier] == 4 }.map { |_k, v| v[:index] }
-      text layout: :BoxHalfSymbol, x: 562.5, str: TIER_SYMBOLS[1], range: COMPANIES.select { |_k, v| v[:tier] == 4 }.map { |_k, v| v[:index] }
+      rect layout: :BoxHalf, stroke_width: 0, fill_color: TIER_COLORS[0], range: Rollingstock.tier_companies(4)
+      text layout: :BoxHalfSymbol, str: TIER_SYMBOLS[0], range: Rollingstock.tier_companies(4)
+      rect layout: :BoxHalf, x: 562.5, stroke_width: 0, fill_color: TIER_COLORS[1],
+           range: Rollingstock.tier_companies(4)
+      text layout: :BoxHalfSymbol, x: 562.5, str: TIER_SYMBOLS[1], range: Rollingstock.tier_companies(4)
       # red orange yellow boxes on the back of purple cards
-      rect layout: :BoxThird, stroke_width: 0, fill_color: TIER_COLORS[0], range: COMPANIES.select { |_k, v| v[:tier] == 5 }.map { |_k, v| v[:index] }
-      text layout: :BoxThirdSymbol, str: TIER_SYMBOLS[0], range: COMPANIES.select { |_k, v| v[:tier] == 5 }.map { |_k, v| v[:index] }
-      rect layout: :BoxThird, x: 425, stroke_width: 0, fill_color: TIER_COLORS[1], range: COMPANIES.select { |_k, v| v[:tier] == 5 }.map { |_k, v| v[:index] }
-      text layout: :BoxThirdSymbol, x: 425, str: TIER_SYMBOLS[1], range: COMPANIES.select { |_k, v| v[:tier] == 5 }.map { |_k, v| v[:index] }
-      rect layout: :BoxThird, x: 700, stroke_width: 0, fill_color: TIER_COLORS[2], range: COMPANIES.select { |_k, v| v[:tier] == 5 }.map { |_k, v| v[:index] }
-      text layout: :BoxThirdSymbol, x: 700, str: TIER_SYMBOLS[2], range: COMPANIES.select { |_k, v| v[:tier] == 5 }.map { |_k, v| v[:index] }
+      rect layout: :BoxThird, stroke_width: 0, fill_color: TIER_COLORS[0], range: Rollingstock.tier_companies(5)
+      text layout: :BoxThirdSymbol, str: TIER_SYMBOLS[0], range: Rollingstock.tier_companies(5)
+      rect layout: :BoxThird, x: 425, stroke_width: 0, fill_color: TIER_COLORS[1], range: Rollingstock.tier_companies(5)
+      text layout: :BoxThirdSymbol, x: 425, str: TIER_SYMBOLS[1], range: Rollingstock.tier_companies(5)
+      rect layout: :BoxThird, x: 700, stroke_width: 0, fill_color: TIER_COLORS[2], range: Rollingstock.tier_companies(5)
+      text layout: :BoxThirdSymbol, x: 700, str: TIER_SYMBOLS[2], range: Rollingstock.tier_companies(5)
       text str: COMPANIES.map { |_k, v| Rollingstock.cost_of_ownership_string(v[:tier]) }, layout: :CenterishText
       rect layout: :safe if CUTLINES
       rect layout: :cut if CUTLINES
-      save dir: 'cards/company', prefix: 'company_', count_format: '%02d[back]', rotate: ROTATE ? :counterclockwise : false, format: :png
+      save dir: 'cards/company', prefix: 'company_', count_format: '%02d[back]',
+           rotate: ROTATE ? :counterclockwise : false, format: :png
       FileUtils.touch 'cards/company'
-      rect layout: :cut, dash: '', stroke_color: :black if CUTLINES_SHEETS and not CUTLINES
+      rect layout: :cut, dash: '', stroke_color: :black if CUTLINES_SHEETS && !CUTLINES
       save_sheet dir: 'sheets', prefix: 'company_back', count_format: '', rtl: true
     end
   end
 
-  def Rollingstock.deck_company()
-    Rollingstock.deck_company_face()
-    Rollingstock.deck_company_back()
+  def self.deck_company
+    deck_company_face
+    deck_company_back
   end
 end

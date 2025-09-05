@@ -2,7 +2,7 @@ require 'fileutils'
 
 module Rollingstock
   # Player turn order cards
-  def Rollingstock.deck_turnorder()
+  def self.deck_turnorder
     Squib::Deck.new(
       cards: 5,
       width: 1125,
@@ -15,9 +15,10 @@ module Rollingstock
       text layout: :lowerlabel, str: ['in player order'] * PLAYER_NUMBERS.length
       rect layout: :safe if CUTLINES
       rect layout: :cut if CUTLINES
-      save dir: 'cards/turnorder', prefix: 'turnorder_', count_format: '%02d', rotate: ROTATE ? :clockwise : false, format: :png
+      save dir: 'cards/turnorder', prefix: 'turnorder_', count_format: '%02d', rotate: ROTATE ? :clockwise : false,
+           format: :png
       FileUtils.touch 'cards/turnorder'
-      rect layout: :cut, dash: '', stroke_color: :black if CUTLINES_SHEETS and not CUTLINES
+      rect layout: :cut, dash: '', stroke_color: :black if CUTLINES_SHEETS && !CUTLINES
       save_sheet dir: 'sheets', prefix: 'turnorder', count_format: ''
     end
   end

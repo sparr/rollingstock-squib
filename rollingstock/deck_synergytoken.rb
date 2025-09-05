@@ -3,7 +3,7 @@ require 'fileutils'
 module Rollingstock
   # synergy tokens
   # to be mixed faces/backs at production time
-  def Rollingstock.deck_synergytoken()
+  def self.deck_synergytoken
     Squib::Deck.new(
       cards: 5,
       width: 225,
@@ -11,12 +11,12 @@ module Rollingstock
       layout: 'layouts/layout_synergytoken.yml'
     ) do
       background color: SYNERGY_COLORS
-      text layout: :tokentext, str: SYNERGY_VALUES.map { |v| '+$' + v.to_s }
+      text layout: :tokentext, str: SYNERGY_VALUES.map { |v| "+$#{v}" }
       circle layout: :safe if CUTLINES
       circle layout: :cut if CUTLINES
       save dir: 'cards/synergytoken', prefix: 'synergytoken_', format: :png
       FileUtils.touch 'cards/synergytoken'
-      circle layout: :cut, dash: '', stroke_color: :black if CUTLINES_SHEETS and not CUTLINES
+      circle layout: :cut, dash: '', stroke_color: :black if CUTLINES_SHEETS && !CUTLINES
       save_sheet dir: 'sheets', prefix: 'synergytoken', count_format: ''
     end
   end
