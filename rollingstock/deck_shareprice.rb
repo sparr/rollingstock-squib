@@ -51,33 +51,33 @@ module Rollingstock
       text range: (1..SHARE_PRICES.length - 2), str: "max payout\nper share", layout: :maxpayoutlabel
       text range: (1..SHARE_PRICES.length - 2), str: SHARE_PRICES.map { |p| "$#{(p / 3).to_i}" },
            layout: :maxpayoutamount
-      rect range: (6..10), fill_color: TIER_COLORS[0], layout: :ipofirstthird
+      rect range: (6..10), fill_color: TIERS[0][:color], layout: :ipofirstthird
       text range: (6..10), str: '●', layout: :ipofirstthirdsymbol
-      rect range: (6..10), fill_color: TIER_COLORS[1], layout: :iposecondthird
+      rect range: (6..10), fill_color: TIERS[1][:color], layout: :iposecondthird
       text range: (6..10), str: '▲', layout: :iposecondthirdsymbol
-      rect range: (6..10), fill_color: TIER_COLORS[2], layout: :ipothirdthird
+      rect range: (6..10), fill_color: TIERS[2][:color], layout: :ipothirdthird
       text range: (6..10), str: '■', layout: :ipothirdthirdsymbol
-      rect range: (11..14), fill_color: TIER_COLORS[1], layout: :ipofirstthird
+      rect range: (11..14), fill_color: TIERS[1][:color], layout: :ipofirstthird
       text range: (11..14), str: '▲', layout: :ipofirstthirdsymbol
-      rect range: (11..14), fill_color: TIER_COLORS[2], layout: :iposecondthird
+      rect range: (11..14), fill_color: TIERS[2][:color], layout: :iposecondthird
       text range: (11..14), str: '■', layout: :iposecondthirdsymbol
-      rect range: (11..14), fill_color: TIER_COLORS[3], layout: :ipothirdthird
+      rect range: (11..14), fill_color: TIERS[3][:color], layout: :ipothirdthird
       text range: (11..14), str: '⬟', layout: :ipothirdthirdsymbol
-      rect range: (15..17), fill_color: TIER_COLORS[2], layout: :ipofirstthird
+      rect range: (15..17), fill_color: TIERS[2][:color], layout: :ipofirstthird
       text range: (15..17), str: '■', layout: :ipofirstthirdsymbol
-      rect range: (15..17), fill_color: TIER_COLORS[3], layout: :iposecondthird
+      rect range: (15..17), fill_color: TIERS[3][:color], layout: :iposecondthird
       text range: (15..17), str: '⬟', layout: :iposecondthirdsymbol
-      rect range: (15..17), fill_color: TIER_COLORS[4], layout: :ipothirdthird
+      rect range: (15..17), fill_color: TIERS[4][:color], layout: :ipothirdthird
       text range: (15..17), str: '⬢', layout: :ipothirdthirdsymbol
-      rect range: (18..20), fill_color: TIER_COLORS[3], layout: :ipofirstthird
+      rect range: (18..20), fill_color: TIERS[3][:color], layout: :ipofirstthird
       text range: (18..20), str: '⬟', layout: :ipofirstthirdsymbol
-      rect range: (18..20), fill_color: TIER_COLORS[4], layout: :iposecondthird
+      rect range: (18..20), fill_color: TIERS[4][:color], layout: :iposecondthird
       text range: (18..20), str: '⬢', layout: :iposecondthirdsymbol
-      rect range: (18..20), fill_color: TIER_COLORS[5], layout: :ipothirdthird
+      rect range: (18..20), fill_color: TIERS[5][:color], layout: :ipothirdthird
       text range: (18..20), str: '★', layout: :ipothirdthirdsymbol
-      rect range: (21..23), fill_color: TIER_COLORS[4], layout: :ipofirsthalf
+      rect range: (21..23), fill_color: TIERS[4][:color], layout: :ipofirsthalf
       text range: (21..23), str: '⬢', layout: :ipofirsthalfsymbol
-      rect range: (21..23), fill_color: TIER_COLORS[5], layout: :iposecondhalf
+      rect range: (21..23), fill_color: TIERS[5][:color], layout: :iposecondhalf
       text range: (21..23), str: '★', layout: :iposecondhalfsymbol
       text range: (6..23), str: 'IPO', layout: :ipolabel
       bottom_y = 462

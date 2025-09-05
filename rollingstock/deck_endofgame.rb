@@ -11,31 +11,31 @@ module Rollingstock
     ) do
       # first we draw the colored boxes
       # face of training game
-      rect layout: :BoxHalf, stroke_width: 0, fill_color: TIER_COLORS[0], range: [0]
-      rect layout: :BoxHalf, stroke_width: 0, fill_color: TIER_COLORS[1], range: [0], x: 562.5
+      rect layout: :BoxHalf, stroke_width: 0, fill_color: TIERS[0][:color], range: [0]
+      rect layout: :BoxHalf, stroke_width: 0, fill_color: TIERS[1][:color], range: [0], x: 562.5
       # face of short game, back of training game
-      rect layout: :BoxThird, stroke_width: 0, fill_color: TIER_COLORS[0], range: [1, 2], x: 0, width: 400
-      rect layout: :BoxThird, stroke_width: 0, fill_color: TIER_COLORS[1], range: [1, 2], x: 400
-      rect layout: :BoxThird, stroke_width: 0, fill_color: TIER_COLORS[2], range: [1, 2], x: 725, width: 400
+      rect layout: :BoxThird, stroke_width: 0, fill_color: TIERS[0][:color], range: [1, 2], x: 0, width: 400
+      rect layout: :BoxThird, stroke_width: 0, fill_color: TIERS[1][:color], range: [1, 2], x: 400
+      rect layout: :BoxThird, stroke_width: 0, fill_color: TIERS[2][:color], range: [1, 2], x: 725, width: 400
       # back of short game, face and back of full game
-      rect layout: :BoxQuarter, stroke_width: 0, fill_color: TIER_COLORS[0], range: [3, 4, 5]
-      rect layout: :BoxQuarter, stroke_width: 0, fill_color: TIER_COLORS[1], range: [3, 4, 5], x: 562.5
-      rect layout: :BoxQuarter, stroke_width: 0, fill_color: TIER_COLORS[2], range: [3, 4, 5], y: 412.5
-      rect layout: :BoxQuarter, stroke_width: 0, fill_color: TIER_COLORS[3], range: [3, 4, 5], x: 562.5, y: 412.5
+      rect layout: :BoxQuarter, stroke_width: 0, fill_color: TIERS[0][:color], range: [3, 4, 5]
+      rect layout: :BoxQuarter, stroke_width: 0, fill_color: TIERS[1][:color], range: [3, 4, 5], x: 562.5
+      rect layout: :BoxQuarter, stroke_width: 0, fill_color: TIERS[2][:color], range: [3, 4, 5], y: 412.5
+      rect layout: :BoxQuarter, stroke_width: 0, fill_color: TIERS[3][:color], range: [3, 4, 5], x: 562.5, y: 412.5
       # next we draw the symbols
       # bottom left circle
-      text layout: :BottomSymbol, str: TIER_SYMBOLS[0], range: [0, 1, 2], align: :left
+      text layout: :BottomSymbol, str: TIERS[0][:symbol], range: [0, 1, 2], align: :left
       # bottom right triangle
-      text layout: :BottomSymbol, str: TIER_SYMBOLS[1], range: [0], align: :right
+      text layout: :BottomSymbol, str: TIERS[1][:symbol], range: [0], align: :right
       # bottom center triangle
-      text layout: :BottomSymbol, str: TIER_SYMBOLS[1], range: [1, 2]
+      text layout: :BottomSymbol, str: TIERS[1][:symbol], range: [1, 2]
       # bottom right square
-      text layout: :BottomSymbol, str: TIER_SYMBOLS[2], range: [1, 2], align: :right
+      text layout: :BottomSymbol, str: TIERS[2][:symbol], range: [1, 2], align: :right
       # all four corners
-      text layout: :TopSymbol, str: TIER_SYMBOLS[0], range: [3, 4, 5], align: :left
-      text layout: :TopSymbol, str: TIER_SYMBOLS[1], range: [3, 4, 5], align: :right
-      text layout: :BottomSymbol, str: TIER_SYMBOLS[2], range: [3, 4, 5], align: :left
-      text layout: :BottomSymbol, str: TIER_SYMBOLS[3], range: [3, 4, 5], align: :right
+      text layout: :TopSymbol, str: TIERS[0][:symbol], range: [3, 4, 5], align: :left
+      text layout: :TopSymbol, str: TIERS[1][:symbol], range: [3, 4, 5], align: :right
+      text layout: :BottomSymbol, str: TIERS[2][:symbol], range: [3, 4, 5], align: :left
+      text layout: :BottomSymbol, str: TIERS[3][:symbol], range: [3, 4, 5], align: :right
       # then we draw the text in the middle
       text str: [3, 8, 6, 15, 10, 16].map { |c| "cost of ownership $#{c}" }, layout: :CenterishText
       text str: "If there are no unowned private companies left at the end of\na turn, flip this card.",

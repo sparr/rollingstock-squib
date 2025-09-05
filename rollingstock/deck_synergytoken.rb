@@ -10,8 +10,8 @@ module Rollingstock
       height: 225,
       layout: 'layouts/layout_synergytoken.yml'
     ) do
-      background color: SYNERGY_COLORS
-      text layout: :tokentext, str: SYNERGY_VALUES.map { |v| "+$#{v}" }
+      background color: SYNERGIES.map { |s| s[:color] }
+      text layout: :tokentext, str: SYNERGIES.map { |s| "+$#{s[:value]}" }
       circle layout: :safe if CUTLINES
       circle layout: :cut if CUTLINES
       save dir: 'cards/synergytoken', prefix: 'synergytoken_', format: :png

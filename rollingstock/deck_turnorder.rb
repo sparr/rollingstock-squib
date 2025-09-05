@@ -1,6 +1,8 @@
 require 'fileutils'
 
 module Rollingstock
+  PLAYER_NUMBERS = (1..MAX_PLAYERS).to_a.freeze
+
   # Player turn order cards
   def self.deck_turnorder
     Squib::Deck.new(

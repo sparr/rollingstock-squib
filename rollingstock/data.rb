@@ -1,23 +1,43 @@
 module Rollingstock
   MAX_PLAYERS = 5
-  MIN_PLAYERS = 1
-  PLAYER_NUMBERS = (1..MAX_PLAYERS).to_a.freeze
-  CORP_NAMES = %w[Bear Wheel Orion Eagle Horse Star Android Ship Jupiter Saturn].freeze
-  CORP_COLORS = %w[#F00 #000 #96C #FD2 #999 #0A0 #AC0 #09F #963 #F0F].freeze
+
+  CORPS = [
+    { name: 'Bear',    color: '#F00' },
+    { name: 'Wheel',   color: '#000' },
+    { name: 'Orion',   color: '#96C' },
+    { name: 'Eagle',   color: '#FD2' },
+    { name: 'Horse',   color: '#999' },
+    { name: 'Star',    color: '#0A0' },
+    { name: 'Android', color: '#AC0' },
+    { name: 'Ship',    color: '#09F' },
+    { name: 'Jupiter', color: '#963' },
+    { name: 'Saturn',  color: '#F0F' },
+  ].freeze
+
   SHARE_PRICES = [
     0, # bankrupt
     5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 18, 20, 22,
     24, 26, 28, 31, 34, 37, 41, 45, 50, 55, 60, 66, 73, 81, 90,
     100 # triggers end of game
   ].freeze
-  # red orange yellow green blue purple
-  # default blue and purple are too dark
-  TIER_COLORS = %w[red orange yellow green #66F #A2D].freeze
-  # red orange yellow+green blue purple
-  SYNERGY_COLORS = [TIER_COLORS[0], TIER_COLORS[1], '#BF0', TIER_COLORS[4], TIER_COLORS[5]].freeze
-  SYNERGY_VALUES = [1, 2, 4, 8, 16].freeze
-  TIER_SYMBOLS = %w[● ▲ ■ ⬟ ⬢ ★].freeze
-  TIER_TO_SYNERGY = [0, 1, 2, 2, 3, 4].freeze
+
+  TIERS = [
+    { color: 'red',    symbol: '●', synergy: 0 },
+    { color: 'orange', symbol: '▲', synergy: 1 },
+    { color: 'yellow', symbol: '■', synergy: 2 },
+    { color: 'green',  symbol: '⬟', synergy: 2 },
+    { color: '#66F',   symbol: '⬢', synergy: 3 }, # blue
+    { color: '#A2D',   symbol: '★', synergy: 4 }, # purple
+  ].freeze
+
+  SYNERGIES = [
+    { color: TIERS[0][:color], value: 1 },
+    { color: TIERS[1][:color], value: 2 },
+    { color: '#BF0',           value: 4 }, # yellow-green
+    { color: TIERS[4][:color], value: 8 },
+    { color: TIERS[5][:color], value: 16 },
+  ].freeze
+
   CORP_SHARES = 10
 
   # some data originally from
@@ -127,7 +147,7 @@ module Rollingstock
                  name: 'London Heathrow Airport' },
     'CDG'   => { index: 34, tier: 4, value:  56, income: 15,
                  synergies: %w[SNCF SBB E FR VP LE],
-                 name: 'Aéroport Paris Charles-de-Gaulle' },
+                 name: 'Aéroport Paris - Charles - de - Gaulle' },
     'FRA'   => { index: 35, tier: 4, value:  58, income: 15,
                  synergies: %w[PKP KK SBB DR FR MM LE],
                  name: 'Flughafen Frankfurt' },

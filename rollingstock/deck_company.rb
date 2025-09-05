@@ -23,13 +23,13 @@ module Rollingstock
   end
 
   def self.synergytier(tier1, tier2)
-    TIER_TO_SYNERGY[[tier1, tier2].min]
+    TIERS[[tier1, tier2].min][:synergy]
   end
 
   COMPANY_GRID_HEIGHT = 115
   # for every company, figure out if and where and how to render each synergy and row of synergies
   # which companies have each possible tier of synergies?
-  SYNERGY_ROWS = Array.new(SYNERGY_COLORS.length) do
+  SYNERGY_ROWS = Array.new(SYNERGIES.length) do
     {
       x: Array.new(COMPANIES.length, 75),
       y: Array.new(COMPANIES.length, 0),
@@ -127,30 +127,30 @@ module Rollingstock
       height: 825,
       layout: 'layouts/layout_company.yml'
     ) do
-      background color: COMPANIES.map { |_k, v| "(0,37.5)(0,787.5) #{TIER_COLORS[v[:tier]]}@0.0 white@1.0" }
+      background color: COMPANIES.map { |_k, v| "(0,37.5)(0,787.5) #{TIERS[v[:tier]][:color]}@0.0 white@1.0" }
       text layout: :value, str: COMPANIES.map { |_k, v| "$#{v[:value]}" }
       text layout: :pricerange,
            str: COMPANIES.map { |_k, v|
              "($#{Rollingstock.company_min_price(v[:value])}-"\
              "$#{Rollingstock.company_max_price(v[:tier], v[:value], v[:income])})"
            }
-      text layout: :tiericon, str: COMPANIES.map { |_k, v| TIER_SYMBOLS[v[:tier]] }
-      circle layout: :incomecircle, fill_color: COMPANIES.map { |_k, v| TIER_COLORS[v[:tier]] }
+      text layout: :tiericon, str: COMPANIES.map { |_k, v| TIERS[v[:tier]][:symbol] }
+      circle layout: :incomecircle, fill_color: COMPANIES.map { |_k, v| TIERS[v[:tier]][:color] }
       text layout: :incometext, str: COMPANIES.map { |_k, v| "+$#{v[:income]}" }
       extents = text layout: :acronym, str: COMPANIES.keys
       text layout: :name, y: extents[0][:height] + 20, str: COMPANIES.map { |_k, v| v[:name] }
 
-      SYNERGY_COLORS.each_with_index do |color, index|
-        rect fill_color: color, layout: :synergyamount,
+      SYNERGIES.each_with_index do |synergy, index|
+        rect fill_color: synergy[:color], layout: :synergyamount,
              x: SYNERGY_ROWS[index][:x], y: SYNERGY_ROWS[index][:y], range: SYNERGY_ROWS[index][:range],
              width: SYNERGY_ROWS[index][:width], height: SYNERGY_ROWS[index][:height]
-        text str: "$#{SYNERGY_VALUES[index]}", layout: :synergyamount,
+        text str: "$#{SYNERGIES[index][:value]}", layout: :synergyamount,
              x: SYNERGY_ROWS[index][:x], y: SYNERGY_ROWS[index][:y], range: SYNERGY_ROWS[index][:range],
              width: SYNERGY_ROWS[index][:width], height: SYNERGY_ROWS[index][:height]
       end
       COMPANIES.each do |k, v|
         i = v[:index]
-        rect fill_color: TIER_COLORS[v[:tier]],
+        rect fill_color: TIERS[v[:tier]][:color],
              x: SYNERGY_BOXES[i][:x], y: SYNERGY_BOXES[i][:y], range: SYNERGY_BOXES[i][:range],
              width: SYNERGY_BOXES[i][:width], height: COMPANY_GRID_HEIGHT, layout: :synergybox
         text str: k,
@@ -193,24 +193,24 @@ module Rollingstock
       height: 825,
       layout: 'layouts/layout_company_back.yml'
     ) do
-      background color: COMPANIES.map { |_k, v| "(0,37.5)(0,787.5) #{TIER_COLORS[v[:tier]]}@0.0 white@1.0" }
-      text layout: :CornerSymbol, str: COMPANIES.map { |_k, v| TIER_SYMBOLS[v[:tier]] }
+      background color: COMPANIES.map { |_k, v| "(0,37.5)(0,787.5) #{TIERS[v[:tier]][:color]}@0.0 white@1.0" }
+      text layout: :CornerSymbol, str: COMPANIES.map { |_k, v| TIERS[v[:tier]][:symbol] }
       # red box on the back of green cards
-      rect layout: :BoxWhole, stroke_width: 0, fill_color: TIER_COLORS[0], range: Rollingstock.tier_companies(3)
-      text layout: :BoxWholeSymbol, str: TIER_SYMBOLS[0], range: Rollingstock.tier_companies(3)
+      rect layout: :BoxWhole, stroke_width: 0, fill_color: TIERS[0][:color], range: Rollingstock.tier_companies(3)
+      text layout: :BoxWholeSymbol, str: TIERS[0][:symbol], range: Rollingstock.tier_companies(3)
       # red and orange boxes on the back of blue cards
-      rect layout: :BoxHalf, stroke_width: 0, fill_color: TIER_COLORS[0], range: Rollingstock.tier_companies(4)
-      text layout: :BoxHalfSymbol, str: TIER_SYMBOLS[0], range: Rollingstock.tier_companies(4)
-      rect layout: :BoxHalf, x: 562.5, stroke_width: 0, fill_color: TIER_COLORS[1],
+      rect layout: :BoxHalf, stroke_width: 0, fill_color: TIERS[0][:color], range: Rollingstock.tier_companies(4)
+      text layout: :BoxHalfSymbol, str: TIERS[0][:symbol], range: Rollingstock.tier_companies(4)
+      rect layout: :BoxHalf, x: 562.5, stroke_width: 0, fill_color: TIERS[1][:color],
            range: Rollingstock.tier_companies(4)
-      text layout: :BoxHalfSymbol, x: 562.5, str: TIER_SYMBOLS[1], range: Rollingstock.tier_companies(4)
+      text layout: :BoxHalfSymbol, x: 562.5, str: TIERS[1][:symbol], range: Rollingstock.tier_companies(4)
       # red orange yellow boxes on the back of purple cards
-      rect layout: :BoxThird, stroke_width: 0, fill_color: TIER_COLORS[0], range: Rollingstock.tier_companies(5)
-      text layout: :BoxThirdSymbol, str: TIER_SYMBOLS[0], range: Rollingstock.tier_companies(5)
-      rect layout: :BoxThird, x: 425, stroke_width: 0, fill_color: TIER_COLORS[1], range: Rollingstock.tier_companies(5)
-      text layout: :BoxThirdSymbol, x: 425, str: TIER_SYMBOLS[1], range: Rollingstock.tier_companies(5)
-      rect layout: :BoxThird, x: 700, stroke_width: 0, fill_color: TIER_COLORS[2], range: Rollingstock.tier_companies(5)
-      text layout: :BoxThirdSymbol, x: 700, str: TIER_SYMBOLS[2], range: Rollingstock.tier_companies(5)
+      rect layout: :BoxThird, stroke_width: 0, fill_color: TIERS[0][:color], range: Rollingstock.tier_companies(5)
+      text layout: :BoxThirdSymbol, str: TIERS[0][:symbol], range: Rollingstock.tier_companies(5)
+      rect layout: :BoxThird, x: 425, stroke_width: 0, fill_color: TIERS[1][:color], range: Rollingstock.tier_companies(5)
+      text layout: :BoxThirdSymbol, x: 425, str: TIERS[1][:symbol], range: Rollingstock.tier_companies(5)
+      rect layout: :BoxThird, x: 700, stroke_width: 0, fill_color: TIERS[2][:color], range: Rollingstock.tier_companies(5)
+      text layout: :BoxThirdSymbol, x: 700, str: TIERS[2][:symbol], range: Rollingstock.tier_companies(5)
       text str: COMPANIES.map { |_k, v| Rollingstock.cost_of_ownership_string(v[:tier]) }, layout: :CenterishText
       rect layout: :safe if CUTLINES
       rect layout: :cut if CUTLINES
