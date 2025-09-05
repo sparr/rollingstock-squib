@@ -83,7 +83,7 @@ module Rollingstock
       bottom_y = 462
       text str: 'When a corporation takes this card, it is declared bankrupt immediately. '\
                 'Remove its subsidiary companies from the game. Return its cash, its shares, '\
-                'and this card without compensation.\n(Shares are available for newly founded corporations.)',
+                "and this card without compensation.\n(Shares are available for newly founded corporations.)",
            range: 0, y: bottom_y, layout: :bottomtext
       text str: 'If this card is in use in phase 10 or after a share has been bought in phase 3, '\
                 'the game ends immediately. In phase 9, assume there is an infinite supply of this '\
