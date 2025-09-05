@@ -45,9 +45,21 @@ BoxHalf:
   extends: BoxWhole
   width: '/=2'
 
+BoxHalf2:
+  extends: BoxHalf
+  x: +=412.5
+
 BoxThird:
   extends: BoxWhole
   width: '/=3'
+
+BoxThird2:
+  extends: BoxThird
+  x: +=275
+
+BoxThird3:
+  extends: BoxThird2
+  x: +=275
 
 BoxHalfSymbol:
   extends:
@@ -55,12 +67,23 @@ BoxHalfSymbol:
     - BoxHalf
   height: '-=40'
 
+BoxHalf2Symbol:
+  extends: BoxHalfSymbol
+  x: +=412.5
+
 BoxThirdSymbol:
   extends:
     - BoxWholeSymbol
     - BoxThird
   height: '-=40'
 
+BoxThird2Symbol:
+  extends: BoxThirdSymbol
+  x: +=275
+
+BoxThird3Symbol:
+  extends: BoxThird2Symbol
+  x: +=275
 
 # The "cut line", without rounded corners
 cut:

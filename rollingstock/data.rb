@@ -93,7 +93,8 @@ module Rollingstock
                  name: 'Nederlandse Spoorwegen' },
     'B'     => { index: 16, tier: 2, value:  22, income:  6,
                  synergies: %w[PR NS SNCF DR E HA HR],
-                 name: 'Nationale Maatschappij der Belgische Spoorwegen – Société Nationale des Chemins de fer Belges' },
+                 name: 'Nationale Maatschappij der Belgische Spoorwegen – '\
+                       'Société Nationale des Chemins de fer Belges' },
     'PKP'   => { index: 17, tier: 2, value:  23, income:  6,
                  synergies: %w[SX MS PR KK DR SZD BSR HH FRA],
                  name: 'Polskie Koleje Państwowe' },

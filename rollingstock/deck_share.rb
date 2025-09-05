@@ -1,7 +1,7 @@
 require 'fileutils'
 
 # ordinal and ordinalize from
-# https://github.com / rails / rails / blob / 4 - 2 - stable / activesupport / lib / active_support / inflector / methods.rb#L312 - L347
+# https://github.com/rails/rails/blob/4-2-stable/activesupport/lib/active_support/inflector/methods.rb#L312-L347
 def ordinal(number)
   abs_number = number.to_i.abs
   if (11..13).cover?(abs_number % 100)
@@ -40,7 +40,9 @@ module Rollingstock
       png file: (0..CORPS.length * CORP_SHARES - 1).to_a.map { |n|
         "images/corplogos/#{CORPS[n / CORP_SHARES][:name].downcase}.png"
       }, x: (825 - SHARE_ICON_SIZE) / 2, y: 75, width: SHARE_ICON_SIZE, height: SHARE_ICON_SIZE
-      # text str: (0..CORPS.length * CORP_SHARES - 1).to_a.map { |n| CORPS[n / CORP_SHARES][:name] }, layout: :companyname
+      # text str: (0..CORPS.length * CORP_SHARES - 1).to_a.map {
+      # |n| CORPS[n / CORP_SHARES][:name]
+      # }, layout: :companyname
       text str: ((0..CORP_SHARES - 1).to_a * CORPS.length).map { |n|
         if n.zero?
           '<i>President</i>'

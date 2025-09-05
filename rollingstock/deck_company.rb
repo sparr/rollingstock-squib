@@ -201,16 +201,16 @@ module Rollingstock
       # red and orange boxes on the back of blue cards
       rect layout: :BoxHalf, stroke_width: 0, fill_color: TIERS[0][:color], range: Rollingstock.tier_companies(4)
       text layout: :BoxHalfSymbol, str: TIERS[0][:symbol], range: Rollingstock.tier_companies(4)
-      rect layout: :BoxHalf, x: 562.5, stroke_width: 0, fill_color: TIERS[1][:color],
+      rect layout: :BoxHalf2, stroke_width: 0, fill_color: TIERS[1][:color],
            range: Rollingstock.tier_companies(4)
-      text layout: :BoxHalfSymbol, x: 562.5, str: TIERS[1][:symbol], range: Rollingstock.tier_companies(4)
+      text layout: :BoxHalf2Symbol, str: TIERS[1][:symbol], range: Rollingstock.tier_companies(4)
       # red orange yellow boxes on the back of purple cards
       rect layout: :BoxThird, stroke_width: 0, fill_color: TIERS[0][:color], range: Rollingstock.tier_companies(5)
       text layout: :BoxThirdSymbol, str: TIERS[0][:symbol], range: Rollingstock.tier_companies(5)
-      rect layout: :BoxThird, x: 425, stroke_width: 0, fill_color: TIERS[1][:color], range: Rollingstock.tier_companies(5)
-      text layout: :BoxThirdSymbol, x: 425, str: TIERS[1][:symbol], range: Rollingstock.tier_companies(5)
-      rect layout: :BoxThird, x: 700, stroke_width: 0, fill_color: TIERS[2][:color], range: Rollingstock.tier_companies(5)
-      text layout: :BoxThirdSymbol, x: 700, str: TIERS[2][:symbol], range: Rollingstock.tier_companies(5)
+      rect layout: :BoxThird2, stroke_width: 0, fill_color: TIERS[1][:color], range: Rollingstock.tier_companies(5)
+      text layout: :BoxThird2Symbol, str: TIERS[1][:symbol], range: Rollingstock.tier_companies(5)
+      rect layout: :BoxThird3, stroke_width: 0, fill_color: TIERS[2][:color], range: Rollingstock.tier_companies(5)
+      text layout: :BoxThird3Symbol, str: TIERS[2][:symbol], range: Rollingstock.tier_companies(5)
       text str: COMPANIES.map { |_k, v| Rollingstock.cost_of_ownership_string(v[:tier]) }, layout: :CenterishText
       rect layout: :safe if CUTLINES
       rect layout: :cut if CUTLINES

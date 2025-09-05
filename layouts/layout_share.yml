@@ -17,8 +17,8 @@ firstline:
 
 # companyname:
 #   extends: Text
-#   font_size: 56
-#   y: 275
+#   font_size: 14
+#   y: 300
 
 secondline:
   font_size: '*=0.9'
