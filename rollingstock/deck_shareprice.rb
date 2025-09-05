@@ -129,7 +129,7 @@ module Rollingstock
            format: :png
       FileUtils.touch 'cards/shareprice'
       rect layout: :cut, dash: '', stroke_color: :black if CUTLINES_SHEETS && !CUTLINES
-      save_sheet dir: 'sheets', prefix: "shareprice_#{face ? 'face' : 'back'}", count_format: ''
+      save_sheet dir: 'sheets', prefix: "shareprice_#{face ? 'face' : 'back'}", count_format: '', rtl: !face
     end
   end
 

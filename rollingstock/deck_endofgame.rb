@@ -59,7 +59,7 @@ module Rollingstock
       FileUtils.touch 'cards/singles'
       rect layout: :cut, dash: '', stroke_color: :black if CUTLINES_SHEETS && !CUTLINES
       save_sheet dir: 'sheets', prefix: 'endofgame_face', count_format: '', range: [0, 2, 4], columns: 3
-      save_sheet dir: 'sheets', prefix: 'endofgame_back', count_format: '', range: [5, 3, 1], columns: 3
+      save_sheet dir: 'sheets', prefix: 'endofgame_back', count_format: '', range: [5, 3, 1], columns: 3, rtl: true
     end
   end
 end
