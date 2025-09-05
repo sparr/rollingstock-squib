@@ -11,12 +11,12 @@ module Rollingstock
     ) do
       background color: '#CCC'
       text layout: :companyname, str: 'Foreign Investor'
-      text layout: :maintext, str: "Starts the game with $4 in treasury.
-
-<b>Phase 5</b>: Buys as many private companies as possible, in ascending face value order.
-<b>Phase 6</b>: Offers private companies for maximum price. If more than one corporation wants to buy the same private company, the corporation with the higher share price has priority.
-<b>Phase 7</b>: Closes private companies with negative income.
-<b>Phase 8</b>: Earns $5 plus normal income from private companies."
+      text layout: :maintext, str: "Starts the game with $4 in treasury.\n\n"\
+        "<b>Phase 5</b>: Buys as many private companies as possible, in ascending face value order.\n"\
+        "<b>Phase 6</b>: Offers private companies for maximum price. If more than one corporation wants "\
+        "to buy the same private company, the corporation with the higher share price has priority.\n"\
+        "<b>Phase 7</b>: Closes private companies with negative income.\n"\
+        "<b>Phase 8</b>: Earns $5 plus normal income from private companies."
       text layout: :bottomtext, str: '▼ private companies ▼'
       text layout: :righttext, str: '▲ treasury ▲'
       circle layout: :incomecircle
